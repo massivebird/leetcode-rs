@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+
+members = [
+   "lc-0001-twosum",
+   "lc-0002-addtwonumbers",
+   "lc-0011-mostwater",
+   "lc-1371-longestsubstreven",
+]
