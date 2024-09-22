@@ -15,7 +15,7 @@ pub fn find_the_longest_substring(s: String) -> i32 {
             _ => (),
         }
 
-        dbg!((idx,vowels));
+        dbg!((idx, vowels));
         if vowels.iter().all(|c| *c == 0) {
             if start_idx.is_none() {
                 start_idx = Some(idx);
@@ -71,6 +71,9 @@ mod tests {
         );
         assert_eq!(find_the_longest_substring(String::from("bcbcbc")), 6);
         assert_eq!(find_the_longest_substring(String::from("id")), 1);
-        assert_eq!(find_the_longest_substring(String::from("eleetminicoworoep")), 13);
+        assert_eq!(
+            find_the_longest_substring(String::from("eleetminicoworoep")),
+            13
+        );
     }
 }
