@@ -1,62 +1,50 @@
+// Courtesy of leetcode user hemanth00405.
+//
+// Overarching idea: we can use a 5-bit mask to track if we've encountered each
+// vowel an even (0) or odd (1) number of times. The longest substring that
+// contains an even number of vowels is initialized and terminated with
+// the same bit mask!
+//
+// We'll leverage this to record when we first encounter each possible bitmask
+// (if at all).
 pub fn find_the_longest_substring(s: String) -> i32 {
-    let mut end_idx: usize = 0;
-    // we'll late-initialize the start_idx
-    let mut start_idx: Option<usize> = None;
+    #[derive(Copy, Clone)]
+    enum MaskStatus {
+        NotFound,
+        InitialIdx(i32), // i32 so we can set -1 for mask 00000 (whole string).
+    }
 
-    let mut vowels = [0, 0, 0, 0, 0];
+    // Represents all possible 32 permutations of a 5-bit string.
+    let mut mask_records = [MaskStatus::NotFound; 32];
+    // Account for the possibility of the entire string being the answer.
+    mask_records[0] = MaskStatus::InitialIdx(-1);
 
-    for (idx, char) in s.char_indices() {
-        match char {
-            'a' => vowels[0] = (vowels[0] + 1) % 2,
-            'e' => vowels[1] = (vowels[1] + 1) % 2,
-            'i' => vowels[2] = (vowels[2] + 1) % 2,
-            'o' => vowels[3] = (vowels[3] + 1) % 2,
-            'u' => vowels[4] = (vowels[4] + 1) % 2,
+    // We will continuously mutate this mask as we go.
+    let mut working_mask = 0;
+    // The final answer, continuously updated as we go.
+    let mut working_max_len = 0;
+
+    for (idx, c) in s.char_indices() {
+        let idx = idx as i32;
+
+        match c {
+            'a' => working_mask ^= 1,
+            'e' => working_mask ^= 2,
+            'i' => working_mask ^= 4,
+            'o' => working_mask ^= 8,
+            'u' => working_mask ^= 16,
             _ => (),
         }
 
-        dbg!((idx, vowels));
-        if vowels.iter().all(|c| *c == 0) {
-            if start_idx.is_none() {
-                start_idx = Some(idx);
-            }
-            end_idx = idx;
-        }
-    }
-
-    dbg!((start_idx, end_idx));
-    (end_idx - start_idx.unwrap_or(0) + 1) as i32
-}
-
-pub fn _find_the_longest_substring_old(s: String) -> i32 {
-    let is_vowelly_valid = |s: &str| {
-        for vowel in ['a', 'e', 'i', 'o', 'u'] {
-            if s.chars().filter(|c| *c == vowel).count() % 2 != 0 {
-                return false;
-            }
-        }
-        true
-    };
-
-    let mut high_score: usize = 0;
-
-    // Startup cancel if s itself is the answer
-    if is_vowelly_valid(&s) {
-        return s.len() as i32;
-    }
-
-    for idx in 0..s.len() {
-        for jdx in idx..s.len() {
-            let substr = &s[idx..=jdx];
-            let len = jdx - idx + 1;
-
-            if len > high_score && is_vowelly_valid(substr) {
-                high_score = len;
+        match mask_records[working_mask] {
+            MaskStatus::NotFound => mask_records[working_mask] = MaskStatus::InitialIdx(idx),
+            MaskStatus::InitialIdx(init_idx) => {
+                working_max_len = i32::max(working_max_len, idx - init_idx)
             }
         }
     }
 
-    high_score as i32
+    working_max_len
 }
 
 #[cfg(test)]
@@ -64,13 +52,25 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn case_leetcodeisgreat() {
         assert_eq!(
             find_the_longest_substring(String::from("leetcodeisgreat")),
             5
         );
+    }
+
+    #[test]
+    fn case_bcbcbc() {
         assert_eq!(find_the_longest_substring(String::from("bcbcbc")), 6);
+    }
+
+    #[test]
+    fn case_id() {
         assert_eq!(find_the_longest_substring(String::from("id")), 1);
+    }
+
+    #[test]
+    fn case_eleetminicoworoep() {
         assert_eq!(
             find_the_longest_substring(String::from("eleetminicoworoep")),
             13
