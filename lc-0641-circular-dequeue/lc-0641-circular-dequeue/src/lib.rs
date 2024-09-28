@@ -1,4 +1,8 @@
-struct MyCircularDeque {}
+struct MyCircularDeque {
+    head_idx: usize,
+    tail_idx: usize,
+    arr: Vec<i32>,
+}
 
 /*
  * `&self` means the method takes an immutable reference.
@@ -6,7 +10,11 @@ struct MyCircularDeque {}
  */
 impl MyCircularDeque {
     fn new(k: i32) -> Self {
-        todo!();
+        Self {
+            head_idx: 0,
+            tail_idx: 0,
+            arr: Vec::with_capacity(k as usize),
+        }
     }
 
     fn insert_front(&self, value: i32) -> bool {
