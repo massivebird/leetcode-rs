@@ -15,5 +15,9 @@ name = "lc-0011-mostwater"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0641-circular-dequeue"
+version = "0.1.0"
+
+[[package]]
 name = "lc-1371-longestsubstreven"
 version = "0.1.0"
