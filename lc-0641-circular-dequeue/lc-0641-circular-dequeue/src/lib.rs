@@ -34,15 +34,15 @@ impl MyCircularDeque {
     }
 
     fn get_front(&self) -> i32 {
-        todo!();
+        *self.arr.get(self.head_idx).unwrap()
     }
 
     fn get_rear(&self) -> i32 {
-        todo!();
+        *self.arr.get(self.tail_idx).unwrap()
     }
 
     fn is_empty(&self) -> bool {
-        todo!();
+        self.head_idx == self.tail_idx
     }
 
     fn is_full(&self) -> bool {
