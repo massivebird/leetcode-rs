@@ -95,15 +95,12 @@ impl MyCircularDeque {
             return false;
         }
 
-        match self.head.take() {
-            None => unreachable!(),
-            Some(old_head) => {
-                if let Some(new_head) = old_head.borrow_mut().next.take() {
-                    new_head.borrow_mut().prev = None;
-                    self.head = Some(new_head);
-                } else {
-                    self.tail = None;
-                }
+        if let Some(old_head) = self.head.take() {
+            if let Some(new_head) = old_head.borrow_mut().next.take() {
+                new_head.borrow_mut().prev = None;
+                self.head = Some(new_head);
+            } else {
+                self.tail = None;
             }
         }
 
@@ -146,7 +143,7 @@ impl MyCircularDeque {
         self.len == 0
     }
 
-    fn is_full(&self) -> bool {
+    const fn is_full(&self) -> bool {
         self.len == self.capacity
     }
 }
