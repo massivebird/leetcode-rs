@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use std::cell::RefCell;
-use std::rc::Rc;
+use std::rc::{Rc, Weak};
 
 mod solution_1;
 
@@ -17,7 +17,9 @@ struct MyCircularDeque {
 struct Node {
     elem: i32,
     next: Option<Rc<RefCell<Node>>>,
-    prev: Option<Rc<RefCell<Node>>>,
+    // Weak references prevent reference cycles!
+    // Appears to reduce space complexity slightly.
+    prev: Option<Weak<RefCell<Node>>>,
 }
 
 /*
@@ -51,7 +53,7 @@ impl MyCircularDeque {
             None => self.tail = Some(Rc::clone(&new_head)),
             Some(old_head) => {
                 new_head.borrow_mut().next = Some(Rc::clone(&old_head));
-                old_head.borrow_mut().prev = Some(Rc::clone(&new_head));
+                old_head.borrow_mut().prev = Some(Rc::downgrade(&new_head));
             }
         }
 
@@ -77,7 +79,7 @@ impl MyCircularDeque {
                 self.head = Some(Rc::clone(&new_tail));
             }
             Some(old_tail) => {
-                new_tail.borrow_mut().prev = Some(Rc::clone(&old_tail));
+                new_tail.borrow_mut().prev = Some(Rc::downgrade(&old_tail));
                 old_tail.borrow_mut().next = Some(Rc::clone(&new_tail));
             }
         }
@@ -119,8 +121,8 @@ impl MyCircularDeque {
             None => unreachable!(),
             Some(old_tail) => {
                 if let Some(new_tail) = old_tail.borrow_mut().prev.take() {
-                    new_tail.borrow_mut().next = None;
-                    self.tail = Some(new_tail);
+                    new_tail.upgrade().unwrap().borrow_mut().next = None;
+                    self.tail = Some(new_tail.upgrade().unwrap());
                 } else {
                     self.head = None;
                 }
@@ -148,19 +150,6 @@ impl MyCircularDeque {
         self.len == self.capacity
     }
 }
-
-/*
- * Your MyCircularDeque object will be instantiated and called as such:
- * let obj = MyCircularDeque::new(k);
- * let ret_1: bool = obj.insert_front(value);
- * let ret_2: bool = obj.insert_last(value);
- * let ret_3: bool = obj.delete_front();
- * let ret_4: bool = obj.delete_last();
- * let ret_5: i32 = obj.get_front();
- * let ret_6: i32 = obj.get_rear();
- * let ret_7: bool = obj.is_empty();
- * let ret_8: bool = obj.is_full();
- */
 
 #[cfg(test)]
 mod tests {
