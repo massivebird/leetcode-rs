@@ -1,7 +1,10 @@
-use std::collections::HashMap;
+use std::collections::hash_map::Entry::{Occupied, Vacant};
+use std::collections::{HashMap, HashSet};
 
+#[derive(Debug)]
 struct AllOne {
-    keys: HashMap<String, u32>,
+    str_to_count: HashMap<String, u32>,
+    count_to_str: HashMap<u32, HashSet<String>>,
 }
 
 /**
@@ -11,12 +14,38 @@ struct AllOne {
 impl AllOne {
     fn new() -> Self {
         Self {
-            keys: HashMap::new(),
+            str_to_count: HashMap::new(),
+            count_to_str: HashMap::new(),
         }
     }
 
     fn inc(&mut self, key: String) {
-        self.keys.entry(key).and_modify(|v| *v += 1).or_insert(1);
+        match self.str_to_count.entry(key.clone()) {
+            Occupied(mut entry) => {
+                let count: &mut u32 = entry.get_mut();
+
+                // "move" key from count to (count + 1)
+                self.count_to_str.get_mut(count).unwrap().remove(&key);
+                self.count_to_str
+                    .entry(*count + 1)
+                    .and_modify(|v| {
+                        v.insert(key.clone());
+                    })
+                    .or_insert_with(|| HashSet::from([key]));
+
+                // increment count
+                *count += 1;
+            }
+            Vacant(entry) => {
+                entry.insert(1);
+                self.count_to_str
+                    .entry(1)
+                    .and_modify(|set| {
+                        set.insert(key.clone());
+                    })
+                    .or_insert_with(|| HashSet::from([key]));
+            }
+        }
     }
 
     /// Decrements count associated with specified key. Removes the key if the
@@ -24,19 +53,49 @@ impl AllOne {
     ///
     /// The key is guaranteed to exist.
     fn dec(&mut self, key: String) {
-        if *self.keys.get(&key).unwrap() == 1 {
-            self.keys.remove(&key);
+        if self.str_to_count.get(&key).is_some_and(|v| *v == 1) {
+            self.str_to_count.remove(&key);
+            self.count_to_str.get_mut(&1).unwrap().remove(&key);
         } else {
-            self.keys.entry(key).and_modify(|v| *v -= 1);
+            let count = self.str_to_count.get_mut(&key).unwrap();
+
+            // "move" key from count to (count - 1)
+            self.count_to_str.get_mut(count).unwrap().remove(&key);
+            self.count_to_str
+                .get_mut(&(*count - 1))
+                .unwrap()
+                .insert(key);
+
+            *count -= 1;
         }
     }
 
     fn get_max_key(&self) -> String {
-        todo!();
+        for i in (1..=10).rev() {
+            if let Some(set) = self.count_to_str.get(&i) {
+                if set.is_empty() {
+                    continue;
+                }
+
+                return set.iter().nth(0).unwrap().clone();
+            }
+        }
+
+        "".to_string()
     }
 
     fn get_min_key(&self) -> String {
-        todo!();
+        for i in 1..=10 {
+            if let Some(set) = self.count_to_str.get(&i) {
+                if set.is_empty() {
+                    continue;
+                }
+
+                return set.iter().nth(0).unwrap().clone();
+            }
+        }
+
+        "".to_string()
     }
 }
 
@@ -55,6 +114,89 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let a = AllOne::new();
+        let mut a = AllOne::new();
+        a.inc("hello".to_string());
+        a.inc("hello".to_string());
+    }
+
+    #[test]
+    fn case_1() {
+        let mut a = AllOne::new();
+
+        a.inc("a".to_string());
+
+        a.inc("b".to_string());
+        a.inc("b".to_string());
+
+        a.inc("c".to_string());
+        a.inc("c".to_string());
+        a.inc("c".to_string());
+
+        a.dec("b".to_string());
+        a.dec("b".to_string());
+
+        assert_eq!(a.get_min_key(), "a".to_string());
+
+        a.dec("a".to_string());
+
+        assert_eq!(a.get_max_key(), "c".to_string());
+        assert_eq!(a.get_min_key(), "c".to_string());
+    }
+
+    #[test]
+    fn case_2() {
+        let mut a = AllOne::new();
+
+        a.inc("a".to_string());
+        a.inc("b".to_string());
+        a.inc("b".to_string());
+        a.inc("b".to_string());
+        a.inc("b".to_string());
+        dbg!(&a);
+
+        a.dec("b".to_string());
+        dbg!(&a);
+        a.dec("b".to_string());
+        dbg!(&a);
+
+        assert_eq!(a.get_max_key(), "b".to_string());
+        assert_eq!(a.get_min_key(), "a".to_string());
+    }
+
+    #[test]
+    fn case_3() {
+        let mut a = AllOne::new();
+
+        a.inc("hello".to_string());
+        a.inc("hello".to_string());
+
+        assert_eq!(a.get_max_key(), "hello".to_string());
+        assert_eq!(a.get_min_key(), "hello".to_string());
+
+        dbg!(&a);
+        a.inc("leet".to_string());
+        dbg!(&a);
+
+        assert_eq!(a.get_max_key(), "hello".to_string());
+        assert_eq!(a.get_min_key(), "leet".to_string());
+    }
+
+    #[test]
+    fn case_4() {
+        let mut a = AllOne::new();
+
+        for _ in 0..10_000 {
+            a.inc("a".to_string());
+            a.inc("b".to_string());
+        }
+
+        for _ in 0..1_000 {
+            a.inc("b".to_string());
+        }
+
+        dbg!(&a);
+
+        assert_eq!(a.get_max_key(), "b".to_string());
+        assert_eq!(a.get_min_key(), "a".to_string());
     }
 }
