@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-mod solution_1;
-
 #[derive(Debug)]
 struct MyCircularDeque {
     head_idx: usize,
@@ -122,90 +120,5 @@ impl MyCircularDeque {
             0 => self.arr.capacity() - 1,
             other => other - 1,
         }
-    }
-}
-
-/*
- * Your MyCircularDeque object will be instantiated and called as such:
- * let obj = MyCircularDeque::new(k);
- * let ret_1: bool = obj.insert_front(value);
- * let ret_2: bool = obj.insert_last(value);
- * let ret_3: bool = obj.delete_front();
- * let ret_4: bool = obj.delete_last();
- * let ret_5: i32 = obj.get_front();
- * let ret_6: i32 = obj.get_rear();
- * let ret_7: bool = obj.is_empty();
- * let ret_8: bool = obj.is_full();
- */
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn case_1() {
-        let mut d = MyCircularDeque::new(3);
-
-        assert!(d.insert_last(1));
-        dbg!(&d);
-        assert_eq!(d.get_front(), 1);
-
-        assert!(d.insert_last(2));
-        dbg!(&d);
-        assert_eq!(d.get_front(), 1);
-        assert_eq!(d.get_rear(), 2);
-
-        assert!(d.insert_front(3));
-        dbg!(&d);
-        assert_eq!(d.get_front(), 3);
-        assert_eq!(d.get_rear(), 2);
-
-        assert!(!d.insert_front(4));
-    }
-
-    #[test]
-    fn case_2() {
-        let mut d = MyCircularDeque::new(8);
-
-        assert!(d.insert_front(5));
-        dbg!(&d);
-        assert_eq!(d.get_front(), 5);
-    }
-
-    #[test]
-    fn case_3() {
-        let mut d = MyCircularDeque::new(4);
-
-        assert!(d.insert_front(9));
-        dbg!(&d);
-
-        assert!(d.delete_last());
-        dbg!(&d);
-        assert_eq!(d.get_rear(), -1);
-        assert_eq!(d.get_front(), -1);
-    }
-
-    #[test]
-    fn case_4() {
-        let mut d = MyCircularDeque::new(2);
-
-        assert!(d.insert_front(7));
-        dbg!(&d);
-
-        assert!(d.delete_last());
-        dbg!(&d);
-        assert_eq!(d.get_front(), -1);
-
-        assert!(d.insert_last(5));
-        dbg!(&d);
-
-        assert!(d.insert_front(0));
-        dbg!(&d);
-
-        assert_eq!(d.get_front(), 0);
-        dbg!(&d);
-
-        assert_eq!(d.get_rear(), 5);
-        dbg!(&d);
     }
 }
