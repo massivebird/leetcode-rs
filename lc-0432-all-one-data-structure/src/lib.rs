@@ -1,30 +1,40 @@
-struct AllOne {
+use std::collections::HashMap;
 
+struct AllOne {
+    keys: HashMap<String, u32>,
 }
 
-
-/** 
+/**
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl AllOne {
-
     fn new() -> Self {
-        todo!();
+        Self {
+            keys: HashMap::new(),
+        }
     }
-    
-    fn inc(&self, key: String) {
-        todo!();
+
+    fn inc(&mut self, key: String) {
+        self.keys.entry(key).and_modify(|v| *v += 1).or_insert(1);
     }
-    
-    fn dec(&self, key: String) {
-        todo!();
+
+    /// Decrements count associated with specified key. Removes the key if the
+    /// new count is zero.
+    ///
+    /// The key is guaranteed to exist.
+    fn dec(&mut self, key: String) {
+        if *self.keys.get(&key).unwrap() == 1 {
+            self.keys.remove(&key);
+        } else {
+            self.keys.entry(key).and_modify(|v| *v -= 1);
+        }
     }
-    
+
     fn get_max_key(&self) -> String {
         todo!();
     }
-    
+
     fn get_min_key(&self) -> String {
         todo!();
     }
