@@ -1,13 +1,23 @@
 #![allow(dead_code)]
 
+use std::cell::RefCell;
+use std::rc::Rc;
+
 mod solution_1;
 
 #[derive(Debug)]
 struct MyCircularDeque {
-    head_idx: usize,
-    tail_idx: usize,
-    size: usize,
-    arr: Vec<i32>,
+    head: Option<Rc<RefCell<Node>>>,
+    tail: Option<Rc<RefCell<Node>>>,
+    len: usize,
+    capacity: usize,
+}
+
+#[derive(Debug)]
+struct Node {
+    elem: i32,
+    next: Option<Rc<RefCell<Node>>>,
+    prev: Option<Rc<RefCell<Node>>>,
 }
 
 /*
@@ -15,12 +25,12 @@ struct MyCircularDeque {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MyCircularDeque {
-    fn new(k: i32) -> Self {
+    const fn new(k: i32) -> Self {
         Self {
-            head_idx: 0,
-            tail_idx: 0,
-            size: 0,
-            arr: vec![-1; (k + 1) as usize],
+            head: None,
+            tail: None,
+            len: 0,
+            capacity: k as usize,
         }
     }
 
@@ -29,15 +39,24 @@ impl MyCircularDeque {
             return false;
         }
 
-        if self.is_empty() {
-            *self.arr.get_mut(self.head_idx).unwrap() = value;
-            self.size += 1;
-            return true;
+        let head = self.head.take();
+
+        let new_head = Rc::new(RefCell::new(Node {
+            elem: value,
+            next: None,
+            prev: None,
+        }));
+
+        match head {
+            None => self.tail = Some(Rc::clone(&new_head)),
+            Some(old_head) => {
+                new_head.borrow_mut().next = Some(Rc::clone(&old_head));
+                old_head.borrow_mut().prev = Some(Rc::clone(&new_head));
+            }
         }
 
-        self.head_idx = self.wrapping_decrement(self.head_idx);
-        *self.arr.get_mut(self.head_idx).unwrap() = value;
-        self.size += 1;
+        self.head = Some(new_head);
+        self.len += 1;
 
         true
     }
@@ -47,15 +66,24 @@ impl MyCircularDeque {
             return false;
         }
 
-        if self.is_empty() {
-            *self.arr.get_mut(self.tail_idx).unwrap() = value;
-            self.size += 1;
-            return true;
+        let new_tail = Rc::new(RefCell::new(Node {
+            elem: value,
+            next: None,
+            prev: None,
+        }));
+
+        match self.tail.take() {
+            None => {
+                self.head = Some(Rc::clone(&new_tail));
+            }
+            Some(old_tail) => {
+                new_tail.borrow_mut().prev = Some(Rc::clone(&old_tail));
+                old_tail.borrow_mut().next = Some(Rc::clone(&new_tail));
+            }
         }
 
-        self.tail_idx = self.wrapping_increment(self.tail_idx);
-        *self.arr.get_mut(self.tail_idx).unwrap() = value;
-        self.size += 1;
+        self.tail = Some(new_tail);
+        self.len += 1;
 
         true
     }
@@ -65,14 +93,19 @@ impl MyCircularDeque {
             return false;
         }
 
-        if self.size == 1 {
-            *self.arr.get_mut(self.head_idx).unwrap() = -1;
-            self.size -= 1;
-            return true;
+        match self.head.take() {
+            None => unreachable!(),
+            Some(old_head) => {
+                if let Some(new_head) = old_head.borrow_mut().next.take() {
+                    new_head.borrow_mut().prev = None;
+                    self.head = Some(new_head);
+                } else {
+                    self.tail = None;
+                }
+            }
         }
 
-        self.head_idx = self.wrapping_increment(self.head_idx);
-        self.size -= 1;
+        self.len -= 1;
 
         true
     }
@@ -82,46 +115,37 @@ impl MyCircularDeque {
             return false;
         }
 
-        if self.size == 1 {
-            *self.arr.get_mut(self.tail_idx).unwrap() = -1;
-            self.size -= 1;
-            return true;
+        match self.tail.take() {
+            None => unreachable!(),
+            Some(old_tail) => {
+                if let Some(new_tail) = old_tail.borrow_mut().prev.take() {
+                    new_tail.borrow_mut().next = None;
+                    self.tail = Some(new_tail);
+                } else {
+                    self.head = None;
+                }
+            }
         }
 
-        self.tail_idx = self.wrapping_decrement(self.tail_idx);
-        self.size -= 1;
+        self.len -= 1;
 
         true
     }
 
     fn get_front(&self) -> i32 {
-        *self.arr.get(self.head_idx).unwrap()
+        self.head.as_ref().map_or(-1, |node| node.borrow().elem)
     }
 
     fn get_rear(&self) -> i32 {
-        *self.arr.get(self.tail_idx).unwrap()
+        self.tail.as_ref().map_or(-1, |node| node.borrow().elem)
     }
 
     const fn is_empty(&self) -> bool {
-        self.size == 0
+        self.len == 0
     }
 
     fn is_full(&self) -> bool {
-        self.size == self.arr.capacity() - 1
-    }
-
-    fn wrapping_increment(&self, val: usize) -> usize {
-        match val {
-            other if other == self.arr.capacity() - 1 => 0,
-            other => other + 1,
-        }
-    }
-
-    fn wrapping_decrement(&self, val: usize) -> usize {
-        match val {
-            0 => self.arr.capacity() - 1,
-            other => other - 1,
-        }
+        self.len == self.capacity
     }
 }
 
@@ -147,16 +171,13 @@ mod tests {
         let mut d = MyCircularDeque::new(3);
 
         assert!(d.insert_last(1));
-        dbg!(&d);
         assert_eq!(d.get_front(), 1);
 
         assert!(d.insert_last(2));
-        dbg!(&d);
         assert_eq!(d.get_front(), 1);
         assert_eq!(d.get_rear(), 2);
 
         assert!(d.insert_front(3));
-        dbg!(&d);
         assert_eq!(d.get_front(), 3);
         assert_eq!(d.get_rear(), 2);
 
@@ -168,7 +189,6 @@ mod tests {
         let mut d = MyCircularDeque::new(8);
 
         assert!(d.insert_front(5));
-        dbg!(&d);
         assert_eq!(d.get_front(), 5);
     }
 
@@ -177,10 +197,8 @@ mod tests {
         let mut d = MyCircularDeque::new(4);
 
         assert!(d.insert_front(9));
-        dbg!(&d);
 
         assert!(d.delete_last());
-        dbg!(&d);
         assert_eq!(d.get_rear(), -1);
         assert_eq!(d.get_front(), -1);
     }
@@ -190,22 +208,16 @@ mod tests {
         let mut d = MyCircularDeque::new(2);
 
         assert!(d.insert_front(7));
-        dbg!(&d);
 
         assert!(d.delete_last());
-        dbg!(&d);
         assert_eq!(d.get_front(), -1);
 
         assert!(d.insert_last(5));
-        dbg!(&d);
 
         assert!(d.insert_front(0));
-        dbg!(&d);
 
         assert_eq!(d.get_front(), 0);
-        dbg!(&d);
 
         assert_eq!(d.get_rear(), 5);
-        dbg!(&d);
     }
 }
