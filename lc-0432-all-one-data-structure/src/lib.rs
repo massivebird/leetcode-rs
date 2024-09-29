@@ -33,6 +33,14 @@ impl AllOne {
                     })
                     .or_insert_with(|| HashSet::from([key]));
 
+                if self
+                    .count_to_str
+                    .get(count)
+                    .is_some_and(|set| set.is_empty())
+                {
+                    self.count_to_str.remove_entry(count);
+                }
+
                 // increment count
                 *count += 1;
             }
@@ -62,40 +70,48 @@ impl AllOne {
             // "move" key from count to (count - 1)
             self.count_to_str.get_mut(count).unwrap().remove(&key);
             self.count_to_str
-                .get_mut(&(*count - 1))
-                .unwrap()
-                .insert(key);
+                .entry(*count - 1)
+                .and_modify(|v| {
+                    v.insert(key.clone());
+                })
+                .or_insert_with(|| HashSet::from([key]));
+
+            if self
+                .count_to_str
+                .get(count)
+                .is_some_and(|set| set.is_empty())
+            {
+                self.count_to_str.remove_entry(count);
+            }
 
             *count -= 1;
         }
     }
 
     fn get_max_key(&self) -> String {
-        for i in (1..=10).rev() {
-            if let Some(set) = self.count_to_str.get(&i) {
-                if set.is_empty() {
-                    continue;
-                }
-
-                return set.iter().nth(0).unwrap().clone();
-            }
+        if self.str_to_count.is_empty() {
+            return "".to_string();
         }
 
-        "".to_string()
+        self.str_to_count
+            .iter()
+            .max_by_key(|(_, &c)| c)
+            .unwrap()
+            .0
+            .clone()
     }
 
     fn get_min_key(&self) -> String {
-        for i in 1..=10 {
-            if let Some(set) = self.count_to_str.get(&i) {
-                if set.is_empty() {
-                    continue;
-                }
-
-                return set.iter().nth(0).unwrap().clone();
-            }
+        if self.str_to_count.is_empty() {
+            return "".to_string();
         }
 
-        "".to_string()
+        self.str_to_count
+            .iter()
+            .min_by_key(|(_, &c)| c)
+            .unwrap()
+            .0
+            .clone()
     }
 }
 
