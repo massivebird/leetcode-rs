@@ -64,6 +64,14 @@ impl AllOne {
         if self.str_to_count.get(&key).is_some_and(|v| *v == 1) {
             self.str_to_count.remove(&key);
             self.count_to_str.get_mut(&1).unwrap().remove(&key);
+
+            if self
+                .count_to_str
+                .get(&1)
+                .is_some_and(|set| set.is_empty())
+            {
+                self.count_to_str.remove_entry(&1);
+            }
         } else {
             let count = self.str_to_count.get_mut(&key).unwrap();
 
@@ -89,29 +97,33 @@ impl AllOne {
     }
 
     fn get_max_key(&self) -> String {
-        if self.str_to_count.is_empty() {
-            return "".to_string();
+        if let Some(max_count) = self.count_to_str.keys().max() {
+            return self
+                .count_to_str
+                .get(max_count)
+                .unwrap()
+                .iter()
+                .nth(0)
+                .unwrap()
+                .clone();
         }
 
-        self.str_to_count
-            .iter()
-            .max_by_key(|(_, &c)| c)
-            .unwrap()
-            .0
-            .clone()
+        "".to_string()
     }
 
     fn get_min_key(&self) -> String {
-        if self.str_to_count.is_empty() {
-            return "".to_string();
+        if let Some(min_count) = self.count_to_str.keys().min() {
+            return self
+                .count_to_str
+                .get(min_count)
+                .unwrap()
+                .iter()
+                .nth(0)
+                .unwrap()
+                .clone();
         }
 
-        self.str_to_count
-            .iter()
-            .min_by_key(|(_, &c)| c)
-            .unwrap()
-            .0
-            .clone()
+        "".to_string()
     }
 }
 
@@ -147,13 +159,16 @@ mod tests {
         a.inc("c".to_string());
         a.inc("c".to_string());
         a.inc("c".to_string());
+        dbg!(&a);
 
         a.dec("b".to_string());
         a.dec("b".to_string());
+        dbg!(&a);
 
         assert_eq!(a.get_min_key(), "a".to_string());
 
         a.dec("a".to_string());
+        dbg!(&a);
 
         assert_eq!(a.get_max_key(), "c".to_string());
         assert_eq!(a.get_min_key(), "c".to_string());
