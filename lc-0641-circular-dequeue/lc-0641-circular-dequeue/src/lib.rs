@@ -48,6 +48,20 @@ impl MyCircularDeque {
     fn is_full(&self) -> bool {
         todo!();
     }
+
+    fn wrapping_increment(&self, val: usize) -> usize {
+        match val {
+            other if other == self.arr.capacity() - 1 => 0,
+            other => other + 1,
+        }
+    }
+
+    fn wrapping_decrement(&self, val: usize) -> usize {
+        match val {
+            0 => self.arr.capacity() - 1,
+            other => other - 1,
+        }
+    }
 }
 
 /*
@@ -64,4 +78,26 @@ impl MyCircularDeque {
  */
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+
+    #[test]
+    fn wrapping_stuff() {
+        let mut d = MyCircularDeque::new(3);
+
+        d.head_idx = d.wrapping_increment(d.head_idx);
+        assert_eq!(d.head_idx, 1);
+
+        d.head_idx = d.wrapping_increment(d.head_idx);
+        assert_eq!(d.head_idx, 2);
+
+        d.head_idx = d.wrapping_increment(d.head_idx);
+        assert_eq!(d.head_idx, 0);
+
+        d.head_idx = d.wrapping_decrement(d.head_idx);
+        assert_eq!(d.head_idx, 2);
+
+        d.head_idx = d.wrapping_decrement(d.head_idx);
+        assert_eq!(d.head_idx, 1);
+    }
+}
