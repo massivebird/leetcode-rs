@@ -1,6 +1,10 @@
+#![allow(dead_code)]
+
+#[derive(Debug)]
 struct MyCircularDeque {
     head_idx: usize,
     tail_idx: usize,
+    size: usize,
     arr: Vec<i32>,
 }
 
@@ -13,24 +17,79 @@ impl MyCircularDeque {
         Self {
             head_idx: 0,
             tail_idx: 0,
-            arr: Vec::with_capacity(k as usize),
+            size: 0,
+            arr: vec![-1; (k + 1) as usize],
         }
     }
 
-    fn insert_front(&self, value: i32) -> bool {
-        todo!();
+    fn insert_front(&mut self, value: i32) -> bool {
+        if self.is_full() {
+            return false;
+        }
+
+        if self.is_empty() {
+            *self.arr.get_mut(self.head_idx).unwrap() = value;
+            self.size += 1;
+            return true;
+        }
+
+        self.head_idx = self.wrapping_decrement(self.head_idx);
+        *self.arr.get_mut(self.head_idx).unwrap() = value;
+        self.size += 1;
+
+        true
     }
 
-    fn insert_last(&self, value: i32) -> bool {
-        todo!();
+    fn insert_last(&mut self, value: i32) -> bool {
+        if self.is_full() {
+            return false;
+        }
+
+        if self.is_empty() {
+            *self.arr.get_mut(self.tail_idx).unwrap() = value;
+            self.size += 1;
+            return true;
+        }
+
+        self.tail_idx = self.wrapping_increment(self.tail_idx);
+        *self.arr.get_mut(self.tail_idx).unwrap() = value;
+        self.size += 1;
+
+        true
     }
 
-    fn delete_front(&self) -> bool {
-        todo!();
+    fn delete_front(&mut self) -> bool {
+        if self.is_empty() {
+            return false;
+        }
+
+        if self.size == 1 {
+            *self.arr.get_mut(self.head_idx).unwrap() = -1;
+            self.size -= 1;
+            return true;
+        }
+
+        self.head_idx = self.wrapping_increment(self.head_idx);
+        self.size -= 1;
+
+        true
     }
 
-    fn delete_last(&self) -> bool {
-        todo!();
+    fn delete_last(&mut self) -> bool {
+        if self.is_empty() {
+            return false;
+        }
+
+        if self.size == 1 {
+            *self.arr.get_mut(self.tail_idx).unwrap() = -1;
+            self.size -= 1;
+            return true;
+        }
+
+        self.tail_idx = self.wrapping_decrement(self.tail_idx);
+        self.size -= 1;
+
+        true
     }
 
     fn get_front(&self) -> i32 {
@@ -41,12 +100,12 @@ impl MyCircularDeque {
         *self.arr.get(self.tail_idx).unwrap()
     }
 
-    fn is_empty(&self) -> bool {
-        self.head_idx == self.tail_idx
+    const fn is_empty(&self) -> bool {
+        self.size == 0
     }
 
     fn is_full(&self) -> bool {
-        todo!();
+        self.size == self.arr.capacity() - 1
     }
 
     fn wrapping_increment(&self, val: usize) -> usize {
@@ -82,22 +141,69 @@ mod tests {
     use super::*;
 
     #[test]
-    fn wrapping_stuff() {
+    fn case_1() {
         let mut d = MyCircularDeque::new(3);
 
-        d.head_idx = d.wrapping_increment(d.head_idx);
-        assert_eq!(d.head_idx, 1);
+        assert!(d.insert_last(1));
+        dbg!(&d);
+        assert_eq!(d.get_front(), 1);
 
-        d.head_idx = d.wrapping_increment(d.head_idx);
-        assert_eq!(d.head_idx, 2);
+        assert!(d.insert_last(2));
+        dbg!(&d);
+        assert_eq!(d.get_front(), 1);
+        assert_eq!(d.get_rear(), 2);
 
-        d.head_idx = d.wrapping_increment(d.head_idx);
-        assert_eq!(d.head_idx, 0);
+        assert!(d.insert_front(3));
+        dbg!(&d);
+        assert_eq!(d.get_front(), 3);
+        assert_eq!(d.get_rear(), 2);
 
-        d.head_idx = d.wrapping_decrement(d.head_idx);
-        assert_eq!(d.head_idx, 2);
+        assert!(!d.insert_front(4));
+    }
 
-        d.head_idx = d.wrapping_decrement(d.head_idx);
-        assert_eq!(d.head_idx, 1);
+    #[test]
+    fn case_2() {
+        let mut d = MyCircularDeque::new(8);
+
+        assert!(d.insert_front(5));
+        dbg!(&d);
+        assert_eq!(d.get_front(), 5);
+    }
+
+    #[test]
+    fn case_3() {
+        let mut d = MyCircularDeque::new(4);
+
+        assert!(d.insert_front(9));
+        dbg!(&d);
+
+        assert!(d.delete_last());
+        dbg!(&d);
+        assert_eq!(d.get_rear(), -1);
+        assert_eq!(d.get_front(), -1);
+    }
+
+    #[test]
+    fn case_4() {
+        let mut d = MyCircularDeque::new(2);
+
+        assert!(d.insert_front(7));
+        dbg!(&d);
+
+        assert!(d.delete_last());
+        dbg!(&d);
+        assert_eq!(d.get_front(), -1);
+
+        assert!(d.insert_last(5));
+        dbg!(&d);
+
+        assert!(d.insert_front(0));
+        dbg!(&d);
+
+        assert_eq!(d.get_front(), 0);
+        dbg!(&d);
+
+        assert_eq!(d.get_rear(), 5);
+        dbg!(&d);
     }
 }
