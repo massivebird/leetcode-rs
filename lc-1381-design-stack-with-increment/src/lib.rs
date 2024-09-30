@@ -2,11 +2,12 @@ use std::cell::RefCell;
 
 struct CustomStack {
     head: Option<Box<RefCell<Node>>>,
+    size: u32,
     max_size: u32,
 }
 
 struct Node {
-    val: u32,
+    val: i32,
     next: Option<Box<RefCell<Node>>>,
 }
 
@@ -18,12 +19,26 @@ impl CustomStack {
     const fn new(max_size: u32) -> Self {
         Self {
             head: None,
+            size: 0,
             max_size,
         }
     }
 
-    fn push(&self, x: i32) {
-        todo!();
+    // Adds x to the top of the stack if the stack is not at max size.
+    fn push(&mut self, x: i32) {
+        if self.size == self.max_size {
+            return;
+        }
+
+        let new_head = Box::new(RefCell::new(Node { val: x, next: None }));
+
+        if let Some(old_head) = self.head.take() {
+            new_head.borrow_mut().next = Some(old_head);
+        }
+
+        self.head = Some(new_head);
+
+        self.size += 1;
     }
 
     fn pop(&self) -> i32 {
