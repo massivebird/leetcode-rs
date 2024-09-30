@@ -72,10 +72,8 @@ impl CustomStack {
         }
 
         let num_skips = self.size.saturating_sub(k as u32);
-        dbg!(num_skips);
 
         let mut current_head = Rc::clone(self.head.as_ref().unwrap());
-        dbg!(&current_head);
 
         for _ in 0..num_skips {
             let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
@@ -83,10 +81,8 @@ impl CustomStack {
         }
 
         let num_to_inc = self.size - num_skips;
-        dbg!(num_to_inc);
 
         current_head.borrow_mut().val += val;
-        dbg!(&current_head);
 
         for _ in 1..num_to_inc {
             // go next
@@ -94,7 +90,6 @@ impl CustomStack {
             current_head = next;
 
             current_head.borrow_mut().val += val;
-            dbg!(&current_head);
         }
     }
 }
