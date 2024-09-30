@@ -41,8 +41,17 @@ impl CustomStack {
         self.size += 1;
     }
 
-    fn pop(&self) -> i32 {
-        todo!();
+    // Pops and returns the top of the stack, or -1 if stack is empty.
+    fn pop(&mut self) -> i32 {
+        if self.size == 0 {
+            return -1;
+        }
+
+        let old_head = self.head.take().unwrap();
+
+        self.head = old_head.borrow_mut().next.take();
+
+        self.size -= 1;
     }
 
     fn increment(&self, k: i32, val: i32) {
