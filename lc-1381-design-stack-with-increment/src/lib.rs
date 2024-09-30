@@ -1,12 +1,14 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+#[derive(Debug)]
 struct CustomStack {
     head: Option<Rc<RefCell<Node>>>,
     size: u32,
     max_size: u32,
 }
 
+#[derive(Debug)]
 struct Node {
     val: i32,
     next: Option<Rc<RefCell<Node>>>,
@@ -17,11 +19,11 @@ struct Node {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl CustomStack {
-    const fn new(max_size: u32) -> Self {
+    const fn new(max_size: i32) -> Self {
         Self {
             head: None,
             size: 0,
-            max_size,
+            max_size: max_size as u32,
         }
     }
 
@@ -68,8 +70,10 @@ impl CustomStack {
         }
 
         let num_skips = self.size.saturating_sub(k as u32);
+        dbg!(num_skips);
 
         let mut current_head = Rc::clone(self.head.as_ref().unwrap());
+        dbg!(&current_head);
 
         for _ in 0..num_skips {
             let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
@@ -77,13 +81,18 @@ impl CustomStack {
         }
 
         let num_to_inc = self.size - num_skips;
+        dbg!(num_to_inc);
 
-        for _ in 0..num_to_inc {
-            current_head.borrow_mut().val += val;
+        current_head.borrow_mut().val += val;
+        dbg!(&current_head);
 
+        for _ in 1..num_to_inc {
             // go next
             let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
             current_head = next;
+
+            current_head.borrow_mut().val += val;
+            dbg!(&current_head);
         }
     }
 }
@@ -101,7 +110,24 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let s = CustomStack::new(2);
+    fn case_1() {
+        let mut s = CustomStack::new(3);
+
+        s.push(1);
+        s.push(2);
+
+        assert_eq!(s.pop(), 2);
+
+        s.push(2);
+        s.push(3);
+        s.push(4);
+
+        s.increment(5, 100);
+        s.increment(2, 100);
+
+        assert_eq!(s.pop(), 103);
+        assert_eq!(s.pop(), 202);
+        assert_eq!(s.pop(), 201);
+        assert_eq!(s.pop(), -1);
     }
 }
