@@ -81,13 +81,21 @@ impl CustomStack {
 
         let num_nodes_to_skip = self.size.saturating_sub(k as u32);
 
-        // A de facto iterator. We'll mutate this as we go.
-        let mut current_head = Rc::clone(self.head.as_ref().unwrap());
+        // De facto iterator. We'll mutate this as we go.
+        let mut current_node = Rc::clone(self.head.as_ref().unwrap());
+
+        // Moves the iterator to the next node. Just an abstraction for
+        // code reuse.
+        macro_rules! move_current_node {
+            () => {
+                let next = Rc::clone(&current_node.as_ref().borrow().next.clone().unwrap());
+                current_node = next;
+            };
+        }
 
         // Eat the nodes we're meant to skip. Do not mutate them.
         for _ in 0..num_nodes_to_skip {
-            let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
-            current_head = next;
+            move_current_node!();
         }
 
         let num_nodes_to_mutate = self.size - num_nodes_to_skip;
@@ -96,14 +104,12 @@ impl CustomStack {
         // moving to the next one.
 
         // Preliminary mutation.
-        current_head.borrow_mut().val += val;
+        current_node.borrow_mut().val += val;
 
         // Begin range at 1 since we already performed one mutation.
         for _ in 1..num_nodes_to_mutate {
-            let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
-            current_head = next;
-
-            current_head.borrow_mut().val += val;
+            move_current_node!();
+            current_node.borrow_mut().val += val;
         }
     }
 }
