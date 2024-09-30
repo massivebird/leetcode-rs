@@ -1,0 +1,6 @@
+[package]
+name = "lc-1381-design-stack-with-increment"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
