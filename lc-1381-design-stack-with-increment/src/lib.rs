@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+// This is my singly linked list approach!
+
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -16,10 +18,6 @@ struct Node {
     next: Option<Rc<RefCell<Node>>>,
 }
 
-/*
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl CustomStack {
     const fn new(max_size: i32) -> Self {
         Self {
@@ -29,7 +27,7 @@ impl CustomStack {
         }
     }
 
-    // Adds x to the top of the stack if the stack is not at max size.
+    /// Adds x to the top of the stack if the stack is not at max size.
     fn push(&mut self, x: i32) {
         if self.size == self.max_size {
             return;
@@ -37,6 +35,7 @@ impl CustomStack {
 
         let new_head = Rc::new(RefCell::new(Node { val: x, next: None }));
 
+        // Link the new head to the previous head, if one exists.
         if let Some(old_head) = self.head.take() {
             new_head.borrow_mut().next = Some(old_head);
         }
@@ -46,7 +45,7 @@ impl CustomStack {
         self.size += 1;
     }
 
-    // Pops and returns the top of the stack, or -1 if stack is empty.
+    /// Pops and returns the top of the stack, or -1 if stack is empty.
     fn pop(&mut self) -> i32 {
         if self.size == 0 {
             return -1;
@@ -59,33 +58,48 @@ impl CustomStack {
 
         self.size -= 1;
 
+        // I create an owned binding of the return value because Rust otherwise
+        // throws `error[E0597]: [old_head] does not live long enough.`
+        //
+        // Even though val is i32 (impl Copy), I guess we would be returning
+        // it as a field of an old_head borrow, which looks bad to the borrow
+        // checker.
+        //
+        // The binding solves this by (more explicitly) performing a copy before
+        // old_head is invalidated.
         let val = old_head.borrow().val;
         val
     }
 
-    // Increment the bottom k elements of the stack by val.
-    //
-    // If k > size, increment all items in the stack.
+    /// Increment the bottom k elements of the stack by val.
+    ///
+    /// If k > size, increment all items in the stack.
     fn increment(&self, k: i32, val: i32) {
         if self.size == 0 {
             return;
         }
 
-        let num_skips = self.size.saturating_sub(k as u32);
+        let num_nodes_to_skip = self.size.saturating_sub(k as u32);
 
+        // A de facto iterator. We'll mutate this as we go.
         let mut current_head = Rc::clone(self.head.as_ref().unwrap());
 
-        for _ in 0..num_skips {
+        // Eat the nodes we're meant to skip. Do not mutate them.
+        for _ in 0..num_nodes_to_skip {
             let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
             current_head = next;
         }
 
-        let num_to_inc = self.size - num_skips;
+        let num_nodes_to_mutate = self.size - num_nodes_to_skip;
 
+        // To avoid iterating OOB, we'll mutate the current node _before_
+        // moving to the next one.
+
+        // Preliminary mutation.
         current_head.borrow_mut().val += val;
 
-        for _ in 1..num_to_inc {
-            // go next
+        // Begin range at 1 since we already performed one mutation.
+        for _ in 1..num_nodes_to_mutate {
             let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
             current_head = next;
 
@@ -93,14 +107,6 @@ impl CustomStack {
         }
     }
 }
-
-/*
- * Your CustomStack object will be instantiated and called as such:
- * let obj = CustomStack::new(maxSize);
- * obj.push(x);
- * let ret_2: i32 = obj.pop();
- * obj.increment(k, val);
- */
 
 #[cfg(test)]
 mod tests {
