@@ -49,9 +49,13 @@ impl CustomStack {
 
         let old_head = self.head.take().unwrap();
 
-        self.head = old_head.borrow_mut().next.take();
+        let new_head = old_head.borrow_mut().next.take();
+        self.head = new_head;
 
         self.size -= 1;
+
+        let val = old_head.borrow().val;
+        val
     }
 
     fn increment(&self, k: i32, val: i32) {
