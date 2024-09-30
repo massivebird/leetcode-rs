@@ -1,14 +1,15 @@
 use std::cell::RefCell;
+use std::rc::Rc;
 
 struct CustomStack {
-    head: Option<Box<RefCell<Node>>>,
+    head: Option<Rc<RefCell<Node>>>,
     size: u32,
     max_size: u32,
 }
 
 struct Node {
     val: i32,
-    next: Option<Box<RefCell<Node>>>,
+    next: Option<Rc<RefCell<Node>>>,
 }
 
 /*
@@ -30,7 +31,7 @@ impl CustomStack {
             return;
         }
 
-        let new_head = Box::new(RefCell::new(Node { val: x, next: None }));
+        let new_head = Rc::new(RefCell::new(Node { val: x, next: None }));
 
         if let Some(old_head) = self.head.take() {
             new_head.borrow_mut().next = Some(old_head);
@@ -58,8 +59,32 @@ impl CustomStack {
         val
     }
 
+    // Increment the bottom k elements of the stack by val.
+    //
+    // If k > size, increment all items in the stack.
     fn increment(&self, k: i32, val: i32) {
-        todo!();
+        if self.size == 0 {
+            return;
+        }
+
+        let num_skips = self.size.saturating_sub(k as u32);
+
+        let mut current_head = Rc::clone(self.head.as_ref().unwrap());
+
+        for _ in 0..num_skips {
+            let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
+            current_head = next;
+        }
+
+        let num_to_inc = self.size - num_skips;
+
+        for _ in 0..num_to_inc {
+            current_head.borrow_mut().val += val;
+
+            // go next
+            let next = Rc::clone(&current_head.as_ref().borrow().next.clone().unwrap());
+            current_head = next;
+        }
     }
 }
 
