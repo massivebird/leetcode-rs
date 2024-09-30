@@ -1,12 +1,25 @@
-struct CustomStack {}
+use std::cell::RefCell;
+
+struct CustomStack {
+    head: Option<Box<RefCell<Node>>>,
+    max_size: u32,
+}
+
+struct Node {
+    val: u32,
+    next: Option<Box<RefCell<Node>>>,
+}
 
 /*
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl CustomStack {
-    fn new(maxSize: i32) -> Self {
-        todo!();
+    const fn new(max_size: u32) -> Self {
+        Self {
+            head: None,
+            max_size,
+        }
     }
 
     fn push(&self, x: i32) {
