@@ -2,8 +2,8 @@
 resolver = "2"
 
 members = [
-   "lc-0001-twosum",
-   "lc-0002-addtwonumbers",
-   "lc-0011-mostwater", "lc-0432-all-one-data-structure", "lc-0641-circular-dequeue/lc-0641-circular-dequeue",
-   "lc-1371-longestsubstreven", "lc-1381-design-stack-with-increment",
+   "lc-0001-two-sum",
+   "lc-0002-add-two-numbers",
+   "lc-0011-container-with-most-water", "lc-0432-all-one-data-structure", "lc-0641-circular-dequeue",
+   "lc-1371-longest-substr-even-vowels", "lc-1381-design-stack-with-increment",
 ]
