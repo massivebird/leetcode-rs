@@ -33,3 +33,7 @@ version = "0.1.0"
 [[package]]
 name = "lc-1497-array-pairs-divisible"
 version = "0.1.0"
+
+[[package]]
+name = "lc-2491-teams-of-equal-skill"
+version = "0.1.0"
