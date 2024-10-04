@@ -15,28 +15,34 @@ impl Solution {
     /// + `skill`: even-length collection of player skill levels.
     pub fn divide_players(skill: Vec<i32>) -> i64 {
         let mut skill = skill;
-        skill.sort();
+        skill.sort_unstable();
 
-        let mut teams: Vec<Vec<i32>> = Vec::new();
+        let mut left_idx: usize = 0;
+        let mut right_idx: usize = skill.len() - 1;
 
-        for i in 0..skill.len() / 2 {
-            let member_1 = skill.get(i).unwrap();
-            let member_2 = skill.get(skill.len() - 1 - i).unwrap();
+        let mut chemistry: i64 = 0;
 
-            teams.push(vec![*member_1, *member_2]);
-        }
+        let mut target_sum: Option<i32> = None;
 
-        let target_sum: i32 = teams.first().unwrap().iter().sum();
+        while left_idx < right_idx {
+            let member_1 = skill.get(left_idx).unwrap();
+            let member_2 = skill.get(right_idx).unwrap();
 
-        for team in teams.iter().skip(1) {
-            if team.iter().sum::<i32>() != target_sum {
+            let member_sum = member_1 + member_2;
+
+            if target_sum.is_none() {
+                target_sum = Some(member_sum);
+            } else if target_sum.unwrap() != member_sum {
                 return -1;
             }
+
+            chemistry += i64::from(member_1 * member_2);
+
+            left_idx += 1;
+            right_idx -= 1;
         }
 
-        teams.iter().fold(0i64, |acc, team| {
-            acc + (team.first().unwrap() * team.get(1).unwrap()) as i64
-        })
+        chemistry
     }
 }
 
