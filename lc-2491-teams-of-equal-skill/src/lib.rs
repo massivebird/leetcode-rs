@@ -3,6 +3,16 @@
 struct Solution;
 
 impl Solution {
+    /// Attempts to divide players into `n / 2` teams of equal skill, where
+    /// `n` is equal to the number of participating players, and each team
+    /// consists of two players.
+    ///
+    /// Returns the cumulative "chemistry", equal to the sum of the products
+    /// of each teams' skills.
+    ///
+    /// # Parameters
+    ///
+    /// + `skill`: even-length collection of player skill levels.
     pub fn divide_players(skill: Vec<i32>) -> i64 {
         let mut skill = skill;
         skill.sort();
