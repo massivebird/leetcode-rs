@@ -24,8 +24,8 @@ impl Solution {
 
             // decrement exiting char
             if idx >= s1.len() {
-                let freq = *s2_frequencies.get_mut(idx - s1.len()).unwrap();
-                *s2_frequencies.get_mut(idx - s1.len()).unwrap() = freq.saturating_sub(1);
+                let freq = s2_frequencies.get_mut(idx - s1.len()).unwrap();
+                *freq = freq.saturating_sub(1);
             }
 
             dbg!(s2_frequencies);
