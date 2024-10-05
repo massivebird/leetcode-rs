@@ -19,6 +19,10 @@ name = "lc-0432-all-one-data-structure"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0567-permutation-in-string"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0641-circular-dequeue"
 version = "0.1.0"
 
