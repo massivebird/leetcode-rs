@@ -8,8 +8,8 @@ impl Solution {
         let char_to_idx = |c: char| -> usize { c as usize - 97 };
 
         // These arrays represent the frequency of each character.
-        let s1_frequencies = {
-            let mut arr = [0u32; 26];
+        let s1_freqs = {
+            let mut arr = [0i32; 26];
 
             for c in s1.chars() {
                 *arr.get_mut(char_to_idx(c)).unwrap() += 1;
@@ -17,27 +17,62 @@ impl Solution {
 
             arr
         };
+
         // This frequencies array will be mutated so as to represent an
         // s1-length-long-window of characters in s2.
-        let mut s2_frequencies = [0u32; 26];
+        let mut s2_freqs = [0i32; 26];
 
-        for (idx, s2_char) in s2.char_indices() {
-            // Increment current char's frequency.
-            *s2_frequencies.get_mut(char_to_idx(s2_char)).unwrap() += 1;
+        let mut num_matching_freqs = 0;
 
-            // Decrement the frequency of the character exiting the window.
-            if idx >= s1.len() {
-                let char_idx = char_to_idx(s2.chars().nth(idx - s1.len()).unwrap());
-                let freq = s2_frequencies.get_mut(char_idx).unwrap();
-                *freq = freq.saturating_sub(1);
-            }
+        for char in s2.chars().take(s1.len()) {
+            *s2_freqs.get_mut(char_to_idx(char)).unwrap() += 1;
+        }
 
-            if s2_frequencies == s1_frequencies {
-                return true;
+        for idx in 0..26 {
+            if s1_freqs.get(idx).unwrap() == s2_freqs.get(idx).unwrap() {
+                num_matching_freqs += 1;
             }
         }
 
-        false
+        for (idx, char) in s2.char_indices().skip(s1.len()) {
+            // Checks answer for initial matches AND per loop iteration
+            if num_matching_freqs == 26 {
+                return true;
+            }
+
+            // Increment current char's frequency.
+            let right_freq_idx = char_to_idx(char);
+            *s2_freqs.get_mut(right_freq_idx).unwrap() += 1;
+
+            // Mutate matching freq count after incrementing if char freq either:
+            // 1) Now matches after incrementing, or
+            // 2) Is now no longer matching.
+            if s2_freqs.get(right_freq_idx).unwrap() == s1_freqs.get(right_freq_idx).unwrap() {
+                num_matching_freqs += 1;
+            } else if *s2_freqs.get(right_freq_idx).unwrap()
+                == s1_freqs.get(right_freq_idx).unwrap() + 1
+            {
+                num_matching_freqs -= 1;
+            }
+
+            // Decrement the frequency of the character exiting the window.
+            let left_freq_idx = char_to_idx(s2.chars().nth(idx - s1.len()).unwrap());
+            *s2_freqs.get_mut(left_freq_idx).unwrap() -= 1;
+
+            // Mutate matching freq count after decrementing if char freq either:
+            // 1) Now matches after decrementing, or
+            // 2) Is now no longer matching.
+            if s2_freqs.get(left_freq_idx).unwrap() == s1_freqs.get(left_freq_idx).unwrap() {
+                num_matching_freqs += 1;
+            } else if *s2_freqs.get(left_freq_idx).unwrap()
+                == s1_freqs.get(left_freq_idx).unwrap() - 1
+            {
+                num_matching_freqs -= 1;
+            }
+        }
+
+        // Covers final loop iteration
+        num_matching_freqs == 26
     }
 }
 
@@ -51,5 +86,26 @@ mod tests {
             "ab".to_string(),
             "eidbaooo".to_string()
         ));
+    }
+
+    #[test]
+    fn case_2() {
+        assert!(Solution::check_inclusion(
+            "abc".to_string(),
+            "bbbca".to_string()
+        ));
+    }
+
+    #[test]
+    fn case_3() {
+        assert!(!Solution::check_inclusion(
+            "ab".to_string(),
+            "eidboaoo".to_string()
+        ));
+    }
+
+    #[test]
+    fn case_4() {
+        assert!(Solution::check_inclusion("a".to_string(), "ab".to_string()));
     }
 }
