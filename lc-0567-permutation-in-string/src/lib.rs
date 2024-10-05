@@ -7,6 +7,7 @@ impl Solution {
     pub fn check_inclusion(s1: String, s2: String) -> bool {
         let char_to_idx = |c: char| -> usize { c as usize - 97 };
 
+        // These arrays represent the frequency of each character.
         let s1_frequencies = {
             let mut arr = [0u32; 26];
 
@@ -16,19 +17,20 @@ impl Solution {
 
             arr
         };
+        // This frequencies array will be mutated so as to represent an
+        // s1-length-long-window of characters in s2.
         let mut s2_frequencies = [0u32; 26];
 
         for (idx, s2_char) in s2.char_indices() {
-            // increment this char's freq
+            // Increment current char's frequency.
             *s2_frequencies.get_mut(char_to_idx(s2_char)).unwrap() += 1;
 
-            // decrement exiting char
+            // Decrement the frequency of the character exiting the window.
             if idx >= s1.len() {
-                let freq = s2_frequencies.get_mut(idx - s1.len()).unwrap();
+                let char_idx = char_to_idx(s2.chars().nth(idx - s1.len()).unwrap());
+                let freq = s2_frequencies.get_mut(char_idx).unwrap();
                 *freq = freq.saturating_sub(1);
             }
-
-            dbg!(s2_frequencies);
 
             if s2_frequencies == s1_frequencies {
                 return true;
