@@ -3,7 +3,37 @@ struct Solution {}
 #[allow(dead_code)]
 impl Solution {
     pub fn find_kth_bit(n: i32, k: i32) -> char {
-        todo!();
+        Self::generate_nth_bit_string(n)
+            .chars()
+            .nth(k as usize - 1)
+            .unwrap()
+    }
+
+    fn generate_nth_bit_string(n: i32) -> String {
+        let mut working_str = "0".to_string();
+
+        let reverse_bit = |c: char| match c {
+            '1' => '0',
+            '0' => '1',
+            _ => unreachable!(),
+        };
+
+        for _ in 0..n {
+            working_str.push('1');
+            working_str.push_str(
+                &working_str
+                    .clone()
+                    .chars()
+                    .rev()
+                    .skip(1)
+                    .map(&reverse_bit)
+                    .collect::<String>(),
+            );
+
+            dbg!(&working_str);
+        }
+
+        working_str
     }
 }
 
@@ -12,7 +42,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn spec_examples() {
+        assert_eq!(Solution::find_kth_bit(3, 1), '0');
         assert_eq!(Solution::find_kth_bit(3, 1), '0');
     }
 }
