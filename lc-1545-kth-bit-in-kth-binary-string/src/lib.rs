@@ -29,8 +29,6 @@ impl Solution {
                     .map(&reverse_bit)
                     .collect::<String>(),
             );
-
-            dbg!(&working_str);
         }
 
         working_str
@@ -45,5 +43,10 @@ mod tests {
     fn spec_examples() {
         assert_eq!(Solution::find_kth_bit(3, 1), '0');
         assert_eq!(Solution::find_kth_bit(3, 1), '0');
+    }
+
+    #[test]
+    fn case_1() {
+        assert_eq!(Solution::find_kth_bit(18, 179279), '0');
     }
 }
