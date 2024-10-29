@@ -1,0 +1,6 @@
+[package]
+name = "lc-1545-kth-bit-in-kth-binary-string"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
