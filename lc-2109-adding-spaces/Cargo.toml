@@ -1,0 +1,6 @@
+[package]
+name = "lc-2109-adding-spaces"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
