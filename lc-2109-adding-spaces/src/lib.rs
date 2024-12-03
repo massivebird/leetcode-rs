@@ -14,10 +14,18 @@ mod tests {
     use super::Solution;
 
     #[test]
-    fn it_works() {
+    fn case_1() {
         assert_eq!(
             "Leetcode Helps Me Learn".to_string(),
             Solution::add_spaces("LeetcodeHelpsMeLearn".to_string(), vec![8, 13, 15])
+        );
+    }
+
+    #[test]
+    fn case_2() {
+        assert_eq!(
+            "i code in py thon".to_string(),
+            Solution::add_spaces("icodeinpython".to_string(), vec![1,5,7,9])
         );
     }
 }
