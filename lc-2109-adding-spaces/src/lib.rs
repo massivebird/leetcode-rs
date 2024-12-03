@@ -7,15 +7,19 @@ impl Solution {
     pub fn add_spaces(s: String, spaces: Vec<i32>) -> String {
         let mut result: Vec<char> = Vec::new();
 
-        if spaces.contains(&0) {
+        let mut spaces_iter = spaces.into_iter().peekable();
+
+        if spaces_iter.peek() == Some(&0) {
             result.push(' ');
+            spaces_iter.next();
         }
 
         for (idx, c) in s.char_indices() {
             result.push(c);
 
-            if spaces.contains(&((idx + 1) as i32)) {
+            if spaces_iter.peek() == Some(&(idx as i32 + 1)) {
                 result.push(' ');
+                spaces_iter.next();
             }
         }
 
