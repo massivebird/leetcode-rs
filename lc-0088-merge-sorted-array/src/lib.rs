@@ -17,7 +17,9 @@ impl Solution {
         let mut result = Vec::new();
 
         while nums1_idx < m as usize || nums2_idx < n as usize {
-            if nums1_idx < m as usize && nums1[nums1_idx] <= nums2[nums2_idx] {
+            if nums2_idx >= n as usize
+                || nums1_idx < m as usize && nums1[nums1_idx] <= nums2[nums2_idx]
+            {
                 result.push(nums1[nums1_idx]);
                 nums1_idx += 1;
             } else {
@@ -52,5 +54,15 @@ mod tests {
         Solution::merge(&mut a, 0, &mut b, 1);
 
         assert_eq!(a, vec![1]);
+    }
+
+    #[test]
+    fn case_3() {
+        let mut a = vec![2, 0];
+        let mut b = vec![1];
+
+        Solution::merge(&mut a, 1, &mut b, 1);
+
+        assert_eq!(a, vec![1, 2]);
     }
 }
