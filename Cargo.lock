@@ -27,6 +27,10 @@ name = "lc-0088-merge-sorted-array"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0169-majority-element"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0432-all-one-data-structure"
 version = "0.1.0"
 
