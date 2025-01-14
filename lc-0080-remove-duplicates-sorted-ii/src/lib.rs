@@ -7,14 +7,27 @@ impl Solution {
             return 2;
         }
 
-        let write_idx = 1;
+        let mut write_idx = 2;
 
-        for read_idx in 2..nums.len() {
-            if nums[read_idx] != nums[read_idx - 2] {
-                nums[write_idx] = nums[read_idx];
+        for read_idx in 3..nums.len() {
+            let this = nums[read_idx];
+            // If this is equal to previous two, read next.
+            if this == nums[read_idx - 1] && this == nums[read_idx - 2] {
+                write_idx += 1;
+                continue;
             }
+
+            // If this is equal to one of previous two, inc write idx.
+            if this == nums[read_idx - 1] || this == nums[read_idx - 2] {
+                write_idx += 1;
+                continue;
+            }
+
+            nums[write_idx] = this;
+            write_idx += 1;
         }
 
+        dbg!(nums);
         write_idx as i32
     }
 }
@@ -28,5 +41,12 @@ mod tests {
         let mut nums = vec![1, 1, 1, 2, 2, 3];
         assert_eq!(Solution::remove_duplicates(&mut nums), 5);
         assert!(nums.starts_with(&[1, 1, 2, 2, 3]));
+    }
+
+    #[test]
+    fn case_2() {
+        let mut nums = vec![0, 0, 1, 1, 1, 1, 2, 3, 3];
+        assert_eq!(Solution::remove_duplicates(&mut nums), 7);
+        assert!(nums.starts_with(&[0, 0, 1, 1, 2, 3, 3]));
     }
 }
