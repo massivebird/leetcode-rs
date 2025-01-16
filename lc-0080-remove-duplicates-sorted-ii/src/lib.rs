@@ -7,21 +7,35 @@ impl Solution {
             return 2;
         }
 
-        let mut write_idx = 2;
+        let mut write_idx = 1;
+        let mut latest_uniq: i32 = nums[0];
+        let mut latest_uniq_capped: bool = false;
 
-        for read_idx in 2..nums.len() {
+        for read_idx in 1..nums.len() {
+            if write_idx >= nums.len() {
+                break;
+            }
+
             let this = nums[read_idx];
-            // If this is equal to previous two, read next.
-            if this == nums[read_idx - 1] && this == nums[read_idx - 2] {
+
+            if this != latest_uniq {
+                latest_uniq = this;
+                latest_uniq_capped = false;
+                nums[write_idx] = this;
+                write_idx += 1;
+            }
+
+            if latest_uniq_capped {
                 continue;
             }
 
             nums[write_idx] = this;
+            latest_uniq_capped = true;
             write_idx += 1;
         }
 
-        dbg!(nums);
-        write_idx as i32
+        // dbg!(nums);
+        write_idx as i32 - 1
     }
 }
 
