@@ -9,17 +9,10 @@ impl Solution {
 
         let mut write_idx = 2;
 
-        for read_idx in 3..nums.len() {
+        for read_idx in 2..nums.len() {
             let this = nums[read_idx];
             // If this is equal to previous two, read next.
             if this == nums[read_idx - 1] && this == nums[read_idx - 2] {
-                write_idx += 1;
-                continue;
-            }
-
-            // If this is equal to one of previous two, inc write idx.
-            if this == nums[read_idx - 1] || this == nums[read_idx - 2] {
-                write_idx += 1;
                 continue;
             }
 
