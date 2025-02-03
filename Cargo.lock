@@ -27,7 +27,7 @@ name = "lc-0088-merge-sorted-array"
 version = "0.1.0"
 
 [[package]]
-name = "lc-0169-majority-element"
+name = "lc-0088-remove-duplicates-sorted-ii"
 version = "0.1.0"
 
 [[package]]
