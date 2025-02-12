@@ -31,6 +31,10 @@ name = "lc-0088-remove-duplicates-sorted-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0189-rotate-array"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0432-all-one-data-structure"
 version = "0.1.0"
 
