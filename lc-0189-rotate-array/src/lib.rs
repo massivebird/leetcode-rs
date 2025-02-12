@@ -2,21 +2,14 @@ struct Solution;
 
 impl Solution {
     pub fn rotate(nums: &mut Vec<i32>, k: i32) {
-        let mut hand_og_idx: usize = 0;
-        let mut hand: i32 = nums[0];
+        for _ in 0..k {
+            for i in 0..nums.len() - 1 {
+                let this_val = nums[i];
+                let next_val = nums[i+1];
 
-        // Each value displaces some other value.
-        // Let's move the first one, pick up whatever it
-        // displaces, then move that one.
-        // BUUUUUTTTTT even displacement displaces only a SUBSET
-
-        for _ in 0..nums.len() {
-            let new_idx = (hand_og_idx + k as usize) % nums.len();
-
-            // Swap displaced value with hand
-            std::mem::swap(&mut nums[new_idx], &mut hand);
-            hand_og_idx = new_idx;
-            println!("{nums:?}")
+                nums[i] = next_val;
+                nums[i+1] = this_val;
+            }
         }
     }
 }
