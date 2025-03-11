@@ -2,7 +2,20 @@ struct Solution;
 
 impl Solution {
     pub fn max_profit(prices: Vec<i32>) -> i32 {
-        todo!();
+        let mut best_profit = 0;
+        let mut min = *prices.first().unwrap();
+
+        for val in prices.into_iter().skip(1) {
+            if val < min {
+                min = val;
+            }
+
+            if val > min && val - min > best_profit {
+                best_profit = val - min;
+            }
+        }
+
+        best_profit
     }
 }
 
