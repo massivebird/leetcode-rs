@@ -1,14 +1,12 @@
 struct Solution;
 
 impl Solution {
+    /// Rotates an array `k` times to the right.
     pub fn rotate(nums: &mut Vec<i32>, k: i32) {
         for _ in 0..k {
-            for i in 0..nums.len() - 1 {
-                let this_val = nums[i];
-                let next_val = nums[i+1];
-
-                nums[i] = next_val;
-                nums[i+1] = this_val;
+            let mut held_val = *nums.iter().last().unwrap();
+            for i in 0..nums.len() {
+                std::mem::swap(nums.get_mut(i).unwrap(), &mut held_val);
             }
         }
     }
@@ -27,8 +25,8 @@ mod tests {
 
     #[test]
     fn case_2() {
-        let mut arr = vec![-1,-100,3,99];
+        let mut arr = vec![-1, -100, 3, 99];
         Solution::rotate(&mut arr, 2);
-        assert_eq!(arr, vec![3,99,-1,-100]);
+        assert_eq!(arr, vec![3, 99, -1, -100]);
     }
 }
