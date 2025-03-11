@@ -1,6 +1,11 @@
+#![allow(dead_code)]
 struct Solution;
 
 impl Solution {
+    // Returns the maximum profit to be gained given an array of stock price
+    // over time.
+    //
+    // Stock must be "bought" before it can be "sold".
     pub fn max_profit(prices: Vec<i32>) -> i32 {
         let mut best_profit = 0;
         let mut min = *prices.first().unwrap();
