@@ -4,33 +4,22 @@ struct Solution;
 #[allow(clippy::needless_pass_by_value)]
 impl Solution {
     pub fn max_profit(prices: Vec<i32>) -> i32 {
-        let mut grid: Vec<Vec<i32>> = vec![vec![0; prices.len() + 1]; prices.len() + 1];
+        let mut grid: Vec<i32> = vec![0; prices.len() + 1];
 
         for (i, bought) in prices.iter().enumerate() {
             for (j, sold) in prices.iter().enumerate() {
                 if j < i {
-                    grid[i + 1][j + 1] = grid[i][j + 1];
                     continue;
                 }
 
                 // Best profit up to buying on the current day.
-                let base = grid[i][i];
+                let base = grid[i];
 
-                grid[i + 1][j + 1] = i32::max(sold - bought + base, grid[i][j + 1]);
+                grid[j + 1] = i32::max(sold - bought + base, grid[j + 1]);
             }
         }
 
-        grid[prices.len()][prices.len()]
-    }
-}
-
-fn my_dbg<T: std::fmt::Display>(v: &Vec<Vec<T>>) {
-    for sv in v {
-        for e in sv {
-            print!("{e:3}");
-        }
-
-        println!();
+        grid[prices.len()]
     }
 }
 
