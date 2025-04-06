@@ -23,6 +23,10 @@ name = "lc-0027-remove-element"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0055-jump-game"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0088-merge-sorted-array"
 version = "0.1.0"
 
