@@ -18,6 +18,23 @@ impl Solution {
         //
         // The contrapositive of the above is if we can reach the end, then
         // all indices are reachable.
+        //
+        // ## Derivation
+        //
+        // > In hindsight, it does make intuitive sense. But this is how
+        // > I reached it!
+        //
+        // I flattened a 2D dynamic programming approach.
+        //
+        // In a 2D grid, `x` represents jumping from `nums[x]`. `grid[x][y]`
+        // is 1 if navigable from `x`.
+        //
+        // Solution is `true` if all columns contain a `1` somewhere. Since
+        // this involves totally ignores an axis, we can reduce the dimensionality
+        // of the approach from 2D to 1D. Thus, all spaces must be `1`s, and
+        // therefore, all spaces must be reachable.
+        //
+        // > See: [2 0 6 0 2]
 
         let mut farthest_navigable_idx = 0;
 
