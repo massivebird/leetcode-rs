@@ -2,39 +2,26 @@ struct Solution {}
 
 #[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
+    // Start at `nums[0]`. The value at `nums[x]` represents the maximum distance
+    // you can jump forwards from position `x`.
+    //
+    // Is it possible to jump to the final element in `nums`?
     pub fn can_jump(nums: Vec<i32>) -> bool {
-        if nums.len() <= 1 {
-            return true;
-        }
+        // `navigable[x] = 1` means that index `x` is navigable from some
+        // other index.
+        let mut navigable = vec![0; nums.len()];
+        // Start at the first index.
+        navigable[0] = 1;
 
-        for d in 1..=*nums.first().unwrap() {
-            let dest = d as usize;
-
-            if Self::jump(&nums, dest) {
-                return true;
+        for (idx, max_jump) in nums.into_iter().enumerate() {
+            for jdx in (idx + 1)..=(idx + max_jump as usize) {
+                if let Some(v) = navigable.get_mut(jdx) {
+                    *v = 1;
+                }
             }
         }
 
-        false
-    }
-
-    fn jump(nums: &Vec<i32>, start: usize) -> bool {
-        // If we can max jump OOB, then we can make it to the end.
-        let Some(&max_jump) = nums.get(start) else {
-            return true;
-        };
-
-        if start as i32 + max_jump >= nums.len() as i32 - 1 {
-            return true;
-        }
-
-        for d in 1..=max_jump {
-            if Self::jump(nums, start + d as usize) {
-                return true;
-            }
-        }
-
-        false
+        navigable.iter().all(|v| v == &1)
     }
 }
 
