@@ -1,9 +1,27 @@
 struct Solution {}
 
-#[allow(dead_code)]
+#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
+    /// My less-than-idiomatic dynamic programming approach.
+    ///
+    /// Record and optionally overwrite minimum possible jumps to each position.
     pub fn jump(nums: Vec<i32>) -> i32 {
-        todo!()
+        let mut t = vec![0; nums.len()];
+
+        for (i, jump_capacity) in nums.iter().enumerate() {
+            for j in ((i + 1)..).take(*jump_capacity as usize) {
+                if j >= nums.len() {
+                    continue;
+                }
+
+                let candidate_min = t[i] + 1;
+                if j <= i + *jump_capacity as usize && t[j] == 0 || candidate_min < t[j] {
+                    t[j] = candidate_min;
+                }
+            }
+        }
+
+        t[nums.len() - 1]
     }
 }
 
