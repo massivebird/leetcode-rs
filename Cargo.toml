@@ -15,6 +15,7 @@ members = [
    "lc-0122-best-time-to-buy-ii",
    "lc-0169-majority-element",
    "lc-0189-rotate-array",
+   "lc-0274-h-index",
    "lc-0432-all-one-data-structure",
    "lc-0567-permutation-in-string",
    "lc-0641-circular-dequeue",
