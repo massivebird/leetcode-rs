@@ -5,5 +5,5 @@ members = [
    "lc-0001-two-sum",
    "lc-0002-add-two-numbers",
    "lc-0011-container-with-most-water", "lc-0026-remove-duplicates-sorted", "lc-0027-remove-element", "lc-0088-merge-sorted-array", "lc-0080-remove-duplicates-sorted-ii", "lc-0432-all-one-data-structure", "lc-0567-permutation-in-string", "lc-0641-circular-dequeue",
-   "lc-1371-longest-substr-even-vowels", "lc-1381-design-stack-with-increment", "lc-1497-array-pairs-divisible", "lc-1545-kth-bit-in-kth-binary-string", "lc-2109-adding-spaces", "lc-2491-teams-of-equal-skill", "lc-0189-rotate-array", "lc-0121-best-time-to-buy", "lc-0122-best-time-to-buy-ii", "lc-0055-jump-game",
+   "lc-1371-longest-substr-even-vowels", "lc-1381-design-stack-with-increment", "lc-1497-array-pairs-divisible", "lc-1545-kth-bit-in-kth-binary-string", "lc-2109-adding-spaces", "lc-2491-teams-of-equal-skill", "lc-0189-rotate-array", "lc-0121-best-time-to-buy", "lc-0122-best-time-to-buy-ii", "lc-0055-jump-game", "lc-0045-jump-game-ii",
 ]
