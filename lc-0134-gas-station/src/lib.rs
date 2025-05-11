@@ -3,7 +3,40 @@ struct Solution {}
 #[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
-        todo!()
+        let costs = cost;
+
+        let mut tank: i32 = 0;
+
+        'outer: for (idx, &cost) in costs.iter().enumerate() {
+            if cost > gas[idx] {
+                tank = 0;
+                continue;
+            }
+
+            tank += gas[idx];
+            tank -= costs[idx];
+
+            for (jdx, &cost) in costs
+                .iter()
+                .enumerate()
+                .cycle()
+                .skip(idx + 1)
+                .take(costs.len())
+            {
+                tank += gas[jdx];
+
+                if cost > tank {
+                    tank = 0;
+                    continue 'outer;
+                }
+
+                tank -= costs[jdx];
+            }
+
+            return idx as i32;
+        }
+
+        -1
     }
 }
 
