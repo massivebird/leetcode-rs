@@ -1,9 +1,9 @@
-use std::collections::HashMap;
 use rand::Rng;
+use std::collections::HashSet;
 
+#[derive(Default)]
 struct RandomizedSet {
-    exists: HashMap<i32, bool>,
-    vals: Vec<i32>,
+    hash_set: HashSet<i32>,
 }
 
 /**
@@ -13,31 +13,22 @@ struct RandomizedSet {
 #[allow(dead_code, clippy::missing_const_for_fn)]
 impl RandomizedSet {
     fn new() -> Self {
-        Self {
-            exists: HashMap::new(),
-            vals: Vec::new(),
-        }
+        Self::default()
     }
 
     fn insert(&mut self, val: i32) -> bool {
-        if self.exists.get(&val).is_some_and(|b| *b) {
+        if self.hash_set.contains(&val) {
             return false;
         }
 
-        self.exists.insert(val, true);
-        self.vals.push(val);
+        self.hash_set.insert(val);
 
         true
     }
 
     fn remove(&mut self, val: i32) -> bool {
-        if self.exists.get(&val).is_some_and(|b| *b) {
-            *self.exists.get_mut(&val).unwrap() = false;
-
-            let pos = self.vals.iter().position(|v| *v == val).unwrap();
-
-            self.vals.remove(pos);
-
+        if self.hash_set.contains(&val) {
+            self.hash_set.remove(&val);
             return true;
         }
 
@@ -46,8 +37,8 @@ impl RandomizedSet {
 
     fn get_random(&self) -> i32 {
         let mut rng = rand::thread_rng();
-        let idx = rng.gen_range(0..self.vals.len());
-        self.vals[idx]
+        let idx = rng.gen_range(0..self.hash_set.len());
+        *self.hash_set.iter().nth(idx).unwrap()
     }
 }
 
