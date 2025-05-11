@@ -5,38 +5,32 @@ impl Solution {
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
         let costs = cost;
 
+        // Track total cost in the arena.
+        let mut global_cost = 0;
+        // Track total amount of gas in the arena.
+        let mut global_gas = 0;
+
         let mut tank: i32 = 0;
+        let mut start_idx = 0;
 
-        'outer: for (idx, &cost) in costs.iter().enumerate() {
-            if cost > gas[idx] {
+        for idx in 0..costs.len() {
+            global_cost += costs[idx];
+            global_gas += gas[idx];
+
+            tank = tank + gas[idx] - costs[idx];
+
+            if tank < 0 {
+                // Current start index could not support the trip.
+                start_idx = idx + 1;
                 tank = 0;
-                continue;
             }
-
-            tank += gas[idx];
-            tank -= costs[idx];
-
-            for (jdx, &cost) in costs
-                .iter()
-                .enumerate()
-                .cycle()
-                .skip(idx + 1)
-                .take(costs.len())
-            {
-                tank += gas[jdx];
-
-                if cost > tank {
-                    tank = 0;
-                    continue 'outer;
-                }
-
-                tank -= costs[jdx];
-            }
-
-            return idx as i32;
         }
 
-        -1
+        if global_gas < global_cost || start_idx > costs.len() || tank < 0 {
+            return -1;
+        }
+
+        start_idx as i32
     }
 }
 
