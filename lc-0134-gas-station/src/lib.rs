@@ -57,4 +57,11 @@ mod tests {
         let cost = vec![3, 4, 3];
         assert_eq!(Solution::can_complete_circuit(gas, cost), -1);
     }
+
+    #[test]
+    fn case_2() {
+        let gas = vec![0, 0, 0, 2];
+        let cost = vec![0, 0, 1, 0];
+        assert_eq!(Solution::can_complete_circuit(gas, cost), 3);
+    }
 }
