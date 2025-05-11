@@ -64,6 +64,10 @@ name = "lc-0122-best-time-to-buy-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0134-gas-station"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0169-majority-element"
 version = "0.1.0"
 
