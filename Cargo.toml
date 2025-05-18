@@ -14,6 +14,7 @@ members = [
    "lc-0121-best-time-to-buy",
    "lc-0122-best-time-to-buy-ii",
    "lc-0134-gas-station",
+   "lc-0135-candy",
    "lc-0169-majority-element",
    "lc-0189-rotate-array",
    "lc-0238-product-except-self",
