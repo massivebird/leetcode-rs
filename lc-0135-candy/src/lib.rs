@@ -8,8 +8,11 @@ impl Solution {
 
         let mut prev_trend = Ordering::Equal;
         let mut streak: i32 = 0;
-        let mut last_greater_val: i32 = 0;
-        let mut last_was_greater = true;
+
+        // These two are used when evaluating a streak of `Less` immediately after
+        // a `Greater` in order to keep that `Greater` a local maximum.
+        let mut latest_greater_val: i32 = 0;
+        let mut less_streak_after_greater = true;
 
         for (i, rating) in ratings.iter().enumerate().skip(1) {
             ans += 1;
@@ -21,36 +24,33 @@ impl Solution {
                     streak += 1;
                     ans += streak;
 
-                    if last_was_greater && streak >= last_greater_val - 1 && last_greater_val > 1 {
+                    if less_streak_after_greater
+                        && streak >= latest_greater_val - 1
+                        && latest_greater_val > 1
+                    {
                         // dbg!("additional");
                         ans += 1;
                     }
                 }
-                (Ordering::Less, Ordering::Equal) => (),
-                (Ordering::Less, Ordering::Greater) => {
+                (Ordering::Less | Ordering::Equal, Ordering::Greater) => {
                     streak = 1;
                     ans += 1;
                 }
                 (Ordering::Equal, Ordering::Less) => {
                     streak = 1;
-                    last_was_greater = false;
+                    less_streak_after_greater = false;
                     ans += streak;
                 }
-                (Ordering::Equal, Ordering::Equal) => (),
-                (Ordering::Equal, Ordering::Greater) => {
-                    streak = 1;
-                    ans += 1;
-                }
                 (Ordering::Greater, Ordering::Less) => {
-                    last_greater_val = streak + 1;
-                    last_was_greater = true;
+                    latest_greater_val = streak + 1;
+                    less_streak_after_greater = true;
                     streak = 0;
                 }
-                (Ordering::Greater, Ordering::Equal) => (),
                 (Ordering::Greater, Ordering::Greater) => {
                     streak += 1;
                     ans += streak;
                 }
+                _ => (),
             }
 
             // dbg!(this_trend);
