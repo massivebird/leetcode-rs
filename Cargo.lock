@@ -32,6 +32,10 @@ name = "lc-0011-mostwater"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0013-roman-to-int"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0026-remove-duplicates-sorted"
 version = "0.1.0"
 
