@@ -7,6 +7,7 @@ members = [
    "lc-0011-container-with-most-water",
    "lc-0012-int-to-roman",
    "lc-0013-roman-to-int",
+   "lc-0014-longest-common-prefix",
    "lc-0026-remove-duplicates-sorted",
    "lc-0027-remove-element",
    "lc-0045-jump-game-ii",
