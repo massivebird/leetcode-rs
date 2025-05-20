@@ -1,0 +1,6 @@
+[package]
+name = "lc-0058-length-of-last-word"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
