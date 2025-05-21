@@ -4,6 +4,7 @@ resolver = "2"
 members = [
    "lc-0001-two-sum",
    "lc-0002-add-two-numbers",
+   "lc-0006-zigzag-string",
    "lc-0011-container-with-most-water",
    "lc-0012-int-to-roman",
    "lc-0013-roman-to-int",

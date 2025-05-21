@@ -28,6 +28,10 @@ name = "lc-0002-addtwonumbers"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0006-zigzag-string"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0011-mostwater"
 version = "0.1.0"
 
