@@ -11,6 +11,7 @@ members = [
    "lc-0014-longest-common-prefix",
    "lc-0026-remove-duplicates-sorted",
    "lc-0027-remove-element",
+   "lc-0028-first-occurrence-in-str",
    "lc-0045-jump-game-ii",
    "lc-0055-jump-game",
    "lc-0058-length-of-last-word",

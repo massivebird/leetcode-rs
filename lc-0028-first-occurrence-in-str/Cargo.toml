@@ -1,0 +1,6 @@
+[package]
+name = "lc-0028-first-occurrence-in-str"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
