@@ -72,6 +72,10 @@ name = "lc-0058-length-of-last-word"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0068-text-justification"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0088-merge-sorted-array"
 version = "0.1.0"
 

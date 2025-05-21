@@ -15,6 +15,7 @@ members = [
    "lc-0045-jump-game-ii",
    "lc-0055-jump-game",
    "lc-0058-length-of-last-word",
+   "lc-0068-text-justification",
    "lc-0080-remove-duplicates-sorted-ii",
    "lc-0088-merge-sorted-array",
    "lc-0121-best-time-to-buy",
