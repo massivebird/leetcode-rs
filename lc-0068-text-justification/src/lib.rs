@@ -11,16 +11,16 @@ impl Solution {
             let line_width = acc_len(lines.last().unwrap());
 
             let num_words = lines.last().unwrap().len();
-            let num_spaces = max_width as usize - line_width;
+            let num_spaces = usize::try_from(max_width).unwrap() - line_width;
 
             // num_spaces must not exceed (num_words - 1)
 
-            dbg!(&lines);
-            dbg!(&num_spaces);
+            // dbg!(&lines);
+            // dbg!(&num_spaces);
             if num_spaces > num_words
                 && num_spaces > word.len()
                 && num_spaces - word.len() >= num_words
-                && num_spaces > word.len() + 1
+                && num_spaces > word.len()
             {
                 lines.last_mut().unwrap().push(word);
             } else {
@@ -30,16 +30,16 @@ impl Solution {
 
         let mut ans_buf: Vec<String> = Vec::new();
 
-        for line in lines.iter().take(lines.len() - 1) {
+        for line in lines.iter().take(lines.len() - 1).filter(|v| !v.is_empty()) {
             let mut line_buf = String::new();
 
             let line_width = acc_len(line);
 
-            let total_spaces = max_width as usize - line_width;
+            let total_spaces = usize::try_from(max_width).unwrap() - line_width;
 
             let num_words = line.len();
 
-            if num_words == 1 {
+            if num_words <= 1 {
                 ans_buf.push(format!("{}{}", line[0], " ".repeat(total_spaces)));
                 continue;
             }
@@ -74,7 +74,7 @@ impl Solution {
 
         ans_buf.push(format!(
             "{last_line}{}",
-            " ".repeat(max_width as usize - last_line.len())
+            " ".repeat(usize::try_from(max_width).unwrap() - last_line.len())
         ));
 
         ans_buf
@@ -188,5 +188,16 @@ mod tests {
         let output: Vec<String> = output.iter().map(ToString::to_string).collect();
 
         assert_eq!(Solution::full_justify(words, 17), output);
+    }
+
+    #[test]
+    fn case_4() {
+        let words = ["Listen", "to", "many,", "speak", "to", "a", "few."];
+        let words: Vec<String> = words.iter().map(ToString::to_string).collect();
+
+        let output = ["Listen", "to    ", "many, ", "speak ", "to   a", "few.  "];
+        let output: Vec<String> = output.iter().map(ToString::to_string).collect();
+
+        assert_eq!(Solution::full_justify(words, 6), output);
     }
 }
