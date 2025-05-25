@@ -3,7 +3,17 @@ struct Solution;
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn single_number(nums: Vec<i32>) -> i32 {
-        todo!()
+        let mut pocket: Vec<i32> = vec![];
+
+        for n in nums {
+            if let Some(pos) = pocket.iter().position(|o| *o == n) {
+                pocket.remove(pos);
+            } else {
+                pocket.push(n);
+            }
+        }
+
+        pocket[0]
     }
 }
 
