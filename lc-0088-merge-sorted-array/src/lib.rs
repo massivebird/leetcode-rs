@@ -1,5 +1,11 @@
 struct Solution;
 
+#[allow(
+    unused,
+    clippy::needless_pass_by_value,
+    clippy::ptr_arg,
+    clippy::needless_pass_by_ref_mut
+)]
 impl Solution {
     pub fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
         if m > 0 && n == 0 {
@@ -7,7 +13,7 @@ impl Solution {
         }
 
         if m == 0 && n > 0 {
-            *nums1 = nums2.to_vec();
+            nums1.clone_from(nums2);
             return;
         }
 
@@ -16,10 +22,12 @@ impl Solution {
 
         let mut result = Vec::new();
 
-        while nums1_idx < m as usize || nums2_idx < n as usize {
-            if nums2_idx >= n as usize
-                || nums1_idx < m as usize && nums1[nums1_idx] <= nums2[nums2_idx]
-            {
+        let m = usize::try_from(m).unwrap();
+        let n = usize::try_from(n).unwrap();
+
+        while nums1_idx < m || nums2_idx < n {
+            #[allow(clippy::suspicious_operation_groupings)]
+            if nums2_idx >= n || nums1_idx < m && nums1[nums1_idx] <= nums2[nums2_idx] {
                 result.push(nums1[nums1_idx]);
                 nums1_idx += 1;
             } else {

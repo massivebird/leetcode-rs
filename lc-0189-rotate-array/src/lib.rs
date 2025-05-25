@@ -1,5 +1,6 @@
 struct Solution;
 
+#[allow(unused, clippy::needless_pass_by_value, clippy::ptr_arg)]
 impl Solution {
     /// Rotates an array `k` times to the right.
     pub fn rotate(nums: &mut Vec<i32>, k: i32) {

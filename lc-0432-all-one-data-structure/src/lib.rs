@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::collections::hash_map::Entry::{Occupied, Vacant};
 use std::collections::{HashMap, HashSet};
 
@@ -36,7 +38,7 @@ impl AllOne {
                 if self
                     .count_to_str
                     .get(count)
-                    .is_some_and(|set| set.is_empty())
+                    .is_some_and(std::collections::HashSet::is_empty)
                 {
                     self.count_to_str.remove_entry(count);
                 }
@@ -68,7 +70,7 @@ impl AllOne {
             if self
                 .count_to_str
                 .get(&1)
-                .is_some_and(|set| set.is_empty())
+                .is_some_and(std::collections::HashSet::is_empty)
             {
                 self.count_to_str.remove_entry(&1);
             }
@@ -87,7 +89,7 @@ impl AllOne {
             if self
                 .count_to_str
                 .get(count)
-                .is_some_and(|set| set.is_empty())
+                .is_some_and(std::collections::HashSet::is_empty)
             {
                 self.count_to_str.remove_entry(count);
             }
@@ -108,7 +110,7 @@ impl AllOne {
                 .clone();
         }
 
-        "".to_string()
+        String::new()
     }
 
     fn get_min_key(&self) -> String {
@@ -123,7 +125,7 @@ impl AllOne {
                 .clone();
         }
 
-        "".to_string()
+        String::new()
     }
 }
 

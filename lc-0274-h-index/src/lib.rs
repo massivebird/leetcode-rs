@@ -8,19 +8,17 @@ impl Solution {
         let mut t = vec![0; total_citations + 1];
 
         let mut candidate_index = 0;
-        let mut candidate_count = 0;
 
-        for c in citations {
-            for i in (1..=c as usize).take(usize::min(c as usize, total_citations)) {
+        for c in citations.iter().map(|v| usize::try_from(*v).unwrap()) {
+            for i in (1..=c).take(usize::min(c, total_citations)) {
                 t[i] += 1;
                 if t[i] >= i && i > candidate_index {
                     candidate_index = i;
-                    candidate_count = t[i];
                 }
             }
         }
 
-        candidate_index as i32
+        i32::try_from(candidate_index).unwrap()
     }
 }
 

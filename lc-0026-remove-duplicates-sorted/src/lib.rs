@@ -1,5 +1,6 @@
 struct Solution;
 
+#[allow(unused)]
 impl Solution {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         if nums.is_empty() {
@@ -21,7 +22,7 @@ impl Solution {
 
         *nums = new_nums;
 
-        num_uniques as i32
+        i32::try_from(num_uniques).unwrap()
     }
 }
 

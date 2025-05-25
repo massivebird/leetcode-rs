@@ -17,7 +17,7 @@ impl Solution {
         for (idx, c) in s.char_indices() {
             result.push(c);
 
-            if spaces_iter.peek() == Some(&(idx as i32 + 1)) {
+            if spaces_iter.peek() == Some(&(i32::try_from(idx).unwrap() + 1)) {
                 result.push(' ');
                 spaces_iter.next();
             }

@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 struct Solution;
 
+#[allow(unused)]
 impl Solution {
     // KEY: assume some majority element always exists.
     // We can quit as soon as a value's freq exceeds floor(n/2).

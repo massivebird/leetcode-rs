@@ -1,5 +1,6 @@
 struct Solution;
 
+#[allow(unused)]
 impl Solution {
     pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
         let mut new_nums: Vec<i32> = Vec::new();

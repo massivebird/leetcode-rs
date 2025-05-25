@@ -1,10 +1,11 @@
 struct Solution;
 
+#[allow(unused, clippy::needless_pass_by_value, clippy::ptr_arg)]
 impl Solution {
     // MUST perform operations in place without another array
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         if nums.len() <= 2 {
-            return nums.len() as i32;
+            return i32::try_from(nums.len()).unwrap();
         }
 
         let mut write_idx = 2;
@@ -13,12 +14,11 @@ impl Solution {
             if nums[read_idx] != nums[write_idx - 2] {
                 nums[write_idx] = nums[read_idx];
                 write_idx += 1;
-                continue;
             }
         }
 
         // dbg!(&nums);
-        write_idx as i32
+        i32::try_from(write_idx).unwrap()
     }
 }
 
