@@ -26,6 +26,7 @@ members = [
    "lc-0151-reverse-words",
    "lc-0169-majority-element",
    "lc-0189-rotate-array",
+   "lc-0191-number-of-set-bits",
    "lc-0238-product-except-self",
    "lc-0274-h-index",
    "lc-0380-insert-delete-getrandom-o1",
