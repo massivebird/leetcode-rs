@@ -3,17 +3,18 @@ struct Solution;
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn single_number(nums: Vec<i32>) -> i32 {
-        let mut pocket: Vec<i32> = vec![];
+        // Big idea:
+        // (1) Each possible value has a unique bit pattern.
+        // (2) A XOR A cancels itself out and equals zero.
+        // (3) A XOR B XOR A equals B.
+
+        let mut screen: i32 = 0;
 
         for n in nums {
-            if let Some(pos) = pocket.iter().position(|o| *o == n) {
-                pocket.remove(pos);
-            } else {
-                pocket.push(n);
-            }
+            screen ^= n;
         }
 
-        pocket[0]
+        screen
     }
 }
 
