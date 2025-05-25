@@ -104,6 +104,10 @@ name = "lc-0135-candy"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0136-single-number"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0151-reverse-words"
 version = "0.1.0"
 
