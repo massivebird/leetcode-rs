@@ -7,17 +7,12 @@ impl Solution {
         let mut r: usize = numbers.len() - 1;
 
         while l <= r {
-            let l_val = numbers[l];
-            let r_val = numbers[r];
-
-            let sum = l_val + r_val;
-
-            if sum == target {
-                return vec![i32::try_from(l + 1).unwrap(), i32::try_from(r + 1).unwrap()];
-            } else if sum < target {
-                l += 1;
-            } else {
-                r -= 1;
+            match (numbers[l] + numbers[r]).cmp(&target) {
+                std::cmp::Ordering::Equal => {
+                    return vec![i32::try_from(l + 1).unwrap(), i32::try_from(r + 1).unwrap()];
+                }
+                std::cmp::Ordering::Less => l += 1,
+                std::cmp::Ordering::Greater => r -= 1,
             }
         }
 
