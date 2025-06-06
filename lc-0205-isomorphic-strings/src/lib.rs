@@ -6,22 +6,25 @@ struct Solution;
 impl Solution {
     // Input strings are equal in length.
     pub fn is_isomorphic(s: String, t: String) -> bool {
-        let mut map: HashMap<char, char> = HashMap::new();
+        let mut src_target: HashMap<char, char> = HashMap::new();
+        let mut target_src: HashMap<char, char> = HashMap::new();
 
         for (idx, src_char) in s.char_indices() {
             let target_char = t.chars().nth(idx).unwrap();
 
-            match map.get_mut(&src_char) {
-                Some(tc) if *tc != target_char => return false,
-                Some(_) => (),
-                None => {
-                    // Mapping must be one-to-one.
-                    if map.values().any(|c| *c == target_char) {
-                        return false;
-                    }
+            // Check if src is mapped to a different target.
+            let src_already_mapped = src_target
+                .insert(src_char, target_char)
+                .is_some_and(|t| t != target_char);
 
-                    let _ = map.insert(src_char, target_char);
-                }
+            // Mapping must be one-to-one; all src chars must map to
+            // unique targets.
+            let target_is_taken = target_src
+                .insert(target_char, src_char)
+                .is_some_and(|s| s != src_char);
+
+            if src_already_mapped || target_is_taken {
+                return false;
             }
         }
 
