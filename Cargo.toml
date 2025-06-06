@@ -31,6 +31,7 @@ members = [
    "lc-0238-product-except-self",
    "lc-0274-h-index",
    "lc-0380-insert-delete-getrandom-o1",
+   "lc-0383-ransom-note",
    "lc-0432-all-one-data-structure",
    "lc-0567-permutation-in-string",
    "lc-0641-circular-dequeue",

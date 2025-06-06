@@ -143,6 +143,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "lc-0383-ransom-note"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0432-all-one-data-structure"
 version = "0.1.0"
 
