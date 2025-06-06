@@ -1,20 +1,19 @@
-use std::collections::HashMap;
-
 struct Solution;
 
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     // Both inputs consist only of lowercase letters.
     pub fn can_construct(ransom_note: String, magazine: String) -> bool {
-        let mut freq: HashMap<char, u32> = HashMap::new();
+        let mut freq: [u32; 26] = [0; 26];
+
+        let char_to_idx = |c: char| (c as u8 - 97) as usize;
 
         for c in magazine.chars() {
-            freq.entry(c).and_modify(|v| *v += 1).or_insert(1);
+            freq[char_to_idx(c)] += 1;
         }
 
         for c in ransom_note.chars() {
-            let Some(v) = freq.get_mut(&c) else {
-                // This char isn't in the magazine at all.
+            let Some(v) = freq.get_mut(char_to_idx(c)) else {
                 return false;
             };
 
