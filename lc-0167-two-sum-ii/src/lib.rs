@@ -3,7 +3,25 @@ struct Solution;
 #[allow(clippy::needless_pass_by_value, unused)]
 impl Solution {
     pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
-        todo!()
+        let mut l: usize = 0;
+        let mut r: usize = numbers.len() - 1;
+
+        while l <= r {
+            let l_val = numbers[l];
+            let r_val = numbers[r];
+
+            let sum = l_val + r_val;
+
+            if sum == target {
+                return vec![i32::try_from(l + 1).unwrap(), i32::try_from(r + 1).unwrap()];
+            } else if sum < target {
+                l += 1;
+            } else {
+                r -= 1;
+            }
+        }
+
+        unreachable!()
     }
 }
 
@@ -17,5 +35,23 @@ mod tests {
         let target = 9;
 
         assert_eq!(Solution::two_sum(numbers, target), vec![1, 2]);
+    }
+
+    #[test]
+    fn case_1() {
+        let numbers = vec![2, 3, 4];
+        let target = 6;
+        let ans = vec![1, 3];
+
+        assert_eq!(Solution::two_sum(numbers, target), ans);
+    }
+
+    #[test]
+    fn case_2() {
+        let numbers = vec![-1, 0];
+        let target = -1;
+        let ans = vec![1, 2];
+
+        assert_eq!(Solution::two_sum(numbers, target), ans);
     }
 }
