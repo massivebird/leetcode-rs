@@ -24,6 +24,7 @@ members = [
    "lc-0134-gas-station",
    "lc-0135-candy", "lc-0136-single-number",
    "lc-0151-reverse-words",
+   "lc-0167-two-sum-ii",
    "lc-0169-majority-element",
    "lc-0189-rotate-array",
    "lc-0191-number-of-set-bits",

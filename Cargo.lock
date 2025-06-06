@@ -112,6 +112,10 @@ name = "lc-0151-reverse-words"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0167-two-sum-ii"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0169-majority-element"
 version = "0.1.0"
 
