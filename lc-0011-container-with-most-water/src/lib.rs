@@ -1,6 +1,7 @@
 struct Solution {}
 
 impl Solution {
+    #[allow(unused, clippy::needless_pass_by_value)]
     pub fn max_area(height: Vec<i32>) -> i32 {
         let mut left_idx = 0;
         let mut right_idx = height.len() - 1;
@@ -8,7 +9,7 @@ impl Solution {
         let mut record_area = 0;
 
         while left_idx < right_idx {
-            let width: i32 = (right_idx - left_idx) as i32;
+            let width: i32 = i32::try_from(right_idx - left_idx).unwrap();
 
             let left_height = height.get(left_idx).unwrap();
             let right_height = height.get(right_idx).unwrap();
@@ -27,10 +28,6 @@ impl Solution {
 
         record_area
     }
-}
-
-fn main() {
-    println!("{}", Solution::max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]));
 }
 
 #[cfg(test)]

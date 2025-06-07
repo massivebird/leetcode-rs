@@ -24,7 +24,7 @@ name = "lc-0001-twosum"
 version = "0.1.0"
 
 [[package]]
-name = "lc-0002-addtwonumbers"
+name = "lc-0002-add-two-numbers"
 version = "0.1.0"
 
 [[package]]
