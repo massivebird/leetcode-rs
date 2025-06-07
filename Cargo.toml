@@ -22,6 +22,7 @@ members = [
    "lc-0088-merge-sorted-array",
    "lc-0121-best-time-to-buy",
    "lc-0122-best-time-to-buy-ii",
+   "lc-0125-valid-palindrome",
    "lc-0134-gas-station",
    "lc-0135-candy", "lc-0136-single-number",
    "lc-0151-reverse-words",
