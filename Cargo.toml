@@ -31,6 +31,7 @@ members = [
    "lc-0205-isomorphic-strings",
    "lc-0238-product-except-self",
    "lc-0274-h-index",
+   "lc-0290-word-pattern",
    "lc-0380-insert-delete-getrandom-o1",
    "lc-0383-ransom-note",
    "lc-0432-all-one-data-structure",

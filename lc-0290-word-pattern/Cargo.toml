@@ -1,0 +1,6 @@
+[package]
+name = "lc-0290-word-pattern"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
