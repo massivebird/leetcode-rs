@@ -144,6 +144,10 @@ name = "lc-0205-isomorphic-strings"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0228-summary-ranges"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0238-product-except-self"
 version = "0.1.0"
 

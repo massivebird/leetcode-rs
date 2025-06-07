@@ -32,6 +32,7 @@ members = [
    "lc-0189-rotate-array",
    "lc-0191-number-of-set-bits",
    "lc-0205-isomorphic-strings",
+   "lc-0228-summary-ranges",
    "lc-0238-product-except-self",
    "lc-0242-valid-anagram",
    "lc-0274-h-index",
