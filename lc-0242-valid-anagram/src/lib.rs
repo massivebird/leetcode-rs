@@ -6,7 +6,8 @@ impl Solution {
     pub fn is_anagram(s: String, t: String) -> bool {
         use std::collections::HashMap;
 
-        let mut freqs = [0u32; 26];
+        // Use signed integers to avoid checking for underflow.
+        let mut freqs = [0i32; 26];
 
         let char_to_idx = |c: char| (c as u8 - 97) as usize;
 
@@ -16,21 +17,11 @@ impl Solution {
 
         for c in t.chars() {
             unsafe {
-                let val = freqs.get_unchecked_mut(char_to_idx(c));
-
-                if *val == 0 {
-                    return false;
-                }
-
-                *val -= 1;
+                *freqs.get_unchecked_mut(char_to_idx(c)) -= 1;
             }
         }
 
-        if freqs.iter().any(|v| *v != 0) {
-            return false;
-        }
-
-        true
+        freqs == [0; 26]
     }
 }
 
