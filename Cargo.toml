@@ -37,6 +37,7 @@ members = [
    "lc-0290-word-pattern",
    "lc-0380-insert-delete-getrandom-o1",
    "lc-0383-ransom-note",
+   "lc-0392-is-subsequence",
    "lc-0432-all-one-data-structure",
    "lc-0567-permutation-in-string",
    "lc-0641-circular-dequeue",
