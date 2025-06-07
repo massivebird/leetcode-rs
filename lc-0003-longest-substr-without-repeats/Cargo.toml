@@ -1,0 +1,6 @@
+[package]
+name = "lc-0003-longest-substr-without-repeats"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

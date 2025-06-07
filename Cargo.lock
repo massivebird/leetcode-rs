@@ -28,6 +28,10 @@ name = "lc-0002-add-two-numbers"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0003-longest-substr-without-repeats"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0006-zigzag-string"
 version = "0.1.0"
 
