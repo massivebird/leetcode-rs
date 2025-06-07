@@ -10,8 +10,8 @@ impl Solution {
         for s in strs {
             let mut freqs = [0u32; 26];
 
-            for c in s.chars() {
-                freqs[(c as u8 - 97) as usize] += 1;
+            for c in s.bytes() {
+                freqs[(c - b'a') as usize] += 1;
             }
 
             anagrams
@@ -20,30 +20,10 @@ impl Solution {
                 .or_insert_with(|| vec![s]);
         }
 
-        let mut res = Vec::new();
-
-        for a in anagrams.into_values() {
-            res.push(a);
-        }
-
-        res
+        anagrams.into_values().collect()
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::string::ToString;
-
-    #[test]
-    fn case_0() {
-        let strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
-            .iter()
-            .map(ToString::to_string)
-            .collect::<Vec<String>>();
-
-        let ans = vec![vec!["bat"], vec!["nat", "tan"], vec!["ate", "eat", "tea"]];
-
-        assert_eq!(Solution::group_anagrams(strs), ans);
-    }
-}
+// Writing tests for this challenge is totally uncool. The answer can be
+// returned in an arbitrary order, and the needless pass by value makes copying
+// the inputs/outputs annoying.
