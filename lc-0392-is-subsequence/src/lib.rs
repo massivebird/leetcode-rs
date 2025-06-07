@@ -3,7 +3,24 @@ struct Solution;
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn is_subsequence(s: String, t: String) -> bool {
-        todo!()
+        let mut s_chars = s.chars();
+        let mut t_chars = t.chars();
+
+        'outer: loop {
+            let Some(s_next) = s_chars.next() else {
+                break;
+            };
+
+            loop {
+                match t_chars.next() {
+                    Some(c) if c == s_next => continue 'outer,
+                    Some(_) => (),
+                    None => return false,
+                }
+            }
+        }
+
+        true
     }
 }
 
