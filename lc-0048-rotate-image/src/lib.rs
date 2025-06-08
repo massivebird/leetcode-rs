@@ -1,3 +1,7 @@
+// Rotate the n x n 2D matrix 90 degrees clockwise in-place.
+
+// NEEDS MEMORY OPTIMIZATION actually it's amazing in the runtime category wow
+
 struct Solution;
 
 #[allow(unused, clippy::needless_pass_by_ref_mut, clippy::ptr_arg)]
@@ -55,8 +59,6 @@ impl Solution {
 
                 tmp
             };
-
-            dbg!(&layer_indices);
 
             for _ in 0..rotations {
                 let mut hand = *from_flat_idx_mut!(layer_indices[0]);
