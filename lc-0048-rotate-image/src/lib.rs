@@ -34,7 +34,7 @@ impl Solution {
 
                 // Right-middle
                 for i in 1..=edge_length.saturating_sub(2) {
-                    tmp.push(tmp[0] + (size * i) + (size - layer - 1));
+                    tmp.push(tmp[edge_length - 1] + (size * i));
                 }
 
                 // Append bottom edge of the box
