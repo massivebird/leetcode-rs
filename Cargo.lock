@@ -72,6 +72,10 @@ name = "lc-0045-jump-game-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0048-rotate-image"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0049-group-anagrams"
 version = "0.1.0"
 
