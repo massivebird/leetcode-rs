@@ -1,0 +1,6 @@
+[package]
+name = "lc-0021-merge-sorted-lists"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

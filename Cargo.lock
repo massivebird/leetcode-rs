@@ -52,6 +52,10 @@ name = "lc-0014-longest-common-prefix"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0021-merge-sorted-lists"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0026-remove-duplicates-sorted"
 version = "0.1.0"
 
