@@ -11,33 +11,36 @@ impl Solution {
             for col in 0..width {
                 let mut live_neighbors = 0u32;
 
+                // Modifiers to (row, col) to find this cell's eight neighbors.
                 for tr in [
+                    // Top three
                     (-1, -1),
                     (-1, 0),
                     (-1, 1),
+                    // Middle two
                     (0, -1),
                     (0, 1),
+                    // Bottom three
                     (1, -1),
                     (1, 0),
                     (1, 1),
                 ] {
-                    let Some(row) = (row as i32)
-                        .checked_add(tr.0)
-                        .filter(|v| *v >= 0 && *v < board.len() as i32)
-                    else {
+                    // Compute this neighbor's hypothetical location.
+                    //
+                    // I convert to a signed type to simplify subtraction ops.
+                    let row = isize::try_from(row).unwrap() + tr.0;
+                    let col = isize::try_from(col).unwrap() + tr.1;
+
+                    // Verify (row, col) is within board bounds.
+                    let Some(row) = usize::try_from(row).ok().filter(|v| *v < board.len()) else {
                         continue;
                     };
 
-                    let Some(col) = (col as i32)
-                        .checked_add(tr.1)
-                        .filter(|v| *v >= 0 && *v < width as i32)
-                    else {
+                    let Some(col) = usize::try_from(col).ok().filter(|v| *v < width) else {
                         continue;
                     };
 
-                    // dbg!((row, col));
-
-                    if board[row as usize][col as usize] == 1 {
+                    if board[row][col] == 1 {
                         live_neighbors += 1;
                     }
                 }
@@ -45,7 +48,7 @@ impl Solution {
                 let is_alive = board[row][col] == 1;
 
                 match live_neighbors {
-                    // Remain alive if not overpopulated.
+                    // Stay alive if not overpopulated.
                     2 | 3 if is_alive => ans[row][col] = 1,
                     // Be birthed by reproduction.
                     3 if !is_alive => ans[row][col] = 1,
