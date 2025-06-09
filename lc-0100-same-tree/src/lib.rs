@@ -34,7 +34,21 @@ impl Solution {
         p: Option<Rc<RefCell<TreeNode>>>,
         q: Option<Rc<RefCell<TreeNode>>>,
     ) -> bool {
-        p == q
+        if p.is_none() && q.is_none() {
+            return true;
+        } else if matches!((p.clone(), q.clone()), (Some(_), None) | (None, Some(_))) {
+            return false;
+        }
+
+        let p_head = p.unwrap();
+        let q_head = q.unwrap();
+
+        if p_head.borrow().val != q_head.borrow().val {
+            return false;
+        }
+
+        Self::is_same_tree(p_head.borrow().left.clone(), q_head.borrow().left.clone()) &&
+        Self::is_same_tree(p_head.borrow().right.clone(), q_head.borrow().right.clone())
     }
 }
 
