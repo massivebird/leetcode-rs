@@ -52,4 +52,5 @@ members = [
    "lc-1545-kth-bit-in-kth-binary-string",
    "lc-2109-adding-spaces",
    "lc-2491-teams-of-equal-skill",
+   "lc-0092-reverse-linked-list-ii",
 ]
