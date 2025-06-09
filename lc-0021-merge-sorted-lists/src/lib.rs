@@ -1,3 +1,5 @@
+// --- PROVIDED, DO NOT EDIT
+
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
     pub val: i32,
@@ -11,6 +13,8 @@ impl ListNode {
         ListNode { next: None, val }
     }
 }
+
+// --- OK NOW YOU CAN EDIT
 
 struct Solution;
 
