@@ -25,7 +25,35 @@ impl Solution {
         left: i32,
         right: i32,
     ) -> Option<Box<ListNode>> {
-        todo!()
+        // We'll convert this vector of values into a linked list at the end.
+        let mut ans_vec: Vec<i32> = Vec::new();
+
+        let mut head = head;
+
+        let mut idx = 0;
+
+        while let Some(val) = head.as_ref().map(|n| n.val) {
+            // `left` and `right` are 1-based positions rather than
+            // 0-based indices.
+            if idx >= left - 1 && idx < right {
+                ans_vec.insert(usize::try_from(left - 1).unwrap(), val);
+            } else {
+                ans_vec.push(val);
+            }
+
+            // Prepare next node
+            head = head.unwrap().next;
+            idx += 1;
+        }
+
+        // Convert vector to linked list.
+        let mut ans: Option<Box<ListNode>> = None;
+
+        for val in ans_vec.into_iter().rev() {
+            ans = Some(Box::new(ListNode { val, next: ans }));
+        }
+
+        ans
     }
 }
 
@@ -46,8 +74,8 @@ mod tests {
             })),
         }));
 
-        let left = 1;
-        let right = 2;
+        let left = 2;
+        let right = 3;
 
         let ans = Some(Box::new(ListNode {
             val: 1,
