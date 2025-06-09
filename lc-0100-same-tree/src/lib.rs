@@ -34,21 +34,24 @@ impl Solution {
         p: Option<Rc<RefCell<TreeNode>>>,
         q: Option<Rc<RefCell<TreeNode>>>,
     ) -> bool {
-        if p.is_none() && q.is_none() {
-            return true;
-        } else if matches!((p.clone(), q.clone()), (Some(_), None) | (None, Some(_))) {
+        match (&p, &q) {
+            // Both subtrees do not exist, therefore are equal.
+            (None, None) => return true,
+            // Only one subtree exists, therefore not equal.
+            (Some(_), None) | (None, Some(_)) => return false,
+            // Both subtrees exist.
+            // Now, we check if they are equal.
+            (Some(_), Some(_)) => (),
+        }
+
+        let (p_root, q_root) = (p.unwrap(), q.unwrap());
+
+        if p_root.borrow().val != q_root.borrow().val {
             return false;
         }
 
-        let p_head = p.unwrap();
-        let q_head = q.unwrap();
-
-        if p_head.borrow().val != q_head.borrow().val {
-            return false;
-        }
-
-        Self::is_same_tree(p_head.borrow().left.clone(), q_head.borrow().left.clone()) &&
-        Self::is_same_tree(p_head.borrow().right.clone(), q_head.borrow().right.clone())
+        Self::is_same_tree(p_root.borrow().left.clone(), q_root.borrow().left.clone())
+            && Self::is_same_tree(p_root.borrow().right.clone(), q_root.borrow().right.clone())
     }
 }
 
