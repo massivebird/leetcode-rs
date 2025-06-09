@@ -164,6 +164,10 @@ name = "lc-0274-h-index"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0289-game-of-life"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0290-word-pattern"
 version = "0.1.0"
 

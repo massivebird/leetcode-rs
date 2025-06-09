@@ -38,6 +38,7 @@ members = [
    "lc-0242-valid-anagram",
    "lc-0274-h-index",
    "lc-0290-word-pattern",
+   "lc-0289-game-of-life",
    "lc-0380-insert-delete-getrandom-o1",
    "lc-0383-ransom-note",
    "lc-0392-is-subsequence",
