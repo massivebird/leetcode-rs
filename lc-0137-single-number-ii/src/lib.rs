@@ -3,7 +3,18 @@ struct Solution;
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn single_number(nums: Vec<i32>) -> i32 {
-        todo!()
+        // NOTE: totally NOT a good answer.
+        // The ""REAL"" answer uses a clever combination of bitwise ops.
+
+        use std::collections::HashMap;
+
+        let mut freqs: HashMap<i32, u32> = HashMap::new();
+
+        for n in nums {
+            freqs.entry(n).and_modify(|v| *v += 1).or_insert(1);
+        }
+
+        *freqs.iter().find(|(_, v)| **v == 1).unwrap().0
     }
 }
 
