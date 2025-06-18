@@ -53,5 +53,5 @@ members = [
    "lc-2109-adding-spaces",
    "lc-2491-teams-of-equal-skill",
    "lc-0092-reverse-linked-list-ii",
-   "lc-0100-same-tree",
+   "lc-0100-same-tree", "lc-0137-single-number-ii",
 ]
