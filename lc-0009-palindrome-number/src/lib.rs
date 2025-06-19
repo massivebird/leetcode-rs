@@ -1,9 +1,13 @@
+// Category: Math (avoid string casting)
+//
+// Figure out if the signed input number is a palindrome.
+
 struct Solution;
 
 #[allow(unused, clippy::missing_const_for_fn)]
 impl Solution {
     pub fn is_palindrome(x: i32) -> bool {
-        // Some short circuit solutions
+        // Some short circuit solutions.
         if x.is_negative() {
             return false;
         } else if x < 10 {
