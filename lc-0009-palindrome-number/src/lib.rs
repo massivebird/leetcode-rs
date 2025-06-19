@@ -3,6 +3,7 @@ struct Solution;
 #[allow(unused, clippy::missing_const_for_fn)]
 impl Solution {
     pub fn is_palindrome(x: i32) -> bool {
+        // Some short circuit solutions
         if x.is_negative() {
             return false;
         } else if x < 10 {
@@ -11,34 +12,33 @@ impl Solution {
 
         let mut x = x;
 
+        // Equal to `number of digits - 1`.
+        #[allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
         let highest_ten_power = (x as f32).log10() as i32;
 
+        // Will contain the input's individual digits.
         let mut digits: Vec<i32> = Vec::new();
 
-        for i in (0..=highest_ten_power).rev() {
-            let get_digit = |pos: i32| {
-                if pos == 0 {
-                    x - (x / 10) * 10
-                } else {
-                    x / 10i32.pow(pos as u32)
-                }
-            };
-
-            let digit = get_digit(i);
+        for i in (0..=highest_ten_power)
+            .rev()
+            .map(|v| u32::try_from(v).unwrap())
+        {
+            let digit = x / 10i32.pow(i);
 
             if digit > 0 {
-                x -= 10i32.pow(i as u32) * digit;
-
                 digits.push(digit);
+                // Prepare `x` for the next digit retrieval.
+                x -= 10i32.pow(i) * digit;
             } else {
                 digits.push(0);
             }
         }
 
-        for l in 0..digits.len() {
-            let r = digits.len() - 1 - l;
+        // Verify that digits vector is symmetric.
+        for l_idx in 0..(digits.len() / 2) {
+            let r_idx = digits.len() - 1 - l_idx;
 
-            if digits[l] != digits[r] {
+            if digits[l_idx] != digits[r_idx] {
                 return false;
             }
         }
