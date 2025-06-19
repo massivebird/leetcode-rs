@@ -9,11 +9,13 @@ impl Solution {
             return true;
         }
 
+        let mut x = x;
+
         let highest_ten_power = (x as f32).log10() as i32;
 
-        for l in 0..=highest_ten_power {
-            let r = highest_ten_power - l;
+        let mut digits: Vec<i32> = Vec::new();
 
+        for i in (0..=highest_ten_power).rev() {
             let get_digit = |pos: i32| {
                 if pos == 0 {
                     x - (x / 10) * 10
@@ -22,13 +24,21 @@ impl Solution {
                 }
             };
 
-            let l_digit = get_digit(l);
-            let r_digit = get_digit(r);
+            let digit = get_digit(i);
 
-            dbg!((l, r));
-            dbg!((l_digit, r_digit));
+            if digit > 0 {
+                x -= 10i32.pow(i as u32) * digit;
 
-            if l_digit != r_digit {
+                digits.push(digit);
+            } else {
+                digits.push(0);
+            }
+        }
+
+        for l in 0..digits.len() {
+            let r = digits.len() - 1 - l;
+
+            if digits[l] != digits[r] {
                 return false;
             }
         }
@@ -49,7 +59,7 @@ mod tests {
 
     #[test]
     fn case_1() {
-        let x = 124;
+        let x = 10;
         assert!(!Solution::is_palindrome(x));
     }
 
@@ -86,6 +96,12 @@ mod tests {
     #[test]
     fn case_7() {
         let x = 1001;
+        assert!(Solution::is_palindrome(x));
+    }
+
+    #[test]
+    fn case_8() {
+        let x = 9999;
         assert!(Solution::is_palindrome(x));
     }
 }
