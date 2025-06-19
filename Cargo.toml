@@ -21,6 +21,7 @@ members = [
    "lc-0049-group-anagrams",
    "lc-0055-jump-game",
    "lc-0058-length-of-last-word",
+   "lc-0066-plus-one",
    "lc-0068-text-justification",
    "lc-0080-remove-duplicates-sorted-ii",
    "lc-0088-merge-sorted-array",
