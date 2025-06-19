@@ -34,6 +34,8 @@ impl Solution {
                 // Prepare `x` for the next digit retrieval.
                 x -= 10i32.pow(i) * digit;
             } else {
+                // `x` is less than this power of 10. `digit` might even be
+                // negative, which is no good to us. Just push a zero.
                 digits.push(0);
             }
         }
