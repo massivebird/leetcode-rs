@@ -160,6 +160,10 @@ name = "lc-0169-majority-element"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0172-factorial-trailing-zeroes"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0189-rotate-array"
 version = "0.1.0"
 

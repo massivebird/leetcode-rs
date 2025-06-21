@@ -36,6 +36,7 @@ members = [
    "lc-0151-reverse-words",
    "lc-0167-two-sum-ii",
    "lc-0169-majority-element",
+   "lc-0172-factorial-trailing-zeroes",
    "lc-0189-rotate-array",
    "lc-0191-number-of-set-bits",
    "lc-0205-isomorphic-strings",
