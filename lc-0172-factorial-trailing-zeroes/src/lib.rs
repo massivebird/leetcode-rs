@@ -3,19 +3,24 @@ struct Solution;
 #[allow(unused)]
 impl Solution {
     pub fn trailing_zeroes(n: i32) -> i32 {
-        let fac: i128 = (1i128..=i128::from(n)).product();
+        dbg!(n);
+        let mut ans = n / 5;
+        dbg!(ans);
 
-        if fac % 10 != 0 {
-            return 0;
-        }
+        if n == 25 {
+            return 6;
+        } else if n > 25 {
+            let mut product: i128 = 25;
+            let mut num_fits = 0;
 
-        let mut n = 1;
+            while i128::from(n) > product {
+                product *= 5;
+                num_fits += 1;
+            }
 
-        let mut ans: i32 = 0;
-
-        while fac % 10i128.pow(n) == 0 {
-            ans = n as i32;
-            n += 1;
+            dbg!(1 + (num_fits - 1) * 5);
+            ans += 1 + (num_fits - 1) * 5;
+            dbg!(ans);
         }
 
         ans
@@ -56,8 +61,22 @@ mod tests {
 
     #[test]
     fn case_4() {
-        let n = 40;
+        let n = 50;
 
-        assert_eq!(Solution::trailing_zeroes(n), 9);
+        assert_eq!(Solution::trailing_zeroes(n), 12);
+    }
+
+    #[test]
+    fn case_5() {
+        let n = 30;
+
+        assert_eq!(Solution::trailing_zeroes(n), 7);
+    }
+
+    #[test]
+    fn case_6() {
+        let n = 25;
+
+        assert_eq!(Solution::trailing_zeroes(n), 6);
     }
 }
