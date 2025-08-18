@@ -1,10 +1,14 @@
+<p align="center">
+  <img src="https://leetcard.jacoblin.cool/massivebird?theme=dark&font=JetBrains%20Mono&ext=heatmap" />
+</p>
+
+> Banner generated with [leetcode.jacoblin.cool](https://leetcard.jacoblin.cool/)
+
 # massivebird's Rusty leetcode solutions
 
-These are my solutions to various Leetcode problems, all in Rust 🦀
+Here are my Leetcode solutions, all in Rust 🦀
 
 The `main` branch exclusively contains working solutions.
-
-> For solutions-in-progress, see my other branches. I don't always push or prune these, though.
 
 ## Favorites
 
