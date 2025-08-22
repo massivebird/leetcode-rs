@@ -100,6 +100,10 @@ name = "lc-0066-plus-one"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0067-add-binary"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0068-text-justification"
 version = "0.1.0"
 

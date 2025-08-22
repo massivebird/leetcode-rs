@@ -22,6 +22,7 @@ members = [
    "lc-0055-jump-game",
    "lc-0058-length-of-last-word",
    "lc-0066-plus-one",
+   "lc-0067-add-binary",
    "lc-0068-text-justification",
    "lc-0070-climbing-stairs",
    "lc-0080-remove-duplicates-sorted-ii",
