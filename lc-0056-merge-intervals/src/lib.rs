@@ -1,8 +1,16 @@
 struct Solution;
 
+// Input is a list of two-value ranges, e.g. `[[1,3], [2,4]]`.
+//
+// Return a list of these two-element ranges, merged whenever possible such
+// that none in the returned list overlap.
+
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        // Sort by each interval's starting value.
+        //
+        // This positions overlapping intervals adjacent to each other.
         intervals.sort_by_key(|a| a[0]);
 
         let mut ans: Vec<Vec<i32>> = Vec::new();
@@ -15,10 +23,15 @@ impl Solution {
             idx += 1;
 
             while let Some(other) = intervals.get(idx) {
+                // Exhausted all overlapping intervals.
                 if other[0] > this[1] {
                     break;
                 }
 
+                // Absorb the overlapping interval.
+                //
+                // Since the intervals are sorted by start idx, the start
+                // idx is already at its minimum.
                 this[1] = i32::max(this[1], other[1]);
 
                 idx += 1;
