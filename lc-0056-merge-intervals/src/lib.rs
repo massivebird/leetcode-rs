@@ -36,9 +36,27 @@ impl Solution {
             }
         }
 
+        let mut ans2 = vec![ans[0].clone()];
+
+        'outer: for this in ans.into_iter().skip(1) {
+            let mut merged = false;
+
+            for other in &mut ans2 {
+                if overlap(&this, other) {
+                    merged = true;
+                    other[0] = i32::min(this[0], other[0]);
+                    other[1] = i32::max(this[1], other[1]);
+                }
+            }
+
+            if !merged {
+                ans2.push(this.clone());
+            }
+        }
+
         let mut uniq_ans = Vec::new();
 
-        for (idx, this) in ans.into_iter().enumerate() {
+        for (idx, this) in ans2.into_iter().enumerate() {
             if !uniq_ans.contains(&this) {
                 uniq_ans.push(this);
             }
