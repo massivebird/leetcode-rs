@@ -3,7 +3,38 @@ struct Solution;
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-        todo!()
+        let mut ans = vec![intervals[0].clone()];
+
+        let overlap = |a: &[i32], b: &[i32]| {
+            // `a` left-leaning
+            // `a` starts after `b` starts AND starts before `b` ends
+            (a[0] >= b[0] && a[0] <= b[1]) ||
+            // `a` right-leaning
+            // `a` ends before `b` ends AND ends after `b` starts
+            (a[1] <= b[1] && a[1] >= b[0]) ||
+            // `a` inside
+            // `a` starts after `b` starts AND ends before `b` ends
+            (a[0] >= b[0] && a[1] <= b[1]) ||
+            // `a` outside
+            // `a` starts before `b` starts AND ends after `b` ends
+            (a[0] <= b[0] && a[1] >= b[1])
+        };
+
+        'outer: for (idx, this) in intervals.into_iter().enumerate().skip(1) {
+            for other in &mut ans {
+                if overlap(&this, other) {
+                    other[0] = i32::min(this[0], other[0]);
+                    other[1] = i32::max(this[1], other[1]);
+                    continue 'outer;
+                }
+            }
+
+            ans.push(this.clone());
+        }
+
+        // dbg!(&ans);
+
+        ans
     }
 }
 
@@ -34,6 +65,18 @@ mod tests {
             .collect::<Vec<Vec<i32>>>();
 
         let ans = vec![vec![1, 5]];
+
+        assert_eq!(Solution::merge(intervals), ans);
+    }
+
+    #[test]
+    fn case_2() {
+        let intervals = [[1, 4], [0, 5]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
+
+        let ans = vec![vec![0, 5]];
 
         assert_eq!(Solution::merge(intervals), ans);
     }
