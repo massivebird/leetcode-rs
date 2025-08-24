@@ -20,21 +20,31 @@ impl Solution {
             (a[0] <= b[0] && a[1] >= b[1])
         };
 
-        'outer: for (idx, this) in intervals.into_iter().enumerate().skip(1) {
+        'outer: for this in intervals.into_iter().skip(1) {
+            let mut merged = false;
+
             for other in &mut ans {
                 if overlap(&this, other) {
+                    merged = true;
                     other[0] = i32::min(this[0], other[0]);
                     other[1] = i32::max(this[1], other[1]);
-                    continue 'outer;
                 }
             }
 
-            ans.push(this.clone());
+            if !merged {
+                ans.push(this.clone());
+            }
         }
 
-        // dbg!(&ans);
+        let mut uniq_ans = Vec::new();
 
-        ans
+        for (idx, this) in ans.into_iter().enumerate() {
+            if !uniq_ans.contains(&this) {
+                uniq_ans.push(this);
+            }
+        }
+
+        uniq_ans
     }
 }
 
@@ -77,6 +87,30 @@ mod tests {
             .collect::<Vec<Vec<i32>>>();
 
         let ans = vec![vec![0, 5]];
+
+        assert_eq!(Solution::merge(intervals), ans);
+    }
+
+    #[test]
+    fn case_3() {
+        let intervals = [[2, 3], [4, 5], [6, 7], [8, 9], [1, 10]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
+
+        let ans = vec![vec![1, 10]];
+
+        assert_eq!(Solution::merge(intervals), ans);
+    }
+
+    #[test]
+    fn case_4() {
+        let intervals = [[2, 3], [4, 6], [5, 7], [3, 4]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
+
+        let ans = vec![vec![2, 7]];
 
         assert_eq!(Solution::merge(intervals), ans);
     }
