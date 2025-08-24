@@ -1,0 +1,6 @@
+[package]
+name = "lc-0042-trapping-rain-water"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
