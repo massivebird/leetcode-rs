@@ -25,18 +25,16 @@ impl Solution {
             (a[0] <= b[0] && a[1] >= b[1])
         };
 
-        let mut merged = false;
         let mut merge_interval = (None, None);
 
         for (idx, iv) in intervals.clone().iter().enumerate() {
-            match (overlaps(iv, &new_interval), merged) {
+            match (overlaps(iv, &new_interval), merge_interval.0.is_some()) {
                 // Start merging
                 (true, false) => {
                     new_interval[0] = new_interval[0].min(iv[0]);
                     new_interval[1] = new_interval[1].max(iv[1]);
 
                     merge_interval.0 = Some(idx);
-                    merged = true;
                 }
                 // Still merging
                 (true, true) => {
@@ -46,13 +44,15 @@ impl Solution {
                 // No longer merging
                 (false, true) => {
                     merge_interval.1 = Some(idx);
+                    break;
                 }
                 // No merge yet
                 _ => (),
             }
         }
 
-        let (Some(merge_start), Some(merge_end)) = merge_interval else {
+        // If no intervals were merged, insert the new one by itself.
+        let (Some(merge_start), merge_end) = merge_interval else {
             let pos = intervals
                 .iter()
                 .position(|iv| iv[0] >= new_interval[0])
@@ -63,7 +63,8 @@ impl Solution {
             return intervals;
         };
 
-        for _ in merge_start..merge_end {
+        // Remove all absorbed intervals.
+        for _ in merge_start..merge_end.unwrap_or(intervals.len()) {
             intervals.remove(merge_start);
         }
 
@@ -135,6 +136,37 @@ mod tests {
         let new_interval = vec![2, 3];
 
         let ans = vec![vec![1, 5]];
+
+        assert_eq!(Solution::insert(intervals, new_interval), ans);
+    }
+
+    #[test]
+    fn case_4() {
+        let intervals = [[2, 3], [5, 7]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
+
+        let new_interval = vec![0, 6];
+
+        let ans = vec![vec![0, 7]];
+
+        assert_eq!(Solution::insert(intervals, new_interval), ans);
+    }
+
+    #[test]
+    fn case_5() {
+        let intervals = [[2, 4], [5, 7], [8, 10], [11, 13]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
+
+        let new_interval = vec![3, 6];
+
+        let ans = [[2, 7], [8, 10], [11, 13]]
+            .iter()
+            .map(Vec::from)
+            .collect::<Vec<Vec<i32>>>();
 
         assert_eq!(Solution::insert(intervals, new_interval), ans);
     }
