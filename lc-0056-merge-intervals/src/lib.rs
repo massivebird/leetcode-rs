@@ -2,67 +2,32 @@ struct Solution;
 
 #[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
-    pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-        let mut ans = vec![intervals[0].clone()];
+    pub fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        intervals.sort_by_key(|a| a[0]);
 
-        let overlap = |a: &[i32], b: &[i32]| {
-            // `a` left-leaning
-            // `a` starts after `b` starts AND starts before `b` ends
-            (a[0] >= b[0] && a[0] <= b[1]) ||
-            // `a` right-leaning
-            // `a` ends before `b` ends AND ends after `b` starts
-            (a[1] <= b[1] && a[1] >= b[0]) ||
-            // `a` inside
-            // `a` starts after `b` starts AND ends before `b` ends
-            (a[0] >= b[0] && a[1] <= b[1]) ||
-            // `a` outside
-            // `a` starts before `b` starts AND ends after `b` ends
-            (a[0] <= b[0] && a[1] >= b[1])
-        };
+        let mut ans: Vec<Vec<i32>> = Vec::new();
 
-        'outer: for this in intervals.into_iter().skip(1) {
-            let mut merged = false;
+        let mut idx: usize = 0;
 
-            for other in &mut ans {
-                if overlap(&this, other) {
-                    merged = true;
-                    other[0] = i32::min(this[0], other[0]);
-                    other[1] = i32::max(this[1], other[1]);
+        while idx < intervals.len() {
+            let mut this = intervals[idx].clone();
+
+            idx += 1;
+
+            while let Some(other) = intervals.get(idx) {
+                if other[0] > this[1] {
+                    break;
                 }
+
+                this[1] = i32::max(this[1], other[1]);
+
+                idx += 1;
             }
 
-            if !merged {
-                ans.push(this.clone());
-            }
+            ans.push(this);
         }
 
-        let mut ans2 = vec![ans[0].clone()];
-
-        'outer: for this in ans.into_iter().skip(1) {
-            let mut merged = false;
-
-            for other in &mut ans2 {
-                if overlap(&this, other) {
-                    merged = true;
-                    other[0] = i32::min(this[0], other[0]);
-                    other[1] = i32::max(this[1], other[1]);
-                }
-            }
-
-            if !merged {
-                ans2.push(this.clone());
-            }
-        }
-
-        let mut uniq_ans = Vec::new();
-
-        for (idx, this) in ans2.into_iter().enumerate() {
-            if !uniq_ans.contains(&this) {
-                uniq_ans.push(this);
-            }
-        }
-
-        uniq_ans
+        ans
     }
 }
 
