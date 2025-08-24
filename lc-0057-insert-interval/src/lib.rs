@@ -10,15 +10,64 @@ impl Solution {
         // This positions overlapping intervals adjacent to each other.
         intervals.sort_by_key(|a| a[0]);
 
-        let mut merged = false;
+        let overlaps = |a: &[i32], b: &[i32]| {
+            // `a` left-leaning
+            // `a` starts after `b` starts AND starts before `b` ends
+            (a[0] >= b[0] && a[0] <= b[1]) ||
+            // `a` right-leaning
+            // `a` ends before `b` ends AND ends after `b` starts
+            (a[1] <= b[1] && a[1] >= b[0]) ||
+            // `a` inside
+            // `a` starts after `b` starts AND ends before `b` ends
+            (a[0] >= b[0] && a[1] <= b[1]) ||
+            // `a` outside
+            // `a` starts before `b` starts AND ends after `b` ends
+            (a[0] <= b[0] && a[1] >= b[1])
+        };
 
-        let Some(mut idx) = intervals
-            .iter()
-            .position(|iv| iv[1] >= new_interval[0])
-        else {
-            intervals.push(new_interval);
+        let mut merged = false;
+        let mut merge_interval = (None, None);
+
+        for (idx, iv) in intervals.clone().iter().enumerate() {
+            match (overlaps(iv, &new_interval), merged) {
+                // Start merging
+                (true, false) => {
+                    new_interval[0] = new_interval[0].min(iv[0]);
+                    new_interval[1] = new_interval[1].max(iv[1]);
+
+                    merge_interval.0 = Some(idx);
+                    merged = true;
+                }
+                // Still merging
+                (true, true) => {
+                    new_interval[0] = new_interval[0].min(iv[0]);
+                    new_interval[1] = new_interval[1].max(iv[1]);
+                }
+                // No longer merging
+                (false, true) => {
+                    merge_interval.1 = Some(idx);
+                }
+                // No merge yet
+                _ => (),
+            }
+        }
+
+        let (Some(merge_start), Some(merge_end)) = merge_interval else {
+            let pos = intervals
+                .iter()
+                .position(|iv| iv[0] >= new_interval[0])
+                .unwrap_or(intervals.len());
+
+            intervals.insert(pos, new_interval);
+
             return intervals;
         };
+
+        for _ in merge_start..merge_end {
+            intervals.remove(merge_start);
+        }
+
+        intervals.insert(merge_start, new_interval);
 
         intervals
     }
@@ -75,6 +124,17 @@ mod tests {
             .iter()
             .map(Vec::from)
             .collect::<Vec<Vec<i32>>>();
+
+        assert_eq!(Solution::insert(intervals, new_interval), ans);
+    }
+
+    #[test]
+    fn case_3() {
+        let intervals = vec![vec![1, 5]];
+
+        let new_interval = vec![2, 3];
+
+        let ans = vec![vec![1, 5]];
 
         assert_eq!(Solution::insert(intervals, new_interval), ans);
     }
