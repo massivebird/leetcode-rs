@@ -7,54 +7,66 @@ impl Solution {
 
         let descending = false;
 
-        let mut i = 0;
+        let mut m_idx = 0;
 
-        while i < height.len() {
-            let mut this = height[i];
+        while m_idx < height.len() {
+            let mut this = height[m_idx];
 
-            if height.get(i + 1).is_some_and(|next| *next >= this) {
-                i += 1;
+            if height.get(m_idx + 1).is_some_and(|next| *next >= this) {
+                m_idx += 1;
                 continue;
             }
 
-            while let Some(next) = height.get(i + 1)
+            while let Some(next) = height.get(m_idx + 1)
                 && *next < this
             {
                 this = *next;
-                i += 1;
+                m_idx += 1;
             }
 
             // `i` now positioned at a local minimum.
 
-            let (mut l, mut r) = (i, i);
-
             // Find trap's left bound.
-            while let Some(prev) = height.get(l.saturating_sub(1))
-                && *prev > height[l]
-            {
-                l -= 1;
+            let mut l_height = 0;
+            let mut l_idx = m_idx.saturating_sub(1);
+            for (idx, l_opt) in height.iter().enumerate().take(m_idx).rev() {
+                if *l_opt > l_height {
+                    l_height = l_height.max(height[l_idx]);
+                    l_idx = idx;
+                }
             }
 
             // Find trap's right bound.
-            while let Some(next) = height.get(r + 1)
-                && *next > height[r]
-            {
-                r += 1;
+            let mut r_idx = usize::max(m_idx, height.len() - 1);
+            let mut r_height = height[r_idx];
+            for (idx, r_opt) in height.iter().enumerate().skip(m_idx) {
+                if *r_opt > r_height {
+                    r_height = *r_opt;
+                    r_idx = idx;
+                }
+
+                if *r_opt > l_height {
+                    break;
+                }
             }
 
-            let trap_height = i32::min(height[l], height[r]);
+            let l_height = height[l_idx];
+            let r_height = height[r_idx];
+            let trap_height = i32::min(l_height, r_height);
 
             let mut trap_volume = 0;
 
-            for height in &height[l..r] {
+            for height in &height[l_idx..r_idx] {
+                // let height = i32::min(trap_height, *height);
+
                 trap_volume += i32::max(0, trap_height - height);
             }
 
-            println!("{i} {l} {r} {trap_volume}");
+            println!("@{m_idx} @{l_idx} @{r_idx} V{trap_volume}");
 
             ans += trap_volume;
 
-            i += 1;
+            m_idx = r_idx + 1;
         }
 
         ans
@@ -77,6 +89,24 @@ mod tests {
     fn case_1() {
         let height = vec![4, 2, 0, 3, 2, 5];
         let ans = 9;
+
+        assert_eq!(Solution::trap(height), ans);
+    }
+
+    #[test]
+    fn case_2() {
+        let height = vec![5, 5, 1, 7, 1, 1, 5, 2, 7, 6];
+        let ans = 23;
+
+        assert_eq!(Solution::trap(height), ans);
+    }
+
+    #[test]
+    fn case_3() {
+        let height = vec![
+            6, 4, 2, 0, 3, 2, 0, 3, 1, 4, 5, 3, 2, 7, 5, 3, 0, 1, 2, 1, 3, 4, 6, 8, 1, 3,
+        ];
+        let ans = 83;
 
         assert_eq!(Solution::trap(height), ans);
     }
