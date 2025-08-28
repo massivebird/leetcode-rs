@@ -4,11 +4,11 @@ struct Solution;
 impl Solution {
     pub fn is_valid(s: String) -> bool {
         use std::collections::VecDeque;
-        let mut stack: VecDeque<char> = VecDeque::new();
+        let mut stack: VecDeque<u8> = VecDeque::new();
 
-        for c in s.chars() {
-            if matches!(c, '(' | '{' | '[') {
-                stack.push_back(c);
+        for c in s.as_bytes() {
+            if matches!(c, b'(' | b'{' | b'[') {
+                stack.push_back(*c);
                 continue;
             }
 
@@ -17,7 +17,7 @@ impl Solution {
             };
 
             match (last, c) {
-                ('(', ')') | ('{', '}') | ('[', ']') => {
+                (b'(', b')') | (b'{', b'}') | (b'[', b']') => {
                     stack.pop_back();
                 }
                 _ => return false,
