@@ -11,6 +11,7 @@ members = [
    "lc-0012-int-to-roman",
    "lc-0013-roman-to-int",
    "lc-0014-longest-common-prefix",
+   "lc-0020-valid-parentheses",
    "lc-0021-merge-sorted-lists",
    "lc-0026-remove-duplicates-sorted",
    "lc-0027-remove-element",
