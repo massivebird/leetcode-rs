@@ -4,7 +4,7 @@ struct Solution;
 impl Solution {
     #[allow(unused)]
     pub fn is_happy(mut n: i32) -> bool {
-        let mut known_values = Vec::new();
+        let mut known_values = std::collections::HashSet::new();
 
         loop {
             let mut sum = 0;
@@ -29,11 +29,9 @@ impl Solution {
                 return true;
             }
 
-            if known_values.contains(&n) {
+            if !known_values.insert(n) {
                 break false;
             }
-
-            known_values.push(n);
         }
     }
 }
