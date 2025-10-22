@@ -7,20 +7,29 @@ impl Solution {
         let mut known_values = Vec::new();
 
         loop {
-            n = n
-                .to_string()
-                .chars()
-                .map(|c| c.to_digit(10).unwrap().pow(2))
-                .sum::<u32>() as i32;
+            let mut sum = 0;
 
-            println!("{n}");
+            n = loop {
+                // Get rightmost digit.
+                let digit = n % 10;
+
+                sum += digit * digit;
+
+                // Right shift `n` by one (1) base 10 digit.
+                // e.g. 241 -> 24
+                n /= 10;
+
+                // Check if all digits have been exhausted.
+                if n <= 0 {
+                    break sum;
+                }
+            };
 
             if n == 1 {
                 return true;
             }
 
             if known_values.contains(&n) {
-                println!("break {n}");
                 break false;
             }
 
