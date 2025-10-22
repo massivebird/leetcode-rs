@@ -44,6 +44,7 @@ members = [
    "lc-0189-rotate-array",
    "lc-0191-number-of-set-bits",
    "lc-0198-house-robber",
+   "lc-0202-happy-number",
    "lc-0205-isomorphic-strings",
    "lc-0209-minimum-size-subarray-sum",
    "lc-0228-summary-ranges",
