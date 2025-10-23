@@ -5,7 +5,25 @@ struct Solution;
 impl Solution {
     #[allow(clippy::needless_pass_by_value)]
     pub fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
-        todo!()
+        let mut indices: std::collections::HashMap<i32, Vec<usize>> =
+            std::collections::HashMap::new();
+
+        for (i, n) in nums.iter().enumerate() {
+            let Some(known) = indices.get_mut(n) else {
+                indices.insert(*n, vec![i]);
+                continue;
+            };
+
+            for j in known.iter() {
+                if j.abs_diff(i) <= usize::try_from(k).unwrap() {
+                    return true;
+                }
+            }
+
+            known.push(i);
+        }
+
+        false
     }
 }
 
