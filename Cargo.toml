@@ -47,6 +47,7 @@ members = [
    "lc-0202-happy-number",
    "lc-0205-isomorphic-strings",
    "lc-0209-minimum-size-subarray-sum",
+   "lc-0219-contains-duplicate-ii",
    "lc-0228-summary-ranges",
    "lc-0238-product-except-self",
    "lc-0242-valid-anagram",
