@@ -216,6 +216,10 @@ name = "lc-0219-contains-duplicate-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0226-invert-binary-tree"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0228-summary-ranges"
 version = "0.1.0"
 
