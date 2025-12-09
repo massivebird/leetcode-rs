@@ -25,8 +25,20 @@ struct Solution;
 use std::cell::RefCell;
 use std::rc::Rc;
 impl Solution {
-    #[allow(clippy::needless_pass_by_value, dead_code)]
+    #![allow(clippy::needless_pass_by_value, dead_code)]
+
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        todo!();
+        Self::eval_subtree(root.as_ref(), 0)
+    }
+
+    fn eval_subtree(root: Option<&Rc<RefCell<TreeNode>>>, a: i32) -> i32 {
+        let Some(root) = root else {
+            return a;
+        };
+
+        let b = Self::eval_subtree(root.borrow().left.as_ref(), a);
+        let c = Self::eval_subtree(root.borrow().right.as_ref(), a);
+
+        1 + b.max(c)
     }
 }
