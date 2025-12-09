@@ -27,6 +27,23 @@ use std::rc::Rc;
 impl Solution {
     #[allow(clippy::needless_pass_by_value)]
     pub fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        todo!()
+        let Some(root) = root else { return true };
+
+        Self::eval_subtrees(root.borrow().left.as_ref(), root.borrow().right.as_ref())
+    }
+
+    fn eval_subtrees(l: Option<&Rc<RefCell<TreeNode>>>, r: Option<&Rc<RefCell<TreeNode>>>) -> bool {
+        match (l, r) {
+            (Some(l), Some(r)) => {
+                if l.borrow().val != r.borrow().val {
+                    return false;
+                }
+
+                Self::eval_subtrees(l.borrow().left.as_ref(), r.borrow().right.as_ref())
+                    && Self::eval_subtrees(l.borrow().right.as_ref(), r.borrow().left.as_ref())
+            }
+            (None, None) => true,
+            _ => false,
+        }
     }
 }
