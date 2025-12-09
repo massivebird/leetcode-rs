@@ -39,10 +39,16 @@ impl Solution {
                     return false;
                 }
 
+                // "Symmetric" means we compare the outer nodes with each other, and
+                // mutatis mutandis the inner nodes.
+                // i.e. Compare the left subtree's left child with the
+                // right subtree's right child.
                 Self::eval_subtrees(l.borrow().left.as_ref(), r.borrow().right.as_ref())
                     && Self::eval_subtrees(l.borrow().right.as_ref(), r.borrow().left.as_ref())
             }
+            // Mutual nonexistence satisfies symmetry.
             (None, None) => true,
+            // Missing a corresponding subtree -> not symmetric!
             _ => false,
         }
     }
