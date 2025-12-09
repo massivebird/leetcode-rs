@@ -140,6 +140,10 @@ name = "lc-0100-same-tree"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0104-maximum-depth-binary-tree"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0121-best-time-to-buy"
 version = "0.1.0"
 
