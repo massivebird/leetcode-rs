@@ -32,6 +32,7 @@ members = [
    "lc-0088-merge-sorted-array",
    "lc-0092-reverse-linked-list-ii",
    "lc-0100-same-tree",
+   "lc-0101-symmetric-tree",
    "lc-0104-maximum-depth-binary-tree",
    "lc-0121-best-time-to-buy",
    "lc-0122-best-time-to-buy-ii",
