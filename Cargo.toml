@@ -62,6 +62,7 @@ members = [
    "lc-0432-all-one-data-structure",
    "lc-0567-permutation-in-string",
    "lc-0641-circular-dequeue",
+   "lc-0739-daily-temperatures",
    "lc-1371-longest-substr-even-vowels",
    "lc-1381-design-stack-with-increment",
    "lc-1497-array-pairs-divisible",
