@@ -29,6 +29,18 @@ impl Solution {
             return root;
         };
 
+        match (root.borrow().left.is_some(), root.borrow().right.is_some()) {
+            (true, false) => {
+                let l = root.borrow_mut().left.take();
+                root.borrow_mut().right = l;
+            }
+            (false, true) => {
+                let r = root.borrow_mut().right.take();
+                root.borrow_mut().left = r;
+            }
+            _ => (),
+        }
+
         Self::swap_roots(root.borrow().left.as_ref(), root.borrow().right.as_ref());
 
         Some(root)
@@ -49,5 +61,23 @@ impl Solution {
             }
             _ => (),
         }
+    }
+}
+
+mod tests {
+    #[allow(unused)]
+    use super::{Rc, RefCell, Solution, TreeNode};
+
+    #[test]
+    fn case_0() {
+        let mut root = Some(Rc::new(RefCell::new(TreeNode::new(1))));
+        let child = Some(Rc::new(RefCell::new(TreeNode::new(2))));
+        root.as_mut().unwrap().borrow_mut().left = child;
+
+        let mut ans_root = Some(Rc::new(RefCell::new(TreeNode::new(1))));
+        let ans_child = Some(Rc::new(RefCell::new(TreeNode::new(2))));
+        ans_root.as_mut().unwrap().borrow_mut().left = ans_child;
+
+        assert_eq!(Solution::invert_tree(root), ans_root);
     }
 }
