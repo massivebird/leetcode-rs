@@ -25,42 +25,24 @@ struct Solution;
 #[allow(clippy::needless_pass_by_value, dead_code)]
 impl Solution {
     pub fn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
-        let Some(root) = root else {
-            return root;
-        };
+        Self::swap_rec(root.as_ref());
 
-        match (root.borrow().left.is_some(), root.borrow().right.is_some()) {
-            (true, false) => {
-                let l = root.borrow_mut().left.take();
-                root.borrow_mut().right = l;
-            }
-            (false, true) => {
-                let r = root.borrow_mut().right.take();
-                root.borrow_mut().left = r;
-            }
-            _ => (),
-        }
-
-        Self::swap_roots(root.borrow().left.as_ref(), root.borrow().right.as_ref());
-
-        Some(root)
+        root
     }
 
-    // TODO:
-    // Issue: Asymmetric trees.
-    // Maybe a swap(root) controller, which calls either:
-    // swap_roots(l, r) or swap_lopsided(root).
+    fn swap_rec(root: Option<&Rc<RefCell<TreeNode>>>) {
+        let Some(root) = root else {
+            return;
+        };
 
-    fn swap_roots(l: Option<&Rc<RefCell<TreeNode>>>, r: Option<&Rc<RefCell<TreeNode>>>) {
-        match (l, r) {
-            (Some(l), Some(r)) => {
-                std::mem::swap(&mut l.borrow_mut().val, &mut r.borrow_mut().val);
+        // Swap left and right subtrees, whether `Some(_)` or `None`.
+        let r = root.borrow_mut().right.take();
+        let l = root.borrow_mut().left.take();
+        root.borrow_mut().left = r;
+        root.borrow_mut().right = l;
 
-                Self::swap_roots(l.borrow().left.as_ref(), r.borrow().right.as_ref());
-                Self::swap_roots(l.borrow().right.as_ref(), r.borrow().left.as_ref());
-            }
-            _ => (),
-        }
+        Self::swap_rec(root.borrow().left.as_ref());
+        Self::swap_rec(root.borrow().right.as_ref());
     }
 }
 
@@ -76,7 +58,7 @@ mod tests {
 
         let mut ans_root = Some(Rc::new(RefCell::new(TreeNode::new(1))));
         let ans_child = Some(Rc::new(RefCell::new(TreeNode::new(2))));
-        ans_root.as_mut().unwrap().borrow_mut().left = ans_child;
+        ans_root.as_mut().unwrap().borrow_mut().right = ans_child;
 
         assert_eq!(Solution::invert_tree(root), ans_root);
     }
