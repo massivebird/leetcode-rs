@@ -36,11 +36,11 @@ impl Solution {
         };
 
         // Swap left and right subtrees, whether `Some(_)` or `None`.
-        let r = root.borrow_mut().right.take();
         let l = root.borrow_mut().left.take();
+        let r = std::mem::replace(&mut root.borrow_mut().right, l);
         root.borrow_mut().left = r;
-        root.borrow_mut().right = l;
 
+        // Repeat this process for both subtrees.
         Self::swap_rec(root.borrow().left.as_ref());
         Self::swap_rec(root.borrow().right.as_ref());
     }
