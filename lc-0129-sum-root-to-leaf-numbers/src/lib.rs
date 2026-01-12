@@ -23,38 +23,28 @@ impl Solution {
             return val;
         }
 
-        Self::dfs(root.borrow().left.clone(), vec![val])
-            + Self::dfs(root.borrow().right.clone(), vec![val])
+        Self::dfs(root.borrow().left.clone(), val) + Self::dfs(root.borrow().right.clone(), val)
     }
 
-    fn dfs(root: Option<Rc<RefCell<TreeNode>>>, digits: Vec<i32>) -> i32 {
+    fn dfs(root: Option<Rc<RefCell<TreeNode>>>, sum: i32) -> i32 {
         let Some(root) = root else {
-            // Should only occur when searching a non-leaf's non-existent child.
+            // Should only occur when evaluating a non-leaf's non-existent child.
             return 0;
         };
 
         let val = root.borrow().val;
-        let new_digits = [digits, vec![val]].concat();
+        let new_sum = val + sum * 10;
 
         // If this is a leaf node, then compile and return the value.
         if Self::leaf(&root) {
-            return Self::digits_to_val(new_digits);
+            return new_sum;
         }
 
-        Self::dfs(root.borrow().left.clone(), new_digits.clone())
-            + Self::dfs(root.borrow().right.clone(), new_digits)
+        Self::dfs(root.borrow().left.clone(), new_sum)
+            + Self::dfs(root.borrow().right.clone(), new_sum)
     }
 
-    fn digits_to_val(digits: Vec<i32>) -> i32 {
-        let mut sum = 0;
-
-        for (i, val) in digits.iter().rev().enumerate() {
-            sum += val * 10_i32.pow(u32::try_from(i).unwrap());
-        }
-
-        sum
-    }
-
+    /// Returns `true` if this is a leaf node (i.e., has no children).
     fn leaf(node: &Rc<RefCell<TreeNode>>) -> bool {
         node.borrow().left.is_none() && node.borrow().right.is_none()
     }
