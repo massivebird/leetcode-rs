@@ -15,11 +15,13 @@ impl Solution {
             return 0;
         };
 
-        if root.borrow().left.is_none() && root.borrow().right.is_none() {
-            return root.borrow().val;
-        }
-
         let val = root.borrow().val;
+
+        // Short-circuit if the tree has only one node.
+        // I couldn't figure out how to bake this into the dfs!
+        if Self::leaf(&root) {
+            return val;
+        }
 
         Self::dfs(root.borrow().left.clone(), vec![val])
             + Self::dfs(root.borrow().right.clone(), vec![val])
@@ -27,13 +29,15 @@ impl Solution {
 
     fn dfs(root: Option<Rc<RefCell<TreeNode>>>, digits: Vec<i32>) -> i32 {
         let Some(root) = root else {
+            // Should only occur when searching a non-leaf's non-existent child.
             return 0;
         };
 
         let val = root.borrow().val;
         let new_digits = [digits, vec![val]].concat();
 
-        if root.borrow().left.is_none() && root.borrow().right.is_none() {
+        // If this is a leaf node, then compile and return the value.
+        if Self::leaf(&root) {
             return Self::digits_to_val(new_digits);
         }
 
@@ -49,6 +53,10 @@ impl Solution {
         }
 
         sum
+    }
+
+    fn leaf(node: &Rc<RefCell<TreeNode>>) -> bool {
+        node.borrow().left.is_none() && node.borrow().right.is_none()
     }
 }
 
@@ -71,6 +79,15 @@ mod tests {
     fn case_1() {
         let arr = vec![Some(4), Some(9), Some(0), Some(5), Some(1)];
         let ans = 1026;
+
+        let tree = build_tree(&arr);
+        assert_eq!(Solution::sum_numbers(tree), ans);
+    }
+
+    #[test]
+    fn case_2() {
+        let arr = vec![Some(9)];
+        let ans = 9;
 
         let tree = build_tree(&arr);
         assert_eq!(Solution::sum_numbers(tree), ans);
