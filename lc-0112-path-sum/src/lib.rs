@@ -16,20 +16,7 @@ impl Solution {
         };
 
         let val = root.borrow().val;
-        let new = match (target_sum.signum(), val.signum()) {
-            (_, 0) => target_sum,
-            // Travel away from zero with opposite signs
-            (1, -1) => target_sum - val,
-            (-1, 1) => target_sum - val,
-
-            // Travel towards zero with same signs
-            (-1, -1) => target_sum - val,
-            (0, 1) => target_sum - val,
-            (1, 1) => target_sum - val,
-            (0, -1) => target_sum - val,
-
-            (_, _) => unreachable!(),
-        };
+        let new = target_sum - val;
 
         if new == 0 && root.borrow().left.is_none() && root.borrow().right.is_none() {
             return true;
