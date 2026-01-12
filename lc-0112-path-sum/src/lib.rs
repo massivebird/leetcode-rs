@@ -6,11 +6,11 @@ struct Solution;
 
 #[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
+    // Recursively determines if there exists a path from the tree's root to
+    // some leaf node such that the path's sum equals `target_sum`.
+    //
+    // Node values _and_ `target_sum` are signed values!
     pub fn has_path_sum(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> bool {
-        Self::src_rec(root.as_ref(), target_sum)
-    }
-
-    fn src_rec(root: Option<&Rc<RefCell<TreeNode>>>, target_sum: i32) -> bool {
         let Some(root) = root else {
             return false;
         };
@@ -22,8 +22,8 @@ impl Solution {
             return true;
         }
 
-        Self::src_rec(root.borrow().left.as_ref(), new)
-            || Self::src_rec(root.borrow().right.as_ref(), new)
+        Self::has_path_sum(root.borrow().left.clone(), new)
+            || Self::has_path_sum(root.borrow().right.clone(), new)
     }
 }
 
