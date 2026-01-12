@@ -22,17 +22,42 @@ use std::collections::VecDeque;
 use std::rc::Rc;
 
 #[must_use]
+/// Converts an array of nodes into a tree.
+///
+/// # Examples
+///
+/// ```ignore
+/// \[1, 2, 3]
+///
+///   1
+///  / \
+/// 2   3
+/// ```
+///
+/// ```ignore
+/// [4, 5, null, 6, 7]
+///
+///     4
+///    /
+///   5 
+///  / \
+/// 6   7
+/// ```
+///
+/// # Panics
+///
+/// Could panic I guess. LMAO I don't think it can?? But for the sake of
+/// "safety" and "completeness": I warned you
 pub fn build_tree(vec: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
     let mut stack: VecDeque<Rc<RefCell<TreeNode>>> = VecDeque::new();
 
     let mut vec_iter = vec.iter();
 
-    let root_val = match vec_iter.next() {
-        Some(x) if x.is_some() => x.unwrap(),
-        _ => return None,
+    let Some(Some(root_val)) = vec_iter.next() else {
+        return None;
     };
 
-    let root_node = Rc::new(RefCell::new(TreeNode::new(root_val)));
+    let root_node = Rc::new(RefCell::new(TreeNode::new(*root_val)));
     stack.push_back(root_node.clone());
     let tree = Some(root_node);
 
@@ -65,6 +90,6 @@ mod tests {
 
     #[test]
     fn case_0() {
-        dbg!(build_tree(&vec![Some(1), Some(2), None, None, Some(3)]));
+        dbg!(build_tree(&[Some(1), Some(2), None, None, Some(3)]));
     }
 }
