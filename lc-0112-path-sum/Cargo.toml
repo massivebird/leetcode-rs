@@ -1,0 +1,6 @@
+[package]
+name = "lc-0112-path-sum"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
