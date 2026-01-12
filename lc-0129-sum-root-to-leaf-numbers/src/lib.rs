@@ -49,7 +49,7 @@ impl Solution {
         let mut sum = 0;
 
         for (i, val) in digits.iter().rev().enumerate() {
-            sum += val * 10_i32.pow(i as u32);
+            sum += val * 10_i32.pow(u32::try_from(i).unwrap());
         }
 
         sum
