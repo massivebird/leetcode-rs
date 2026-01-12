@@ -30,7 +30,6 @@ impl Solution {
 
             (_, _) => unreachable!(),
         };
-        dbg!(root, new);
 
         if new == 0 && root.borrow().left.is_none() && root.borrow().right.is_none() {
             return true;
