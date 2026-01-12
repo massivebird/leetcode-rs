@@ -171,6 +171,13 @@ name = "lc-0125-valid-palindrome"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0129-sum-root-to-leaf-numbers"
+version = "0.1.0"
+dependencies = [
+ "array-to-tree",
+]
+
+[[package]]
 name = "lc-0134-gas-station"
 version = "0.1.0"
 

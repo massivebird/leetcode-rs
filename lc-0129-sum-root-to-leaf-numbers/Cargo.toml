@@ -1,0 +1,7 @@
+[package]
+name = "lc-0129-sum-root-to-leaf-numbers"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+array-to-tree = { path = "../.utils/array-to-tree" }
