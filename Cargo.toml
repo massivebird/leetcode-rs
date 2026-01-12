@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = [
+members = [".utils/array-to-tree",
    "lc-0001-two-sum",
    "lc-0002-add-two-numbers",
    "lc-0003-longest-substr-without-repeats",
