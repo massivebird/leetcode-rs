@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-array-to-tree = { path = "../.utils/array-to-tree/" }
+tree-node = { path = "../.utils/tree-node/" }

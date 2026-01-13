@@ -3,10 +3,6 @@
 version = 4
 
 [[package]]
-name = "array-to-tree"
-version = "0.1.0"
-
-[[package]]
 name = "cfg-if"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -155,7 +151,7 @@ version = "0.1.0"
 name = "lc-0112-path-sum"
 version = "0.1.0"
 dependencies = [
- "array-to-tree",
+ "tree-node",
 ]
 
 [[package]]
@@ -174,7 +170,7 @@ version = "0.1.0"
 name = "lc-0129-sum-root-to-leaf-numbers"
 version = "0.1.0"
 dependencies = [
- "array-to-tree",
+ "tree-node",
 ]
 
 [[package]]
@@ -389,6 +385,10 @@ dependencies = [
  "quote",
  "unicode-ident",
 ]
+
+[[package]]
+name = "tree-node"
+version = "0.1.0"
 
 [[package]]
 name = "unicode-ident"

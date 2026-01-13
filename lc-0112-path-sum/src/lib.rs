@@ -1,4 +1,4 @@
-use array_to_tree::TreeNode;
+use tree_node::TreeNode;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -31,7 +31,7 @@ impl Solution {
 mod tests {
     #[allow(unused)]
     use super::Solution;
-    use array_to_tree::build_tree;
+    use tree_node::build_tree;
 
     #[test]
     fn case_0() {
