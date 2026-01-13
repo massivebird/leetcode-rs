@@ -8,15 +8,16 @@ impl Solution {
             (Self::factorial(n) / (Self::factorial(n - k) * Self::factorial(k))) as usize;
 
         for b in 0.. {
-            let b_str = format!("{b:b}");
+            let b_str = format!("{b:>0goal_len$b}");
 
             if b_str.chars().filter(|c| *c == '1').count() != k as usize {
                 continue;
             }
+            dbg!(&b_str);
 
             let mut combo = Vec::new();
 
-            for (idx, _) in format!("{b:>0goal_len$b}")
+            for (idx, _) in b_str
                 .chars()
                 .rev()
                 .enumerate()
