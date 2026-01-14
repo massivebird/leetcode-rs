@@ -128,6 +128,10 @@ name = "lc-0070-climbing-stairs"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0074-search-a-2D-matrix"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0077-combinations"
 version = "0.1.0"
 
