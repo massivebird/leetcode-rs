@@ -1,43 +1,38 @@
 struct Solution;
 
+#[allow(unused)]
 impl Solution {
-    // n choose k
+    // "n choose k"
     pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
-        let mut ans = Vec::new();
-        let goal_len =
-            (Self::factorial(n) / (Self::factorial(n - k) * Self::factorial(k))) as usize;
-
-        for b in 0.. {
-            let b_str = format!("{b:>0goal_len$b}");
-
-            if b_str.chars().filter(|c| *c == '1').count() != k as usize {
-                continue;
-            }
-            dbg!(&b_str);
-
-            let mut combo = Vec::new();
-
-            for (idx, _) in b_str
-                .chars()
-                .rev()
-                .enumerate()
-                .filter(|(_, c)| *c == '1')
-            {
-                combo.push((idx as i32) + 1);
-            }
-
-            ans.push(combo);
-
-            if ans.len() >= goal_len {
-                break;
-            }
-        }
-
-        ans
+        Self::rec_eval(n, usize::try_from(k).unwrap(), 1, Vec::new())
     }
 
-    fn factorial(n: i32) -> i32 {
-        (1..=n).product()
+    fn rec_eval(n: i32, k: usize, i: i32, selected: Vec<i32>) -> Vec<Vec<i32>> {
+        // Selected too many values! This path is invalid.
+        if selected.len() > k {
+            return Vec::new();
+        }
+
+        if i > n {
+            // `i` has exhausted selectable values.
+
+            // If enough values have been selected,
+            // return the selection.
+            if selected.len() == k {
+                return vec![selected];
+            }
+
+            // Insuffient selection. This path is invalid.
+            return Vec::new();
+        }
+
+        [
+            // Select this value.
+            Self::rec_eval(n, k, i + 1, [selected.clone(), vec![i]].concat()),
+            // Do not select this value.
+            Self::rec_eval(n, k, i + 1, selected),
+        ]
+        .concat()
     }
 }
 
