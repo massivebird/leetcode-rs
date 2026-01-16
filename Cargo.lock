@@ -246,6 +246,10 @@ name = "lc-0209-minimum-size-subarray-sum"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0215-kth-largest-element"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0219-contains-duplicate-ii"
 version = "0.1.0"
 
