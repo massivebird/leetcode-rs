@@ -1,3 +1,13 @@
+//! [Exercise](https://leetcode.com/problems/find-peak-element?envType=study-plan-v2&envId=top-interview-150)
+//!
+//! Return the 0-based index of __any__ peak element in the input array,
+//! where a peak is greater than its immediate neighbors.
+//!
+//! `nums[-1] = nums[n] = -∞`; that is, the first and last elements are peaks
+//! if they are greater than their single neighbors.
+//!
+//! Requires `O(log n)`.
+
 struct Solution;
 
 #[allow(dead_code)]
