@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn length_of_longest_substring(s: String) -> i32 {
         let mut l_idx: usize = 0;
         let mut r_idx: usize = 0;
@@ -12,6 +12,7 @@ impl Solution {
         'outer: while r_idx < s.len() {
             let here = s.as_bytes()[r_idx];
 
+            #[allow(clippy::mut_range_bound)] // `l_idx` inc is crucial
             for i in l_idx..r_idx {
                 if s.as_bytes()[i] == here {
                     // This window contains a duplicate character.

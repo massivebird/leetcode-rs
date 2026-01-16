@@ -1,11 +1,11 @@
 struct Solution {}
 
-#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
     // Start at `nums[0]`. The value at `nums[x]` represents the maximum distance
     // you can jump forwards from position `x`.
     //
     // Is it possible to jump to the final element in `nums`?
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn can_jump(nums: Vec<i32>) -> bool {
         if nums.len() <= 1 {
             return true;
@@ -44,7 +44,7 @@ impl Solution {
                 return false;
             }
 
-            farthest_navigable_idx = usize::max(farthest_navigable_idx, i + *dist as usize);
+            farthest_navigable_idx = usize::max(farthest_navigable_idx, i + usize::try_from(*dist).unwrap());
 
             // Check if final index (or beyond) is reachable.
             if farthest_navigable_idx >= nums.len() - 1 {

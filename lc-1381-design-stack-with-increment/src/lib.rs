@@ -19,11 +19,11 @@ struct Node {
 }
 
 impl CustomStack {
-    const fn new(max_size: i32) -> Self {
+    fn new(max_size: i32) -> Self {
         Self {
             head: None,
             size: 0,
-            max_size: max_size as u32,
+            max_size: u32::try_from(max_size).unwrap(),
         }
     }
 
@@ -79,7 +79,7 @@ impl CustomStack {
             return;
         }
 
-        let num_nodes_to_skip = self.size.saturating_sub(k as u32);
+        let num_nodes_to_skip = self.size.saturating_sub(u32::try_from(k).unwrap());
 
         // De facto iterator. We'll mutate this as we go.
         let mut current_node = Rc::clone(self.head.as_ref().unwrap());

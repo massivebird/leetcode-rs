@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 struct Solution;
 
 impl Solution {
@@ -13,6 +11,7 @@ impl Solution {
     /// # Parameters
     ///
     /// + `skill`: even-length collection of player skill levels.
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn divide_players(skill: Vec<i32>) -> i64 {
         let mut skill = skill;
         skill.sort_unstable();
@@ -32,7 +31,7 @@ impl Solution {
 
             if target_sum.is_none() {
                 target_sum = Some(member_sum);
-            } else if target_sum.unwrap() != member_sum {
+            } else if let Some(sum) = target_sum && sum != member_sum {
                 return -1;
             }
 

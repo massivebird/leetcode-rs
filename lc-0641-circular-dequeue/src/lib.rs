@@ -27,12 +27,12 @@ struct Node {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MyCircularDeque {
-    const fn new(k: i32) -> Self {
+    fn new(k: i32) -> Self {
         Self {
             head: None,
             tail: None,
             len: 0,
-            capacity: k as usize,
+            capacity: usize::try_from(k).unwrap(),
         }
     }
 

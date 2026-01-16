@@ -1,15 +1,15 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
         let mut col_seen = [false; 9];
         let mut row_seen = [false; 9];
 
         // Check columns and rows.
-        for col_idx in 0..9 {
+        for (col_idx, col) in board.iter().enumerate() {
             for row_idx in 0..9 {
-                let col_val = board[col_idx][row_idx].to_digit(10).map(|v| v as usize);
+                let col_val = col[row_idx].to_digit(10).map(|v| v as usize);
                 let row_val = board[row_idx][col_idx].to_digit(10).map(|v| v as usize);
 
                 if let Some(col_val) = col_val {

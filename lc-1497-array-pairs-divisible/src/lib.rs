@@ -1,11 +1,10 @@
-#![allow(dead_code)]
-
 struct Solution;
 
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn can_arrange(arr: Vec<i32>, k: i32) -> bool {
         // Contains the frequencies of all possible remainder values `val % k`.
-        let mut rem_freqs = vec![0; k as usize];
+        let mut rem_freqs = vec![0; usize::try_from(k).unwrap()];
 
         for val in &arr {
             // `(val % k + k) % k` is an interesting expression. The goal is to
@@ -18,7 +17,7 @@ impl Solution {
             //   1. Computes `val % k` => (-k + 1)..=0,
             //   2. Adds `k` => 1..=k,
             //   3. Mod `k` => 0..k.
-            let idx = ((val % k + k) % k) as usize;
+            let idx = usize::try_from((val % k + k) % k).unwrap();
             *rem_freqs.get_mut(idx).unwrap() += 1;
         }
 
@@ -46,16 +45,16 @@ mod tests {
         assert!(Solution::can_arrange(
             vec![1, 2, 3, 4, 5, 10, 6, 7, 8, 9],
             5
-        ))
+        ));
     }
 
     #[test]
     fn case_1() {
-        assert!(Solution::can_arrange(vec![1, 2, 3, 4, 5, 6], 7))
+        assert!(Solution::can_arrange(vec![1, 2, 3, 4, 5, 6], 7));
     }
 
     #[test]
     fn case_2() {
-        assert!(Solution::can_arrange(vec![-1, 1, -2, 2, -3, 3, -4, 4], 3))
+        assert!(Solution::can_arrange(vec![-1, 1, -2, 2, -3, 3, -4, 4], 3));
     }
 }

@@ -18,7 +18,7 @@ impl MyCircularDeque {
             head_idx: 0,
             tail_idx: 0,
             size: 0,
-            arr: vec![-1; (k + 1) as usize],
+            arr: vec![-1; usize::try_from(k + 1).unwrap()],
         }
     }
 
@@ -104,18 +104,18 @@ impl MyCircularDeque {
         self.size == 0
     }
 
-    fn is_full(&self) -> bool {
+    const fn is_full(&self) -> bool {
         self.size == self.arr.capacity() - 1
     }
 
-    fn wrapping_increment(&self, val: usize) -> usize {
+    const fn wrapping_increment(&self, val: usize) -> usize {
         match val {
             other if other == self.arr.capacity() - 1 => 0,
             other => other + 1,
         }
     }
 
-    fn wrapping_decrement(&self, val: usize) -> usize {
+    const fn wrapping_decrement(&self, val: usize) -> usize {
         match val {
             0 => self.arr.capacity() - 1,
             other => other - 1,

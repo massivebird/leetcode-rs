@@ -1,11 +1,11 @@
-struct Solution {}
+struct Solution;
 
-#[allow(dead_code)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn find_kth_bit(n: i32, k: i32) -> char {
         Self::generate_nth_bit_string(n)
             .chars()
-            .nth(k as usize - 1)
+            .nth(usize::try_from(k).unwrap() - 1)
             .unwrap()
     }
 

@@ -1,7 +1,7 @@
 struct Solution {}
 
-#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
         let costs = cost;
 
@@ -30,7 +30,7 @@ impl Solution {
             return -1;
         }
 
-        start_idx as i32
+        i32::try_from(start_idx).unwrap()
     }
 }
 
