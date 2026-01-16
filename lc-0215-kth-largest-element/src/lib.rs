@@ -6,17 +6,14 @@ impl Solution {
     pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
         use std::collections::BinaryHeap;
 
-        let mut heap: BinaryHeap<i32> = BinaryHeap::new();
+        let mut heap: BinaryHeap<i32> = BinaryHeap::from(nums);
 
-        for num in nums {
-            heap.push(num);
+        for _ in 1..k {
+            // Pop the largest element off the heap.
+            heap.pop();
         }
 
-        heap.into_sorted_vec()
-            .into_iter()
-            .rev()
-            .nth(usize::try_from(k - 1).unwrap())
-            .unwrap()
+        heap.pop().unwrap()
     }
 }
 
