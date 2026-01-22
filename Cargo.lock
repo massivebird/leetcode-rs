@@ -238,6 +238,10 @@ name = "lc-0198-house-robber"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0200-number-of-islands"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0202-happy-number"
 version = "0.1.0"
 
