@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
         use std::collections::HashMap;
 

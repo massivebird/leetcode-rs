@@ -1,8 +1,7 @@
-#[allow(unused)]
 struct Solution;
 
 impl Solution {
-    #[allow(unused)]
+    #[allow(dead_code)]
     pub fn is_happy(mut n: i32) -> bool {
         let mut known_values = std::collections::HashSet::new();
 

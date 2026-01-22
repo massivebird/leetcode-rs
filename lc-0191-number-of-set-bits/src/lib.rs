@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused)]
 impl Solution {
+    #[allow(dead_code)]
     pub fn hamming_weight(n: i32) -> i32 {
         i32::try_from(format!("{n:b}").chars().filter(|c| *c == '1').count()).unwrap()
     }

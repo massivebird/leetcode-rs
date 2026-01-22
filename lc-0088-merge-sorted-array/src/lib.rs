@@ -1,12 +1,11 @@
 struct Solution;
 
-#[allow(
-    unused,
-    clippy::needless_pass_by_value,
-    clippy::ptr_arg,
-    clippy::needless_pass_by_ref_mut
-)]
 impl Solution {
+    #[allow(
+        dead_code,
+        clippy::needless_pass_by_value,
+        clippy::needless_pass_by_ref_mut
+    )]
     pub fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
         if m > 0 && n == 0 {
             return;

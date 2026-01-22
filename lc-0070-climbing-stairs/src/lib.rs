@@ -1,9 +1,9 @@
 struct Solution;
 
-#[allow(unused)]
 impl Solution {
     // One possible conceptualization: you are counting the leaf nodes of the
     // tree(s) representing all possible navigations through the stairs.
+    #[allow(dead_code)]
     pub fn climb_stairs(n: i32) -> i32 {
         if n <= 3 {
             return n;

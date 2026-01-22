@@ -28,7 +28,7 @@ use std::rc::Rc;
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
+#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
     pub fn is_same_tree(
         p: Option<Rc<RefCell<TreeNode>>>,

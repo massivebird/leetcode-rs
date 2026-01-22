@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn convert(s: String, num_rows: i32) -> String {
         if num_rows == 1 {
             return s;
@@ -60,9 +60,6 @@ mod tests {
 
     #[test]
     fn case_3() {
-        assert_eq!(
-            Solution::convert("AB".to_string(), 1),
-            "AB".to_string()
-        );
+        assert_eq!(Solution::convert("AB".to_string(), 1), "AB".to_string());
     }
 }

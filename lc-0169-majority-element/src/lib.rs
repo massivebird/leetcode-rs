@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 struct Solution;
 
-#[allow(unused)]
 impl Solution {
     // KEY: assume some majority element always exists.
     // We can quit as soon as a value's freq exceeds floor(n/2).
+    #[allow(dead_code)]
     pub fn majority_element(nums: Vec<i32>) -> i32 {
         let mut freqs: HashMap<i32, u32> = HashMap::new();
 

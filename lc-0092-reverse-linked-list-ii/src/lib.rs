@@ -8,7 +8,7 @@ pub struct ListNode {
 
 impl ListNode {
     #[inline]
-    #[allow(unused, clippy::use_self, clippy::missing_const_for_fn)]
+    #[allow(dead_code, clippy::use_self, clippy::missing_const_for_fn)]
     fn new(val: i32) -> Self {
         ListNode { next: None, val }
     }
@@ -19,7 +19,7 @@ impl ListNode {
 struct Solution;
 
 impl Solution {
-    #[allow(unused, clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn reverse_between(
         head: Option<Box<ListNode>>,
         left: i32,

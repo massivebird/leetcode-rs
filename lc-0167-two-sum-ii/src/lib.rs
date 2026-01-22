@@ -4,8 +4,8 @@
 
 struct Solution;
 
-#[allow(clippy::needless_pass_by_value, unused)]
 impl Solution {
+    #[allow(clippy::needless_pass_by_value, dead_code)]
     pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
         let mut l: usize = 0;
         let mut r: usize = numbers.len() - 1;

@@ -1,9 +1,10 @@
-struct Solution {}
+struct Solution;
 
-use std::cmp::Ordering;
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn candy(ratings: Vec<i32>) -> i32 {
+        use std::cmp::Ordering;
+
         let mut ans: i32 = 1;
 
         let mut prev_trend = Ordering::Equal;

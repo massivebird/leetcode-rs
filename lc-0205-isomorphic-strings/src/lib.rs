@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     // Input strings are equal in length.
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn is_isomorphic(s: String, t: String) -> bool {
         let mut src_target: HashMap<char, char> = HashMap::new();
         let mut target_src: HashMap<char, char> = HashMap::new();

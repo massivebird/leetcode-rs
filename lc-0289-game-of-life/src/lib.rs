@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_ref_mut, clippy::ptr_arg)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_ref_mut, clippy::ptr_arg)]
     pub fn game_of_life(board: &mut Vec<Vec<i32>>) {
         let width: usize = board[0].len();
 

@@ -1,8 +1,8 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value, clippy::ptr_arg)]
 impl Solution {
     // MUST perform operations in place without another array
+    #[allow(dead_code, clippy::needless_pass_by_value, clippy::ptr_arg)]
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         if nums.len() <= 2 {
             return i32::try_from(nums.len()).unwrap();

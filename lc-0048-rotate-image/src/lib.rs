@@ -4,8 +4,8 @@
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_ref_mut, clippy::ptr_arg)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_ref_mut, clippy::ptr_arg)]
     pub fn rotate(matrix: &mut Vec<Vec<i32>>) {
         let size = matrix[0].len();
 

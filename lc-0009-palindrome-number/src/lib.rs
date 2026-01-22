@@ -4,8 +4,8 @@
 
 struct Solution;
 
-#[allow(unused, clippy::missing_const_for_fn)]
 impl Solution {
+    #[allow(dead_code, clippy::missing_const_for_fn)]
     pub fn is_palindrome(x: i32) -> bool {
         // Some short circuit solutions.
         if x.is_negative() {

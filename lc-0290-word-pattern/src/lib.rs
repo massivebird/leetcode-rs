@@ -5,8 +5,8 @@
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn word_pattern(pattern: String, s: String) -> bool {
         use std::collections::HashMap;
 

@@ -2,8 +2,8 @@ struct Solution;
 
 // Very similar to LC-0056: Merge Intervals
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn insert(mut intervals: Vec<Vec<i32>>, mut new_interval: Vec<i32>) -> Vec<Vec<i32>> {
         // Sort by each interval's starting value.
         //

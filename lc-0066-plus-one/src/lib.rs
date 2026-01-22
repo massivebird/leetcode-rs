@@ -3,8 +3,8 @@
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
         let mut digits: Vec<i32> = digits.into_iter().rev().collect();
 

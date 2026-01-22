@@ -1,8 +1,8 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     // Both inputs consist only of lowercase letters.
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn can_construct(ransom_note: String, magazine: String) -> bool {
         let mut freq: [u32; 26] = [0; 26];
 

@@ -1,7 +1,7 @@
 struct Solution {}
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn roman_to_int(s: String) -> i32 {
         let to_val = |c: char| -> i32 {
             match c {

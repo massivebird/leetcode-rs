@@ -1,7 +1,7 @@
 struct Solution {}
 
-#[allow(unused)]
 impl Solution {
+    #[allow(dead_code)]
     pub fn int_to_roman(mut num: i32) -> String {
         let numerals = [
             ("M", 1000),

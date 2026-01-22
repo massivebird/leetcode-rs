@@ -1,7 +1,7 @@
 struct Solution;
 
 impl Solution {
-    #[allow(unused, clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn is_palindrome(s: String) -> bool {
         let s: String = s
             .chars()

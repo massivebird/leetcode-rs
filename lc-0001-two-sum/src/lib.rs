@@ -7,7 +7,7 @@
 struct Solution;
 
 impl Solution {
-    #[allow(unused, clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         for idx in 0..nums.len() - 1 {
             let diff = target - nums[idx];

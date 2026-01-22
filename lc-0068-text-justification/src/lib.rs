@@ -5,8 +5,8 @@
 
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn full_justify(words: Vec<String>, max_width: i32) -> Vec<String> {
         // Will contain the words present in each line.
         let mut lines: Vec<Vec<String>> = vec![vec![]];

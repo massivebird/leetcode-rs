@@ -7,8 +7,8 @@ struct Solution;
 //
 // The value at `nums[i]` represents the amount of cash in the i-th house.
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn rob(nums: Vec<i32>) -> i32 {
         if nums.len() == 1 {
             return nums[0];

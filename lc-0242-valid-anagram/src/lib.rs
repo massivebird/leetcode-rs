@@ -1,11 +1,9 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
     // Inputs consist only of lowercase English letters.
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn is_anagram(s: String, t: String) -> bool {
-        use std::collections::HashMap;
-
         // Use signed integers to avoid checking for underflow.
         let mut freqs = [0i32; 26];
 

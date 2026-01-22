@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn length_of_last_word(s: String) -> i32 {
         let Some((last_space_pos, _)) = s.trim().char_indices().rfind(|(_, c)| c.is_whitespace())
         else {

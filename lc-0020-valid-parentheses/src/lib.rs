@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn is_valid(s: String) -> bool {
         use std::collections::VecDeque;
         let mut stack: VecDeque<u8> = VecDeque::new();

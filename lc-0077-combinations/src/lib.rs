@@ -1,8 +1,8 @@
 struct Solution;
 
-#[allow(unused)]
 impl Solution {
     // "n choose k"
+    #[allow(dead_code)]
     pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
         Self::rec_eval(n, usize::try_from(k).unwrap(), 1, Vec::new())
     }

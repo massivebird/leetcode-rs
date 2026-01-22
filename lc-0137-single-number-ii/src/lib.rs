@@ -1,7 +1,7 @@
 struct Solution;
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn single_number(nums: Vec<i32>) -> i32 {
         // NOTE: totally NOT a good answer.
         // The ""REAL"" answer uses a clever combination of bitwise ops.

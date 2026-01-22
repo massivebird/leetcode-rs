@@ -1,9 +1,7 @@
-#![allow(unused)]
-
 struct Solution;
 
 impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
         let mut indices: std::collections::HashMap<i32, Vec<usize>> =
             std::collections::HashMap::new();

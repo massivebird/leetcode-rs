@@ -46,6 +46,7 @@ impl Solution {
     }
 }
 
+#[cfg(test)]
 mod tests {
     #[allow(unused)]
     use super::{Rc, RefCell, Solution, TreeNode};

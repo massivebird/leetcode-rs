@@ -1,15 +1,15 @@
-use tree_node::TreeNode;
 use std::cell::RefCell;
 use std::rc::Rc;
+use tree_node::TreeNode;
 
 struct Solution;
 
-#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
     // Recursively determines if there exists a path from the tree's root to
     // some leaf node such that the path's sum equals `target_sum`.
     //
     // Node values _and_ `target_sum` are signed values!
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn sum_numbers(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         let Some(root) = root else {
             return 0;
@@ -51,8 +51,8 @@ impl Solution {
 }
 
 #[cfg(test)]
+#[allow(dead_code)]
 mod tests {
-    #[allow(unused)]
     use super::Solution;
     use tree_node::build_tree;
 

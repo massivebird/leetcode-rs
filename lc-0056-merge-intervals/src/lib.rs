@@ -5,8 +5,8 @@ struct Solution;
 // Return a list of these two-element ranges, merged whenever possible such
 // that none in the returned list overlap.
 
-#[allow(unused, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         // Sort by each interval's starting value.
         //
