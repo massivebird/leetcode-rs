@@ -1,10 +1,8 @@
-#![allow(dead_code)]
-
 struct Solution;
 
 impl Solution {
     /// Returns true is s2 contains a permutation of s1.
-    #[allow(clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn check_inclusion(s1: String, s2: String) -> bool {
         let char_to_idx = |c: char| -> usize { c as usize - 97 };
 

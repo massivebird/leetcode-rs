@@ -1,4 +1,4 @@
-struct Solution {}
+struct Solution;
 
 impl Solution {
     #[allow(dead_code, clippy::needless_pass_by_value)]

@@ -1,7 +1,7 @@
-struct Solution {}
+struct Solution;
 
-#[allow(dead_code, clippy::needless_pass_by_value)]
 impl Solution {
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn h_index(citations: Vec<i32>) -> i32 {
         let total_citations = citations.len();
 

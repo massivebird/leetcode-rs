@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 struct Solution;
 
 impl Solution {
@@ -6,6 +5,7 @@ impl Solution {
     // over time.
     //
     // Stock must be "bought" before it can be "sold".
+    #[allow(dead_code)]
     pub fn max_profit(prices: Vec<i32>) -> i32 {
         let mut best_profit = 0;
         let mut min = *prices.first().unwrap();

@@ -1,9 +1,7 @@
-#![allow(unused_variables, dead_code)]
-
-struct Solution {}
+struct Solution;
 
 impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
+    #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn add_spaces(s: String, spaces: Vec<i32>) -> String {
         let mut result: Vec<char> = Vec::new();
 

@@ -1,4 +1,4 @@
-struct Solution {}
+struct Solution;
 
 impl Solution {
     // Start at `nums[0]`. The value at `nums[x]` represents the maximum distance
