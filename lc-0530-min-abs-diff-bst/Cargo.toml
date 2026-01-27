@@ -1,0 +1,7 @@
+[package]
+name = "lc-0530-min-abs-diff-bst"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tree-node = { path = "../.utils/tree-node/" }

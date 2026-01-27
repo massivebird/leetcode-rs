@@ -309,6 +309,13 @@ name = "lc-0432-all-one-data-structure"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0530-min-abs-diff-bst"
+version = "0.1.0"
+dependencies = [
+ "tree-node",
+]
+
+[[package]]
 name = "lc-0567-permutation-in-string"
 version = "0.1.0"
 
