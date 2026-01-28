@@ -14,6 +14,12 @@ I'm working through the [Top Interview 150](https://leetcode.com/studyplan/top-i
 
 ## FAQ
 
+__Q: Why use Rust for Leetcode?__
+
+__A:__ Rust's type system and [ownership rules](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html) help prevent a lot of "stupid shit" like null pointers and OOB exceptions, which means I can focus more on writing actual problem-solving logic.
+
+Rust also features first-class [unit tests](https://doc.rust-lang.org/rust-by-example/testing/unit_testing.html), so I can write challenge tests (i.e., "given these inputs, I expect this output") alongside my source code and run them locally in the terminal.
+
 __Q: Rust is cool! How can I start learning?__
 
 __A:__ Start your Rust journey [right here](https://rust-book.cs.brown.edu/ch00-00-introduction.html)!
