@@ -1,29 +1,18 @@
+mod tests;
+
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn my_sqrt(x: i32) -> i32 {
-        todo!()
-    }
-}
+        let mut last: f32 = 1.0; // Initial guess
+        let mut next: f32 = 0.0;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+        for _ in 0..10 {
+            next = 0.5 * (last + (x as f32) / last);
+            last = next;
+        }
 
-    #[test]
-    fn case_0() {
-        let x = 4;
-        let ans = 2;
-
-        assert_eq!(Solution::my_sqrt(x), ans);
-    }
-
-    #[test]
-    fn case_1() {
-        let x = 8;
-        let ans = 2;
-
-        assert_eq!(Solution::my_sqrt(x), ans);
+        return next.floor() as i32;
     }
 }
