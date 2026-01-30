@@ -217,6 +217,10 @@ name = "lc-0137-single-number-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0139-word-break"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0151-reverse-words"
 version = "0.1.0"
 
