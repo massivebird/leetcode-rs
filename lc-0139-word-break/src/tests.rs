@@ -72,3 +72,27 @@ fn case_5() {
 
     assert!(!Solution::word_break(s, word_dict));
 }
+
+#[test]
+fn case_6() {
+    let s = "cars".to_string();
+
+    let word_dict = ["car", "ca", "rs"]
+        .iter()
+        .map(|&s| String::from(s))
+        .collect::<Vec<String>>();
+
+    assert!(Solution::word_break(s, word_dict));
+}
+
+#[test]
+fn case_7() {
+    let s = "a".to_string();
+
+    let word_dict = ["a"]
+        .iter()
+        .map(|&s| String::from(s))
+        .collect::<Vec<String>>();
+
+    assert!(Solution::word_break(s, word_dict));
+}
