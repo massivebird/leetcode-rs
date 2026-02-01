@@ -309,6 +309,10 @@ name = "lc-0290-word-pattern"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0300-longest-inc-subsequence"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0380-insert-delete-getrandom-o1"
 version = "0.1.0"
 dependencies = [
