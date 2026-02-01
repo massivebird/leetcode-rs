@@ -1,3 +1,10 @@
+//! Given an integer array nums, return the length of the longest strictly increasing subsequence.
+//! The subsequence does not have to be contiguous.
+//!
+//! MB: My dynamic programming approach!
+//!
+//! The time complexity is slower than O(n).
+
 mod tests;
 
 struct Solution;
@@ -5,44 +12,24 @@ struct Solution;
 impl Solution {
     #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn length_of_lis(nums: Vec<i32>) -> i32 {
-        let mut best_ans = 1;
+        // Value at index `i` represents the length of the longest increasing
+        // subsequence starting at index `i`.
+        let mut lengths: Vec<usize> = vec![1; nums.len()];
 
-        let mut searched: Vec<usize> = Vec::new();
-        let mut to_search: Vec<usize> = vec![0];
+        let mut ans = 1;
 
-        while let Some(low_i) = to_search.pop() {
-            searched.push(low_i);
-
-            let this = nums[low_i];
-            let mut to_beat = nums[low_i];
-            let mut prev_to_beat = nums[low_i];
-            let mut score = 1;
-
-            for (i, &n) in nums.iter().enumerate().skip(low_i + 1) {
-                // Potential new lowest.
-                if n < this && !searched.contains(&i) {
-                    to_search.push(i);
-                }
-
-                // Replace the latest to_beat.
-                if n < to_beat && n > prev_to_beat && prev_to_beat != this {
-                    to_beat = n;
-                    prev_to_beat = n;
-                    score += 1;
+        for (i, this) in nums.iter().enumerate().rev() {
+            for (j, other) in nums.iter().enumerate().skip(i + 1) {
+                if other <= this {
                     continue;
                 }
 
-                if n > to_beat {
-                    dbg!((this, to_beat, n));
-                    score += 1;
-
-                    to_beat = n;
-
-                    best_ans = i32::max(best_ans, score);
-                }
+                lengths[i] = lengths[i].max(1 + lengths[j]);
             }
+
+            ans = ans.max(lengths[i]);
         }
 
-        best_ans
+        ans.try_into().unwrap()
     }
 }
