@@ -56,6 +56,10 @@ name = "lc-0014-longest-common-prefix"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0017-phone-number-letter-combos"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0020-valid-parentheses"
 version = "0.1.0"
 
