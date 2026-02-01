@@ -64,6 +64,10 @@ name = "lc-0021-merge-sorted-lists"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0022-generate-parentheses"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0026-remove-duplicates-sorted"
 version = "0.1.0"
 
