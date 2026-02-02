@@ -124,6 +124,13 @@ name = "lc-0058-length-of-last-word"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0061-rotate-list"
+version = "0.1.0"
+dependencies = [
+ "list-node",
+]
+
+[[package]]
 name = "lc-0066-plus-one"
 version = "0.1.0"
 
@@ -387,6 +394,10 @@ name = "libc"
 version = "0.2.180"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bcc35a38544a891a5f7c865aca548a982ccb3b8650a5b06d0fd33a10283c56fc"
+
+[[package]]
+name = "list-node"
+version = "0.1.0"
 
 [[package]]
 name = "ppv-lite86"
