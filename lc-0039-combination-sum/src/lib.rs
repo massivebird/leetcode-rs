@@ -11,28 +11,43 @@ impl Solution {
     pub fn combination_sum(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
         let mut acc: Vec<Vec<i32>> = Vec::new();
 
-        Self::rec(Vec::new(), &candidates, target, &mut acc);
+        Self::rec(
+            &mut vec![0; candidates.len()],
+            &candidates,
+            target,
+            &mut acc,
+        );
 
         acc
     }
 
-    fn rec(this: Vec<i32>, candidates: &[i32], target: i32, acc: &mut Vec<Vec<i32>>) {
-        let sum: i32 = this.iter().sum();
+    fn rec(this: &mut Vec<i32>, candidates: &[i32], target: i32, acc: &mut Vec<Vec<i32>>) {
+        let sum: i32 = this
+            .iter()
+            .zip(candidates)
+            .fold(0, |acc, (val, mul)| acc + val * mul);
 
         if sum > target {
             return;
         } else if sum == target {
-            acc.push(this);
+            let values: Vec<i32> = this
+                .iter()
+                .enumerate()
+                .flat_map(|(i, m)| vec![candidates[i]; *m as usize])
+                .collect();
+
+            if !acc.contains(&values) {
+                acc.push(values);
+            }
             return;
         }
 
-        for r in candidates {
-            Self::rec(
-                [this.clone(), [*r].into()].concat(),
-                candidates,
-                target,
-                acc,
-            );
+        for i in 0..candidates.len() {
+            this[i] += 1;
+
+            Self::rec(this, candidates, target, acc);
+
+            this[i] -= 1;
         }
     }
 }
