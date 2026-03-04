@@ -100,6 +100,10 @@ name = "lc-0045-jump-game-ii"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0046-permutations"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0048-rotate-image"
 version = "0.1.0"
 

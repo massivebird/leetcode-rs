@@ -24,6 +24,7 @@ members = [
    "lc-0035-search-insert-position",
    "lc-0036-valid-sudoku",
    "lc-0045-jump-game-ii",
+   "lc-0046-permutations",
    "lc-0048-rotate-image",
    "lc-0049-group-anagrams",
    "lc-0055-jump-game",
