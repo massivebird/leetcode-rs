@@ -120,6 +120,10 @@ name = "lc-0049-group-anagrams"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0054-spiral-matrix"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0055-jump-game"
 version = "0.1.0"
 
