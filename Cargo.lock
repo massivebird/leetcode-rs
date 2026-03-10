@@ -378,6 +378,13 @@ name = "lc-0567-permutation-in-string"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0637-avg-of-levels-of-binary-tree"
+version = "0.1.0"
+dependencies = [
+ "tree-node",
+]
+
+[[package]]
 name = "lc-0641-circular-dequeue"
 version = "0.1.0"
 
