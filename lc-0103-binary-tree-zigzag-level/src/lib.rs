@@ -24,7 +24,7 @@ impl Solution {
             let val = node.borrow().val;
 
             if let Some(lvl_items) = output.get_mut(lvl) {
-                if lvl % 2 == 0 {
+                if lvl.is_multiple_of(2) {
                     lvl_items.push(val);
                 } else {
                     *lvl_items = [vec![val], lvl_items.clone()].concat();
