@@ -49,6 +49,7 @@ members = [
    "lc-0100-same-tree",
    "lc-0101-symmetric-tree",
    "lc-0102-binary-tree-level-order",
+   "lc-0103-binary-tree-zigzag-level",
    "lc-0104-maximum-depth-binary-tree",
    "lc-0108-sorted-arr-to-bst",
    "lc-0112-path-sum",
