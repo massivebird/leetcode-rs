@@ -199,6 +199,13 @@ name = "lc-0101-symmetric-tree"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0102-binary-tree-level-order"
+version = "0.1.0"
+dependencies = [
+ "tree-node",
+]
+
+[[package]]
 name = "lc-0104-maximum-depth-binary-tree"
 version = "0.1.0"
 
