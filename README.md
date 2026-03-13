@@ -44,7 +44,8 @@ __Q: I found a curse word in the source code. Can you remove it?__
 
 __A:__ That's my bad. I'll remove it right away
 
-## Favorite challenges
+## Favorite challenges/solutions
 
 + 0136: Single Number
 + 0200: Number of Islands
++ 0230: Kth Smallest Element in a BST
