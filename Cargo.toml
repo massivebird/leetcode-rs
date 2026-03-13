@@ -70,6 +70,7 @@ members = [
    "lc-0190-reverse-bits",
    "lc-0191-number-of-set-bits",
    "lc-0198-house-robber",
+   "lc-0199-binary-tree-right-side-view",
    "lc-0200-number-of-islands",
    "lc-0201-bitwise-and-range",
    "lc-0202-happy-number",
