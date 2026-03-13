@@ -345,6 +345,13 @@ name = "lc-0228-summary-ranges"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0230-kth-smallest-in-bst"
+version = "0.1.0"
+dependencies = [
+ "tree-node",
+]
+
+[[package]]
 name = "lc-0238-product-except-self"
 version = "0.1.0"
 

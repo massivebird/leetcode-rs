@@ -80,6 +80,7 @@ members = [
    "lc-0219-contains-duplicate-ii",
    "lc-0226-invert-binary-tree",
    "lc-0228-summary-ranges",
+   "lc-0230-kth-smallest-in-bst",
    "lc-0238-product-except-self",
    "lc-0242-valid-anagram",
    "lc-0274-h-index",
