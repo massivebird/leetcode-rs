@@ -46,6 +46,7 @@ members = [
    "lc-0080-remove-duplicates-sorted-ii",
    "lc-0088-merge-sorted-array",
    "lc-0092-reverse-linked-list-ii",
+   "lc-0098-validate-bst",
    "lc-0100-same-tree",
    "lc-0101-symmetric-tree",
    "lc-0102-binary-tree-level-order",
