@@ -40,3 +40,11 @@ fn case_3() {
 
     assert_eq!(Solution::snakes_and_ladders(board), answer);
 }
+
+#[test]
+fn case_4() {
+    let board = vec![vec![1, 1, -1], vec![1, 1, 1], vec![-1, 1, 1]];
+    let answer = -1;
+
+    assert_eq!(Solution::snakes_and_ladders(board), answer);
+}

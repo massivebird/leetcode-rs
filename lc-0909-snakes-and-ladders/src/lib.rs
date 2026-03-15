@@ -1,3 +1,24 @@
+//! <https://leetcode.com/problems/snakes-and-ladders/description/?envType=study-plan-v2&envId=top-interview-150>
+//!
+//! You are given an n x n integer matrix board where the cells are labeled
+//! from 1 to n*n in a Boustrophedon style starting from the bottom left of
+//! the board (i.e. `board[n - 1][0]`) and alternating direction each row.
+//!
+//! Return the minimum number of turns required to reach the end, or
+//! -1 if it can't be done.
+//!
+//! MB: this question is TERRIBLY written. Here's an excerpt of slop:
+//!
+//! > "Note that you only take a snake or ladder at most once per dice roll.
+//! > If the destination to a snake or ladder is the start of another snake or
+//! > ladder, you do not follow the subsequent snake or ladder."
+//!
+//! Does this mean that taking a snake or ladder forces me to roll another die?
+//! No thanks to the unclear language here, I eventually figured out that the
+//! answer is yes.
+//!
+//! Anyway. My recursive approach blew the stack so here's a standard queue BFS.
+
 mod tests;
 
 struct Solution;
@@ -5,88 +26,60 @@ struct Solution;
 impl Solution {
     #[allow(dead_code, clippy::needless_pass_by_value)]
     pub fn snakes_and_ladders(board: Vec<Vec<i32>>) -> i32 {
-        let mut b = Vec::new();
-
-        for (i, row) in board.iter().rev().enumerate() {
-            if i.is_multiple_of(2) {
-                for s in row {
-                    b.push(s);
-                }
-            } else {
-                for s in row.iter().rev() {
-                    b.push(s);
-                }
-            }
-        }
-
-        // dbg!(&b);
-
         let n = board.len();
 
+        // Reconstruct the 2D board into 1D.
+        let board: Vec<&i32> = {
+            let mut tmp = Vec::new();
+
+            for (i, row) in board.iter().rev().enumerate() {
+                // mind the boustrophedon layout
+                if i.is_multiple_of(2) {
+                    for s in row {
+                        tmp.push(s);
+                    }
+                } else {
+                    for s in row.iter().rev() {
+                        tmp.push(s);
+                    }
+                }
+            }
+
+            tmp
+        };
+
         let mut visited: Vec<Option<i32>> = vec![None; n * n];
-        Self::bfs(&b, 0, &mut visited, 1, 6, false);
-        dbg!(&visited);
-        // Self::_dbg_print(&visited, n);
 
-        visited[(n * n) - 1].unwrap()
-    }
+        // (index, turn#)
+        let mut queue: std::collections::VecDeque<(usize, i32)> =
+            std::collections::VecDeque::from(vec![(0, 0)]);
 
-    fn bfs(
-        board: &[&i32],
-        i: usize,
-        visited: &mut [Option<i32>],
-        turn: i32,
-        dice_rem: usize,
-        snuck: bool,
-    ) {
-        if turn == 1 {
-            // dbg!((i, step));
-        }
-        let Some(vst) = visited.get_mut(i) else {
-            return;
-        };
+        while let Some((i, turn)) = queue.pop_front() {
+            let vst = &mut visited[i];
 
-        if vst.is_some_and(|v| v < turn) {
-            return;
-        }
+            // Skup if this space has been reached in fewer turns.
+            if vst.is_some_and(|v| v <= turn) {
+                continue;
+            }
 
-        *vst = Some(turn);
+            *vst = Some(turn);
 
-        let (next_turn, next_dice, snuck) = if dice_rem == 0 {
-            (turn + 1, 6, false)
-        } else {
-            (turn, dice_rem - 1, snuck)
-        };
+            for roll in 1..=6 {
+                // Roll until OOB.
+                let Some(board_val) = board.get(i + roll) else {
+                    break;
+                };
 
-        // Self::bfs(board, i.saturating_sub(1), visited, next_step, next_dice);
-
-        if *board[i] > -1 && !snuck {
-            Self::bfs(
-                board,
-                (*board[i] - 1) as usize,
-                visited,
-                turn,
-                dice_rem,
-                true,
-            );
-        } else {
-            Self::bfs(
-                board,
-                i.saturating_add(1),
-                visited,
-                next_turn,
-                next_dice,
-                snuck,
-            );
-        }
-    }
-
-    fn _dbg_print(board: &[Option<i32>], n: usize) {
-        for (i, v) in board.iter().enumerate() {
-            print!("{v:3?}");
-            if i > 0 && (i + 1).is_multiple_of(n) {
-                println!();
+                // If roll lands on a snake/ladder, take it.
+                if **board_val > -1 {
+                    #[allow(clippy::cast_sign_loss)]
+                    queue.push_back(((*board_val - 1) as usize, turn + 1));
+                } else {
+                    queue.push_back((i + roll, turn + 1));
+                }
             }
         }
+
+        visited[(n * n) - 1].unwrap_or(-1)
     }
 }
