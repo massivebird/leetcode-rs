@@ -89,8 +89,7 @@ fn case_6() {
 fn case_7() {
     let s = "a".to_string();
 
-    let word_dict = ["a"]
-        .iter()
+    let word_dict = std::iter::once(&"a")
         .map(|&s| String::from(s))
         .collect::<Vec<String>>();
 

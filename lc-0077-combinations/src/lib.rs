@@ -59,6 +59,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::too_many_lines)]
     fn case_1() {
         let n = 13;
         let k = 3;

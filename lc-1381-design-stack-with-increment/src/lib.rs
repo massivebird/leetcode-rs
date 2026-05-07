@@ -15,7 +15,7 @@ struct CustomStack {
 #[derive(Debug)]
 struct Node {
     val: i32,
-    next: Option<Rc<RefCell<Node>>>,
+    next: Option<Rc<RefCell<Self>>>,
 }
 
 impl CustomStack {

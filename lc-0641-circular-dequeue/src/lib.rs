@@ -16,10 +16,10 @@ struct MyCircularDeque {
 #[derive(Debug)]
 struct Node {
     elem: i32,
-    next: Option<Rc<RefCell<Node>>>,
+    next: Option<Rc<RefCell<Self>>>,
     // Weak references prevent reference cycles!
     // Appears to reduce space complexity slightly.
-    prev: Option<Weak<RefCell<Node>>>,
+    prev: Option<Weak<RefCell<Self>>>,
 }
 
 /*
