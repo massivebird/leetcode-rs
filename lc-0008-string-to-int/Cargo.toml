@@ -1,0 +1,6 @@
+[package]
+name = "lc-0008-string-to-int"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

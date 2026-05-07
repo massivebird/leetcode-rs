@@ -40,6 +40,10 @@ name = "lc-0007-reverse-integer"
 version = "0.1.0"
 
 [[package]]
+name = "lc-0008-string-to-int"
+version = "0.1.0"
+
+[[package]]
 name = "lc-0009-palindrome-number"
 version = "0.1.0"
 

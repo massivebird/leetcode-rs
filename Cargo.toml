@@ -9,6 +9,7 @@ members = [
    "lc-0003-longest-substr-without-repeats",
    "lc-0006-zigzag-string",
    "lc-0007-reverse-integer",
+   "lc-0008-string-to-int",
    "lc-0009-palindrome-number",
    "lc-0011-container-with-most-water",
    "lc-0012-int-to-roman",
