@@ -1,24 +1,6 @@
-// Definition for a binary tree node.
-#[derive(Debug, PartialEq, Eq)]
-pub struct TreeNode {
-    pub val: i32,
-    pub left: Option<Rc<RefCell<Self>>>,
-    pub right: Option<Rc<RefCell<Self>>>,
-}
-
-impl TreeNode {
-    #[inline]
-    #[must_use]
-    pub const fn new(val: i32) -> Self {
-        Self {
-            val,
-            left: None,
-            right: None,
-        }
-    }
-}
 use std::cell::RefCell;
 use std::rc::Rc;
+use tree_node::TreeNode;
 
 struct Solution;
 
